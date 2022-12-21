@@ -11,7 +11,9 @@ date: "01/02/2023"
 #| code-fold: true
 #| output: false
 # Initilisierung der Arbeitsumgebung
+# ISOcodes muss installiert werden
 library(tidyverse)
+library(ISOcodes)
 ```
 
 ## 1. Formulierung der Fragestellung
@@ -108,7 +110,26 @@ data_cleaned <- data |> mutate(
 str(data_cleaned)
 ```
 
-* TODO: Ländernamen ersetzten bzw. erweitern (V: Tom)
+Damit die einzelnen Länder lesbar sind und in einen Zusammenhang mit den Daten gebracht werden kann, werden hier die Länder-Codes durch die Ländernamen ersetzt. Dafür wird der Dataframe `ISO_3166_1` verwendet, die die Ländercodes und die zugehörigen Ländernamen enthält. Die Ländercodes werden mit den Ländernamen aus dem Dataframe `ISO_3166_1` ersetzt.
+
+```{r}
+# Ländernamen hinzufügen
+data_cleaned <- data_cleaned |>
+    full_join(ISO_3166_1[,c("Alpha_2","Name")], by = c("employee_residence" = "Alpha_2"), ) |>
+    full_join(ISO_3166_1[,c("Alpha_2","Name")], by = c("company_location" = "Alpha_2")) |> 
+    mutate(
+        employee_residence = Name.x,
+        company_location = Name.y,
+        Name.x = NULL,
+        Name.y = NULL,
+    )
+
+
+# Neue Datenstruktur
+str(data_cleaned)
+```
+
+
 - Ordered Factor company_size (V: Tim)
 - Factor für die restlichen Chars (V: Tim)
 
