@@ -93,20 +93,29 @@ sum(complete.cases(data)) == nrow(data)
 
 Es sind also keine NA's vorhanden. Damit können die Daten bereinigt werden.
 
-* TODO: Ländernamen ersetzten bzw. erweitern 
-* TODO: Constant and correct types?
 
 
 ## 3. Transformieren und säubern der Daten
 
-- Ordered Factor experience_level
-- Ordered Factor employment_type
-- Ordered Factor company_size
-- Factor für die restlichen Chars
+```{r}
+
+data_cleaned <- data |> mutate(
+        experience_level  = factor(experience_level, levels= c('EN', 'MI', 'SE', 'EX'), ordered = T),
+        employment_type  = factor(employment_type, levels= c('PT', 'FT', 'CT', 'FL'), ordered = T)
+    )
+
+# Neue Datenstruktur
+str(data_cleaned)
+```
+
+* TODO: Ländernamen ersetzten bzw. erweitern (V: Tom)
+- Ordered Factor company_size (V: Tim)
+- Factor für die restlichen Chars (V: Tim)
 
 
 ## 4. Auswertungen
-- Plot-Matrix der einzelnen Faktoren gegenüber der Bezahlung
+(Zusammen spätens am Freitag)
+- Correlations Matrix der einzelnen Faktoren gegenüber der Bezahlung
 - Erfahrung gegenüber gehalt
 - Auftretende Titel mit bezug auf Gehalt
 - Durschnittliches Gehalt innerhalb der Regionen

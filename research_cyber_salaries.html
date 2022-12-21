@@ -303,30 +303,41 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 </div>
 </div>
 <p>Es sind also keine NA’s vorhanden. Damit können die Daten bereinigt werden.</p>
-<ul>
-<li>TODO: Ländernamen ersetzten bzw. erweitern</li>
-<li>TODO: Constant and correct types?</li>
-</ul>
 </section>
 <section id="transformieren-und-säubern-der-daten" class="level2">
 <h2 class="anchored" data-anchor-id="transformieren-und-säubern-der-daten">3. Transformieren und säubern der Daten</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">experience_level  =</span> <span class="fu">factor</span>(experience_level, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'EN'</span>, <span class="st">'MI'</span>, <span class="st">'SE'</span>, <span class="st">'EX'</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">employment_type  =</span> <span class="fu">factor</span>(employment_type, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'PT'</span>, <span class="st">'FT'</span>, <span class="st">'CT'</span>, <span class="st">'FL'</span>), <span class="at">ordered =</span> T)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [1,349 × 11] (S3: tbl_df/tbl/data.frame)
+ $ work_year         : num [1:1349] 2022 2022 2022 2022 2022 ...
+ $ experience_level  : Ord.factor w/ 4 levels "EN"&lt;"MI"&lt;"SE"&lt;..: 1 3 3 3 3 2 3 3 3 3 ...
+ $ employment_type   : Ord.factor w/ 4 levels "PT"&lt;"FT"&lt;"CT"&lt;..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ job_title         : chr [1:1349] "Information Security Officer" "Security Officer" "Security Officer" "Security Engineer" ...
+ $ salary            : num [1:1349] 68000 123400 88100 163575 115800 ...
+ $ salary_currency   : chr [1:1349] "EUR" "USD" "USD" "USD" ...
+ $ salary_in_usd     : num [1:1349] 72762 123400 88100 163575 115800 ...
+ $ employee_residence: chr [1:1349] "DE" "US" "US" "US" ...
+ $ remote_ratio      : num [1:1349] 100 0 0 100 100 100 100 100 100 100 ...
+ $ company_location  : chr [1:1349] "DE" "US" "US" "US" ...
+ $ company_size      : chr [1:1349] "S" "M" "M" "M" ...</code></pre>
+</div>
+</div>
 <ul>
-<li>Ordered Factor experience_level</li>
-<li>Ordered Factor employment_type</li>
-<li>Ordered Factor company_size</li>
-<li>Factor für die restlichen Chars</li>
+<li>TODO: Ländernamen ersetzten bzw. erweitern (V: Tom)</li>
+<li>Ordered Factor company_size (V: Tim)</li>
+<li>Factor für die restlichen Chars (V: Tim)</li>
 </ul>
 </section>
 <section id="auswertungen" class="level2">
 <h2 class="anchored" data-anchor-id="auswertungen">4. Auswertungen</h2>
-<ul>
-<li>Plot-Matrix der einzelnen Faktoren gegenüber der Bezahlung</li>
-<li>Erfahrung gegenüber gehalt</li>
-<li>Auftretende Titel mit bezug auf Gehalt</li>
-<li>Durschnittliches Gehalt innerhalb der Regionen</li>
-<li>Timeline über das durchschnittliche Gehalt</li>
-<li>Zusammenfassung der Betriebe mit jeweiligen Bezahlungen</li>
-</ul>
+<p>(Zusammen spätens am Freitag) - Correlations Matrix der einzelnen Faktoren gegenüber der Bezahlung - Erfahrung gegenüber gehalt - Auftretende Titel mit bezug auf Gehalt - Durschnittliches Gehalt innerhalb der Regionen - Timeline über das durchschnittliche Gehalt - Zusammenfassung der Betriebe mit jeweiligen Bezahlungen</p>
 </section>
 <section id="zusammenfassung-und-schlussfolgerung" class="level2">
 <h2 class="anchored" data-anchor-id="zusammenfassung-und-schlussfolgerung">Zusammenfassung und Schlussfolgerung</h2>
