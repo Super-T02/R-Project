@@ -1,0 +1,117 @@
+---
+title: "Untersuchung der Gehälter von Cyber-Security Experten"
+author: 
+    - "Tim Kurfiss"
+    - "Tom Freudenmann"
+date: "01/02/2023"
+---
+
+```{r}
+#| echo: false
+#| code-fold: true
+#| output: false
+# Initilisierung der Arbeitsumgebung
+library(tidyverse)
+```
+
+## 1. Formulierung der Fragestellung
+
+Der vorligende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angeställten im Bereich Cyber-Security und werden unter folgendem Link <https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries> bereitgestellt. Der Datensatz enthält folgende Informationen:
+
+* Arbeitsjahr
+* Jobtitel
+* Erfahrungslevel
+* Job Status
+* Jahresgehalt in US-Dollar und anderen Währungen
+* Wohnort des Mitarbeiters
+* Betriebsstandort
+* Betriebsgröße
+* Remote Anteil an der Arbeit
+
+
+### 1.1 Interesse an den Daten
+
+Dadurch, dass immer mehr Prozesse in Unternehmen digitalisiert werden, steigt auch die Gefahr von Cyber-Angriffen. Um diese Gefahr abzuwehren, werden immer mehr Cyber-Security Experten benötigt. Diese Experten sind in der Lage, die Sicherheit von Unternehmen zu gewährleisten. In dieser Arbeit sollen dafür die Gehälter von verschiedenen Cyber-Security Bereichen untersucht werden, um einen Einblick in die Nachfrage von Cyber-Security Experten zu bekommen. Zudem können die Ergebnisse der Arbeit dazu genutzt werden, um die Gehälter von Cyber-Security Experten zu vergleichen und zu bewerten. 
+
+
+### 1.2 Fragestellung
+
+Die übergeordnete Fragestellung liegt darin, herrauszufinden welche Faktoren von der Bezahlung eines Cyber-Security Experten abhängen. Dabei sind die einzelnen Faktoren miteinander zu vergleichen und mögliche Korrelationen aufzudecken.
+
+Innerhalb des Cyber-Security Bereichs existieren zudem viele unterschiedliche Titel die auf den genaueren Einsatzbereich des Angestellen schließen können. Hier können möglicherweise einzelne Gruppen gebildet werden, die ebenfalls einen gewissen Einfluss auf das Gehalt eines Mitarbeiters haben.
+
+Abgesehen davon könnte sich auch die Fragestellung ergeben, ob sich die Gehälter von Cyber-Security Experten über die Zeit verändert haben. Hierbei ist zu untersuchen, wo und durch welche Faktoren sich die Gehälter verändert haben.
+
+
+### 1.3 Erwartete Ergebnisse
+
+Folgende Erwartungen kamen in der ersten Auseinandersetzung mit dem Datensatz anhand persönlicher Überlegungen auf:
+* Starke Korrelation des Gehalts mit Erfahrungen
+* Bekannte/Größere Betriebe zahlen ihren Mitarbeitern mehr
+* Regionale unterschiede vergelichbar mit BIP
+* Remote Anteil an der Arbeit hat keinen Einfluss auf das Gehalt
+* Über die Zeit verdienen Cyber-Security Experten mehr Geld
+
+Innerhalb des Projekts wird versucht Beweise für die aufgestellten Erwartungen zu sammeln, die dafür- oder dagensprechen können.
+
+## 2. Laden der Daten und entdecken der Datenstruktur
+
+In diesem Schritt werden die Daten geladen und genauer untersucht. Dabei werden die Daten auf mögliche Fehler überprüft und die Datenstruktur genauer betrachtet. Ziel ist es, wichtige Schritte zu definieren, die im nächsten Schritt für die Aufbereitung der Daten wichtig sind.
+
+```{r}
+# Daten laden
+data <- as_tibble(read_csv("data/Cyber_salaries.csv"))
+data
+```
+
+Daraus folgt, dass die Daten erfolgreich importiert wurden und folgedne Datenstruktur aufweisen:
+
+| Variable | Typ | Unique Values | Beschreibung |
+|----------|-----|---------------|--------------|
+| work_year | Integer | Zwischen `r min(data$work_year)` und `r max(data$work_year)` | Arbeitsjahr |
+| experience_level | chr | `r unique(data$experience_level)` | Erfahrungslevel, wobei EN - Entry level / Junior, MI - Mid level / Intermediate, SE - Senior level / Expert, EX - Executive level / Director |
+| employment_type | chr | `r unique(data$employment_type)` | Art der Anstellung, wobei  PT - Part time, FT - Full time, CT - Contract, FL - Freelance |
+| job_title | chr | `r head(unique(data$job_title))`, ... | Jobtitel (hier nur die ersten 10 abgebildet) |
+| salary | Integer | Zwischen `r min(data$salary)` und `r max(data$salary)` | Jahresgehalt |
+| salary_currency | chr | `r unique(data$salary_currency)` | Währung |
+| salary_in_usd | Integer | Zwischen `r min(data$salary_in_usd)` und `r max(data$salary_in_usd)` | Jahresgehalt in USD |
+| employee_residence | chr | `r unique(data$employee_residence)` | Wohnort des Mitarbeiters nach Ländercode (ISO 3166)  |
+| remote_ratio | Integer | Zwischen `r min(data$remote_ratio)` und `r max(data$remote_ratio)` | Remote Anteil an der Arbeit 0 - Keine Remote Arbeit (weniger als 20%), 50 - Teilweise Remote, 100 - Komplett Remote (mehr als 80%) |
+| company_location | chr | `r unique(data$company_location)` | Betriebsstandort nach Ländercode (ISO 3166) |
+| company_size | chr | `r unique(data$company_size)` | Betriebsgröße, wobei  S(small) - Weniger als 50 Angestellte , M(medium) - Zwischen 50 und 250 Angestellte , L(large) - Mehr als 250 Angestellte |
+
+Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. `experience_level` oder `employment_type`, als `chr` definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als `factor` definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden.
+Zusätzlich ist zu beachten, dass die Variablen `salary` und `salary_currency` nicht benötigt werden, da diese Informationen bereits in `salary_in_usd` umgerechnet in US-Dollar enthalten sind. Die Variablen `salary` und `salary_currency` sollten daher im nächsten Schritt gelöscht werden.
+Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschireben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.
+
+Bevor mit dem Bereinigen und umformatieren begonnen werden kann muss überprüft werden, ob die Daten vollständig sind. Dazu wird die Funktion `complete.cases()` verwendet, die alle Zeilen zurückgibt, die keine fehlenden Werte enthalten. Die Funktion `sum()` gibt die Anzahl der Zeilen zurück, die keine fehlenden Werte enthalten. Die Anzahl der Zeilen, die keine fehlenden Werte enthalten, sollte mit der Anzahl der Zeilen im Datensatz übereinstimmen. Ist dies nicht der Fall, müssen die fehlenden Werte im nächsten Schritt bereinigt werden.
+
+```{r}
+# Anzahl der Zeilen ohne fehlende Werte
+sum(complete.cases(data)) == nrow(data)
+```
+
+Es sind also keine NA's vorhanden. Damit können die Daten bereinigt werden.
+
+* TODO: Ländernamen ersetzten bzw. erweitern 
+* TODO: Constant and correct types?
+
+
+## 3. Transformieren und säubern der Daten
+
+- Ordered Factor experience_level
+- Ordered Factor employment_type
+- Ordered Factor company_size
+- Factor für die restlichen Chars
+
+
+## 4. Auswertungen
+- Plot-Matrix der einzelnen Faktoren gegenüber der Bezahlung
+- Erfahrung gegenüber gehalt
+- Auftretende Titel mit bezug auf Gehalt
+- Durschnittliches Gehalt innerhalb der Regionen
+- Timeline über das durchschnittliche Gehalt
+- Zusammenfassung der Betriebe mit jeweiligen Bezahlungen
+
+
+## Zusammenfassung und Schlussfolgerung
