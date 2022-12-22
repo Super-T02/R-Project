@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.1.189">
@@ -8,7 +8,6 @@
 
 <meta name="author" content="Tim Kurfiss">
 <meta name="author" content="Tom Freudenmann">
-<meta name="dcterms.date" content="2023-01-02">
 
 <title>Untersuchung der Gehälter von Cyber-Security Experten</title>
 <style>
@@ -119,7 +118,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Autor:innen</div>
     <div class="quarto-title-meta-contents">
              <p>Tim Kurfiss </p>
              <p>Tom Freudenmann </p>
@@ -127,9 +126,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
     
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 2, 2023</p>
+      <p class="date">2. Januar 2023</p>
     </div>
   </div>
     
@@ -176,7 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In diesem Schritt werden die Daten geladen und genauer untersucht. Dabei werden die Daten auf mögliche Fehler überprüft und die Datenstruktur genauer betrachtet. Ziel ist es, wichtige Schritte zu definieren, die im nächsten Schritt für die Aufbereitung der Daten wichtig sind.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Daten laden</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read_csv</span>(<span class="st">"data/Cyber_salaries.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read_csv</span>(<span class="st">"data/Cyber_salaries.csv"</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 1349 Columns: 11
 ── Column specification ────────────────────────────────────────────────────────
@@ -187,7 +186,7 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,349 × 11
    work_year experience…¹ emplo…² job_t…³ salary salar…⁴ salar…⁵ emplo…⁶ remot…⁷
@@ -297,7 +296,7 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 <p>Bevor mit dem Bereinigen und umformatieren begonnen werden kann muss überprüft werden, ob die Daten vollständig sind. Dazu wird die Funktion <code>complete.cases()</code> verwendet, die alle Zeilen zurückgibt, die keine fehlenden Werte enthalten. Die Funktion <code>sum()</code> gibt die Anzahl der Zeilen zurück, die keine fehlenden Werte enthalten. Die Anzahl der Zeilen, die keine fehlenden Werte enthalten, sollte mit der Anzahl der Zeilen im Datensatz übereinstimmen. Ist dies nicht der Fall, müssen die fehlenden Werte im nächsten Schritt bereinigt werden.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anzahl der Zeilen ohne fehlende Werte</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">complete.cases</span>(data)) <span class="sc">==</span> <span class="fu">nrow</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">complete.cases</span>(data)) <span class="sc">==</span> <span class="fu">nrow</span>(data)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -307,26 +306,33 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 <section id="transformieren-und-säubern-der-daten" class="level2">
 <h2 class="anchored" data-anchor-id="transformieren-und-säubern-der-daten">3. Transformieren und säubern der Daten</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">experience_level  =</span> <span class="fu">factor</span>(experience_level, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'EN'</span>, <span class="st">'MI'</span>, <span class="st">'SE'</span>, <span class="st">'EX'</span>), <span class="at">ordered =</span> T),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">employment_type  =</span> <span class="fu">factor</span>(employment_type, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'PT'</span>, <span class="st">'FT'</span>, <span class="st">'CT'</span>, <span class="st">'FL'</span>), <span class="at">ordered =</span> T)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>locations <span class="ot">&lt;-</span> <span class="fu">unique</span>(data<span class="sc">$</span>company_location)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>titles <span class="ot">&lt;-</span> <span class="fu">unique</span>(data<span class="sc">$</span>job_title)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">experience_level  =</span> <span class="fu">factor</span>(experience_level, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'EN'</span>, <span class="st">'MI'</span>, <span class="st">'SE'</span>, <span class="st">'EX'</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">employment_type  =</span> <span class="fu">factor</span>(employment_type, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'PT'</span>, <span class="st">'FT'</span>, <span class="st">'CT'</span>, <span class="st">'FL'</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">company_size  =</span> <span class="fu">factor</span>(company_size, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'S'</span>, <span class="st">'M'</span>, <span class="st">'L'</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">employee_residence =</span> <span class="fu">factor</span>(employee_residence, <span class="at">levels =</span> locations),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">company_location =</span> <span class="fu">factor</span>(company_location, <span class="at">levels =</span> locations),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">job_title =</span> <span class="fu">factor</span>(job_title, <span class="at">levels =</span> titles),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [1,349 × 11] (S3: tbl_df/tbl/data.frame)
  $ work_year         : num [1:1349] 2022 2022 2022 2022 2022 ...
  $ experience_level  : Ord.factor w/ 4 levels "EN"&lt;"MI"&lt;"SE"&lt;..: 1 3 3 3 3 2 3 3 3 3 ...
  $ employment_type   : Ord.factor w/ 4 levels "PT"&lt;"FT"&lt;"CT"&lt;..: 2 2 2 2 2 2 2 2 2 2 ...
- $ job_title         : chr [1:1349] "Information Security Officer" "Security Officer" "Security Officer" "Security Engineer" ...
+ $ job_title         : Factor w/ 87 levels "Information Security Officer",..: 1 2 2 3 3 4 5 5 3 3 ...
  $ salary            : num [1:1349] 68000 123400 88100 163575 115800 ...
  $ salary_currency   : chr [1:1349] "EUR" "USD" "USD" "USD" ...
  $ salary_in_usd     : num [1:1349] 72762 123400 88100 163575 115800 ...
- $ employee_residence: chr [1:1349] "DE" "US" "US" "US" ...
+ $ employee_residence: Factor w/ 57 levels "DE","US","CY",..: 1 2 2 2 2 3 2 2 2 2 ...
  $ remote_ratio      : num [1:1349] 100 0 0 100 100 100 100 100 100 100 ...
- $ company_location  : chr [1:1349] "DE" "US" "US" "US" ...
- $ company_size      : chr [1:1349] "S" "M" "M" "M" ...</code></pre>
+ $ company_location  : Factor w/ 57 levels "DE","US","CY",..: 1 2 2 2 2 3 2 2 2 2 ...
+ $ company_size      : Ord.factor w/ 3 levels "S"&lt;"M"&lt;"L": 1 2 2 2 2 3 2 2 2 2 ...</code></pre>
 </div>
 </div>
 <p>Damit die einzelnen Länder lesbar sind und in einen Zusammenhang mit den Daten gebracht werden kann, werden hier die Länder-Codes durch die Ländernamen ersetzt. Dafür wird der Dataframe <code>ISO_3166_1</code> verwendet, die die Ländercodes und die zugehörigen Ländernamen enthält. Die Ländercodes werden mit den Ländernamen aus dem Dataframe <code>ISO_3166_1</code> ersetzt.</p>
@@ -344,26 +350,22 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [1,730 × 11] (S3: tbl_df/tbl/data.frame)
- $ work_year         : num [1:1730] 2022 2022 2022 2022 2022 ...
+<pre><code>tibble [1,737 × 11] (S3: tbl_df/tbl/data.frame)
+ $ work_year         : num [1:1737] 2022 2022 2022 2022 2022 ...
  $ experience_level  : Ord.factor w/ 4 levels "EN"&lt;"MI"&lt;"SE"&lt;..: 1 3 3 3 3 2 3 3 3 3 ...
  $ employment_type   : Ord.factor w/ 4 levels "PT"&lt;"FT"&lt;"CT"&lt;..: 2 2 2 2 2 2 2 2 2 2 ...
- $ job_title         : chr [1:1730] "Information Security Officer" "Security Officer" "Security Officer" "Security Engineer" ...
- $ salary            : num [1:1730] 68000 123400 88100 163575 115800 ...
- $ salary_currency   : chr [1:1730] "EUR" "USD" "USD" "USD" ...
- $ salary_in_usd     : num [1:1730] 72762 123400 88100 163575 115800 ...
- $ employee_residence: chr [1:1730] "Germany" "United States" "United States" "United States" ...
- $ remote_ratio      : num [1:1730] 100 0 0 100 100 100 100 100 100 100 ...
- $ company_location  : chr [1:1730] "Germany" "United States" "United States" "United States" ...
- $ company_size      : chr [1:1730] "S" "M" "M" "M" ...</code></pre>
+ $ job_title         : Factor w/ 87 levels "Information Security Officer",..: 1 2 2 3 3 4 5 5 3 3 ...
+ $ salary            : num [1:1737] 68000 123400 88100 163575 115800 ...
+ $ salary_currency   : chr [1:1737] "EUR" "USD" "USD" "USD" ...
+ $ salary_in_usd     : num [1:1737] 72762 123400 88100 163575 115800 ...
+ $ employee_residence: chr [1:1737] "Germany" "United States" "United States" "United States" ...
+ $ remote_ratio      : num [1:1737] 100 0 0 100 100 100 100 100 100 100 ...
+ $ company_location  : chr [1:1737] "Germany" "United States" "United States" "United States" ...
+ $ company_size      : Ord.factor w/ 3 levels "S"&lt;"M"&lt;"L": 1 2 2 2 2 3 2 2 2 2 ...</code></pre>
 </div>
 </div>
-<ul>
-<li>Ordered Factor company_size (V: Tim)</li>
-<li>Factor für die restlichen Chars (V: Tim)</li>
-</ul>
 </section>
 <section id="auswertungen" class="level2">
 <h2 class="anchored" data-anchor-id="auswertungen">4. Auswertungen</h2>
@@ -415,7 +417,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Kopiert");
     setTimeout(function() {
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
