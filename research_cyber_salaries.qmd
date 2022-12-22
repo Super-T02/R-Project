@@ -100,10 +100,16 @@ Es sind also keine NA's vorhanden. Damit können die Daten bereinigt werden.
 ## 3. Transformieren und säubern der Daten
 
 ```{r}
+locations <- unique(data$company_location)
+titles <- unique(data$job_title)
 
 data_cleaned <- data |> mutate(
         experience_level  = factor(experience_level, levels= c('EN', 'MI', 'SE', 'EX'), ordered = T),
-        employment_type  = factor(employment_type, levels= c('PT', 'FT', 'CT', 'FL'), ordered = T)
+        employment_type  = factor(employment_type, levels= c('PT', 'FT', 'CT', 'FL'), ordered = T),
+        company_size  = factor(company_size, levels= c('S', 'M', 'L'), ordered = T),
+        employee_residence = factor(employee_residence, levels = locations),
+        company_location = factor(company_location, levels = locations),
+        job_title = factor(job_title, levels = titles),
     )
 
 # Neue Datenstruktur
@@ -128,10 +134,6 @@ data_cleaned <- data_cleaned |>
 # Neue Datenstruktur
 str(data_cleaned)
 ```
-
-
-- Ordered Factor company_size (V: Tim)
-- Factor für die restlichen Chars (V: Tim)
 
 
 ## 4. Auswertungen
