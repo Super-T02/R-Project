@@ -196,12 +196,12 @@ data_cleaned |>
     )
 ```
 
-Es ist zu sehen, dass über die Zeit mehr Daten erfasst wurden und am meisten Daten von **Senior** und **Intermediate** Mitarbeitern erfasst wurden. Die Daten von Executive Mitarbeitern sind dafür am geringsten. Das liegt vermutlich daran, dass es weniger Executive Mitarbeiter gibt und weniger Daten von diesen Mitarbeitern vorliegen.
+Es ist zu sehen, dass über die Zeit mehr Daten erfasst wurden und am meisten Daten von **Senior** und **Intermediate** Mitarbeitern enthalten sind. Die Daten von Executive Mitarbeitern sind dafür am geringsten. Das liegt vermutlich daran, dass es weniger Executive Mitarbeiter gibt und weniger Daten von diesen Mitarbeitern vorliegen.
 
 
 ### 4.1.2 Entwicklung der Gehälter pro Jahr und Erfahrungslevel
 
-Um einen Einblick zu erhalten, wie sich die Gehälter im Laufe der Zeit entwickelt haben, wird eine Grafik erstellt, die die Entwicklung der Gehälter pro Jahr darstellt. Zusätzlich wird nach der Erfahrung gruppiert, um zu sehen, wie sich die Gehälter in Abhängigkeit der Erfahrung und Jahr entwickelt haben.
+Um einen Einblick zu erhalten, wie sich die Gehälter im Laufe der Zeit entwickelt haben, wird eine Grafik erstellt, die die Entwicklung der Gehälter pro Jahr darstellt. Zusätzlich wird nach der Erfahrung gruppiert, um zu sehen, wie sich die Gehälter in Abhängigkeit zur Erfahrung und Jahr entwickelt haben.
 
 ```{r}
 #| echo: false
@@ -247,7 +247,7 @@ ggplot(plot_data, aes(x = experience_level, y = mean_salary, group = work_year, 
 
 ```
 
-In der Grafik ist zu erkennen, dass die Gehälter von **Senior** und **Executives** im Laufe der Zeit gestiegen sind, bei den anderen beiden sind sie ähnlich geblieben. Zusätzlich ist zu erkennen, dass die Gehälter für die Erfahrungslevel **Senior** und **Executives** im Vergleich zu den anderen Erfahrungsleveln deutlich höher sind. Betrachtet man den Boxplot für das Verhältnis wird das auch nochmal deutlich. Zu beachten ist aber, dass die einzelnen Datenpunkte nicht alle gleich verteilt sind, da die Anzahl der Datenpunkte für die einzelnen Erfahrungslevel unterschiedlich ist. 
+In der Grafik ist zu erkennen, dass die Gehälter von **Senior** und **Executives** im Laufe der Zeit gestiegen sind, bei den anderen beiden sind sie ähnlich geblieben. Zusätzlich ist zu erkennen, dass die Gehälter für die Erfahrungslevel **Senior** und **Executives** im Vergleich zu den anderen Erfahrungsleveln deutlich höher sind. Betrachtet man den Boxplot für das Verhältnis wird das auch nochmal deutlich. Zu beachten ist aber, dass die einzelnen Datenpunkte nicht alle gleich verteilt sind, da die Anzahl der Datenpunkte für die einzelnen Erfahrungslevel unterschiedlich ist.
 
 ```{r}
 #| echo: false
@@ -267,12 +267,12 @@ ggplot(plot_data, aes(x = experience_level, y = mean_salary)) +
     )
 ```
 
-Auch hier ist zu sehen, dass die Gehälter von **Executives** deutlich höher sind. Hier ist aber auch zu sehen, dass die Streuung der Datenpunkte bei den **Executives** am größten ist. Das liegt daran, dass es nur weniger Datenpunkte gibt und die Gehälter von **Executives** sehr unterschiedlich sind. Bei **Junior** und **Intermediate** Mitarbeitern ist die Streuung der Datenpunkte am geringsten. So liegt das Gehalt im Schnitt wie folgt:
+Auch hier ist zu sehen, dass die Gehälter von **Executives** deutlich höher sind. Hier ist aber auch zu sehen, dass die Streuung der Datenpunkte bei den **Executives** am größten ist. Das liegt daran, dass es nur weniger Datenpunkte gibt und die Gehälter von **Executives** sehr unterschiedlich sind (Standardabweichung in 2022: `r  paste(round(plot_data[plot_data$experience_level == "Executive" & plot_data$work_year == "2022", "sd_salary"]))` USD). Bei **Junior** und **Intermediate** Mitarbeitern ist die Streuung der Datenpunkte am geringsten. So liegt das Gehalt im Schnitt wie folgt:
 
-* **Junior Mitarbeiter**: `r round(per_level[1,"mean_salary"])` USD
-* **Intermediate Mitarbeiter**: `r round(per_level[2,"mean_salary"])` USD
-* **Senior Mitarbeiter**: `r round(per_level[3,"mean_salary"])` USD
-* **Executive Mitarbeiter**: `r round(per_level[4,"mean_salary"])` USD
+* **Junior Mitarbeiter**: `r paste(round(per_level[1,"mean_salary"]))` USD
+* **Intermediate Mitarbeiter**: `r paste(round(per_level[2,"mean_salary"]))` USD
+* **Senior Mitarbeiter**: `r paste(round(per_level[3,"mean_salary"]))` USD
+* **Executive Mitarbeiter**: `r paste(round(per_level[4,"mean_salary"]))` USD
 
 
 ### 4.2 Die verschiedenen Berufstitel
