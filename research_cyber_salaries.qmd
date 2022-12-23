@@ -13,8 +13,12 @@ lang: "de"
 #| output: false
 # Initilisierung der Arbeitsumgebung
 # ISOcodes muss installiert werden
+# ggcorrplot muss installiert werden
+# install.packages("ISOcodes")
+# install.packages("ggcorrplot")
 library(tidyverse)
 library(ISOcodes)
+library(ggcorrplot)
 ```
 
 ## 1. Formulierung der Fragestellung
@@ -63,9 +67,12 @@ In diesem Schritt werden die Daten geladen und genauer untersucht. Dabei werden 
 
 ```{r}
 # Daten laden
-data <- as_tibble(read_csv("data/Cyber_salaries.csv"))
+data <- as_tibble(read_csv("data/Cyber_salaries.csv", show_col_types = FALSE))
 data
 ```
+
+
+### 2.1 Übersicht der Daten
 
 Daraus folgt, dass die Daten erfolgreich importiert wurden und folgedne Datenstruktur aufweisen:
 
@@ -87,6 +94,23 @@ Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variab
 Zusätzlich ist zu beachten, dass die Variablen `salary` und `salary_currency` nicht benötigt werden, da diese Informationen bereits in `salary_in_usd` umgerechnet in US-Dollar enthalten sind. Die Variablen `salary` und `salary_currency` sollten daher im nächsten Schritt gelöscht werden.
 Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschireben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.
 
+
+### 2.2 Duplikate
+
+Außerdem muss der Datensatz auf doppelte Einträge überprüft werden. Dazu wird die Funktion `duplicated()` verwendet, die alle doppelten Einträge zurückgibt. Die Funktion `sum()` gibt die Anzahl der doppelten Einträge zurück. Die Anzahl der doppelten Einträge sollte mit 0 übereinstimmen. Ist dies nicht der Fall, müssen die doppelten Einträge im nächsten Schritt bereinigt werden.
+
+```{r}
+# Anzahl der doppelten Einträge
+duplicate <- sum(duplicated(data))
+
+# Ausgeben der doppelten Einträge
+data[duplicated(data),]
+```
+
+Es sind also `r duplicate` doppelte Einträge vorhanden. Die Duplikate können jedoch nich aus dem Datensatz entfernt werden, da es keine eindeutigen Informatioen/Indentifikatoren über die einzelenen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternhemens handelt mit der selben Bezahlung.
+
+### 2.3 Fehlende Werte
+
 Bevor mit dem Bereinigen und umformatieren begonnen werden kann muss überprüft werden, ob die Daten vollständig sind. Dazu wird die Funktion `complete.cases()` verwendet, die alle Zeilen zurückgibt, die keine fehlenden Werte enthalten. Die Funktion `sum()` gibt die Anzahl der Zeilen zurück, die keine fehlenden Werte enthalten. Die Anzahl der Zeilen, die keine fehlenden Werte enthalten, sollte mit der Anzahl der Zeilen im Datensatz übereinstimmen. Ist dies nicht der Fall, müssen die fehlenden Werte im nächsten Schritt bereinigt werden.
 
 ```{r}
@@ -100,18 +124,23 @@ Es sind also keine NA's vorhanden. Damit können die Daten bereinigt werden.
 
 ## 3. Transformieren und säubern der Daten
 
+Aus dem vorherigen Abschnitt folgt, dass verschiedene Faktoren für die einzelnen Spalten angelegt und die Spalten `salary` und `salary_currency` gelöscht werden müssen. Zusätzlich werden die Ländernamen in den Spalten `employee_residence` und `company_location` ausgeschrieben.
+
 ```{r}
 locations <- unique(data$company_location)
 titles <- unique(data$job_title)
 
 data_cleaned <- data |> mutate(
-        experience_level  = factor(experience_level, levels= c('EN', 'MI', 'SE', 'EX'), ordered = T),
+        work_year  = factor(work_year, levels= c(2020,2021,2022), ordered = T),
+        experience_level  = factor(experience_level, levels= c('EN', 'MI', 'SE', 'EX'), labels = c('Junior', 'Intermediate', 'Senior', 'Executive'), ordered = T),
         employment_type  = factor(employment_type, levels= c('PT', 'FT', 'CT', 'FL'), ordered = T),
         company_size  = factor(company_size, levels= c('S', 'M', 'L'), ordered = T),
-        employee_residence = factor(employee_residence, levels = locations),
-        company_location = factor(company_location, levels = locations),
+        # employee_residence = factor(employee_residence, levels = locations),
+        # company_location = factor(company_location, levels = locations),
         job_title = factor(job_title, levels = titles),
-    )
+        salary = NULL,
+        salary_currency = NULL
+    ) 
 
 # Neue Datenstruktur
 str(data_cleaned)
@@ -129,8 +158,7 @@ data_cleaned <- data_cleaned |>
         company_location = Name.y,
         Name.x = NULL,
         Name.y = NULL,
-    )
-
+    ) |> drop_na() # Löschen von Ländern die keine Verbindung gefunden g
 
 # Neue Datenstruktur
 str(data_cleaned)
@@ -138,6 +166,185 @@ str(data_cleaned)
 
 
 ## 4. Auswertungen
+
+Die Aufbereiteten Daten können nun in diesem Abschnitt ausgewertet werden. Hierfür werden verschiedene Abbildungen und Grafiken generiert, sowie beschrieben. 
+
+
+### 4.1 Betrachtung von Gehalt und Erfahrungslevel
+
+Um einen Einblick zu erhalten, wie viele Daten pro Jahr und Erfahrungslevel vorliegen, wird eine Grafik erstellt, die die Anzahl an Daten pro Jahr darstellt. Hierfür werden die einzelnen Daten pro Jahr und Erfahrungslevel gezählt und in einem Balkendiagramm dargestellt.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+# Anzahl an Daten pro Jahr
+data_cleaned |>
+    group_by(work_year, experience_level) |>
+    summarise(n = n()) |>
+    ggplot(aes(x = work_year, y = n, fill = experience_level)) + 
+    geom_col() + 
+    geom_text(aes(label = n), size = 3, position = position_stack(vjust = 0.5)) +
+    ggtitle("Anzahl an Daten pro Jahr und Erfahrung") +
+    labs(fill = "Erfahrung", x = "Jahr", y = "Anzahl an Daten") +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 0.5, size = 16),
+        axis.title = element_text(size = 14),
+    )
+```
+
+Es ist zu sehen, dass über die Zeit mehr Daten erfasst wurden und am meisten Daten von **Senior** und **Intermediate** Mitarbeitern erfasst wurden. Die Daten von Executive Mitarbeitern sind dafür am geringsten. Das liegt vermutlich daran, dass es weniger Executive Mitarbeiter gibt und weniger Daten von diesen Mitarbeitern vorliegen.
+
+
+### 4.1.2 Entwicklung der Gehälter pro Jahr und Erfahrungslevel
+
+Um einen Einblick zu erhalten, wie sich die Gehälter im Laufe der Zeit entwickelt haben, wird eine Grafik erstellt, die die Entwicklung der Gehälter pro Jahr darstellt. Zusätzlich wird nach der Erfahrung gruppiert, um zu sehen, wie sich die Gehälter in Abhängigkeit der Erfahrung und Jahr entwickelt haben.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+# Berechnung der Eckdaten für die folgenden Plots
+plot_data <- data_cleaned |>
+    group_by(experience_level, work_year) |>
+    summarise(
+        mean_salary = mean(salary_in_usd, na.rm = T),
+        median_salary = median(salary_in_usd, na.rm = T),
+        sd_salary = sd(salary_in_usd, na.rm = T),
+        n = n()
+    )
+
+per_level <- data_cleaned |>
+    group_by(experience_level) |>
+    summarise(
+        mean_salary = mean(salary_in_usd, na.rm = T),
+        median_salary = median(salary_in_usd, na.rm = T),
+        sd_salary = sd(salary_in_usd, na.rm = T),
+        n = n()
+    )
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+# Ehrfarung gegenüber Mitellwert der Gehälter pro Jahr
+ggplot(plot_data, aes(x = experience_level, y = mean_salary, group = work_year, fill = work_year)) +
+    geom_col(position = "dodge") +
+    geom_text(aes(label = round(mean_salary, 0)), position = position_dodge(width = 0.9), vjust = -0.25) +
+    ggtitle("Gehalt für pro Erfahrungslevel und Jahr") +
+    labs(fill = "Arbeitsjahr", x = "Erfahrung", y = "Gehalt in USD") +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 0.5, size = 16),
+        axis.title = element_text(size = 14),
+    )
+
+```
+
+In der Grafik ist zu erkennen, dass die Gehälter von **Senior** und **Executives** im Laufe der Zeit gestiegen sind, bei den anderen beiden sind sie ähnlich geblieben. Zusätzlich ist zu erkennen, dass die Gehälter für die Erfahrungslevel **Senior** und **Executives** im Vergleich zu den anderen Erfahrungsleveln deutlich höher sind. Betrachtet man den Boxplot für das Verhältnis wird das auch nochmal deutlich. Zu beachten ist aber, dass die einzelnen Datenpunkte nicht alle gleich verteilt sind, da die Anzahl der Datenpunkte für die einzelnen Erfahrungslevel unterschiedlich ist. 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+# Boxplot für das Verhältnis der Gehälter pro Jahr
+ggplot(plot_data, aes(x = experience_level, y = mean_salary)) +
+    geom_boxplot() +
+    ggtitle("Boxplot für das Verhältnis der Gehälter pro Erfahrungsstufe") +
+    labs(fill = "Arbeitsjahr", x = "Erfahrung", y = "Gehalt in USD") +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 0.5, size = 16),
+        axis.title = element_text(size = 14),
+    )
+```
+
+Auch hier ist zu sehen, dass die Gehälter von **Executives** deutlich höher sind. Hier ist aber auch zu sehen, dass die Streuung der Datenpunkte bei den **Executives** am größten ist. Das liegt daran, dass es nur weniger Datenpunkte gibt und die Gehälter von **Executives** sehr unterschiedlich sind. Bei **Junior** und **Intermediate** Mitarbeitern ist die Streuung der Datenpunkte am geringsten. So liegt das Gehalt im Schnitt wie folgt:
+
+* **Junior Mitarbeiter**: `r round(per_level[1,"mean_salary"])` USD
+* **Intermediate Mitarbeiter**: `r round(per_level[2,"mean_salary"])` USD
+* **Senior Mitarbeiter**: `r round(per_level[3,"mean_salary"])` USD
+* **Executive Mitarbeiter**: `r round(per_level[4,"mean_salary"])` USD
+
+
+### 4.2 Die verschiedenen Berufstitel
+ 
+Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die 15 häufigsten Titel angegeben, alle anderen werden in der Gruppe `other` zusammengefasst.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+counting <- data_cleaned |> count(job_title, sort = TRUE)
+counting
+titles <- top_n(counting,15) |> pull(job_title)
+
+counting <- rbind(top_n(counting,15), slice(counting,16:n()) |>
+    summarise(job_title="other",n=sum(n))) |>
+    mutate(n=round(n/sum(n)*100)) |> 
+    arrange(desc(n))|> 
+    mutate(
+        job_title = factor(job_title, levels = job_title, ordered = T)
+    )
+    
+
+ggplot(counting, aes(x="", y=n, fill=job_title)) +
+    geom_bar(stat="identity", width=1, color = "black") +
+    coord_polar("y", start=0) +
+    geom_text(aes(label = paste0(n, "%")), position = position_stack(vjust=0.5)) +
+    labs(x = NULL, y = NULL, fill = NULL) 
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+job_title_mean_salary <- data_cleaned[data_cleaned$job_title %in% titles,] |>
+    group_by(job_title) |> 
+    summarise(mean_salary = mean(salary_in_usd)) |> 
+    mutate(job_title = factor(job_title, levels = rev(titles), ordered = T)) 
+
+# Bar Plot für die durchschnittlichen Gehälter pro Berufstitel
+ggplot(job_title_mean_salary, aes(x = job_title, y = mean_salary)) +
+    geom_bar(stat = "identity", fill="#4682b4", color = "black") +
+    ggtitle("Die durchschnittlichen Gehälter der 10 häufigsten Berufstitel") +
+    labs(x = "Berufstitel", y = "Gehalt in USD") +
+    theme_minimal() +
+    geom_text(aes(label=round(mean_salary)), size = 4, hjust = 1.1, color="black") +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 1, size = 16),
+        axis.title = element_text(size = 14),
+    ) + 
+    coord_flip()
+
+# Boxplot für die Gehälter der 10 meist auftretenden Berufstitel
+t <- data_cleaned[data_cleaned$job_title %in% titles,] |>
+   mutate(job_title = factor(job_title, levels = rev(titles), ordered = T))
+
+ggplot(t , aes(x = job_title, y = salary_in_usd)) +
+    geom_boxplot() +
+    ggtitle("Boxplot für die Gehälter der 10 häufigsten Berufstitel") +
+    labs(x = "Berufstitel", y = "Gehalt in USD") +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 1, size = 16),
+        axis.title = element_text(size = 14),
+    ) + 
+    coord_flip()
+```
+
 (Zusammen spätens am Freitag)
 - Correlations Matrix der einzelnen Faktoren gegenüber der Bezahlung
 - Erfahrung gegenüber gehalt

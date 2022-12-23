@@ -175,18 +175,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In diesem Schritt werden die Daten geladen und genauer untersucht. Dabei werden die Daten auf mögliche Fehler überprüft und die Datenstruktur genauer betrachtet. Ziel ist es, wichtige Schritte zu definieren, die im nächsten Schritt für die Aufbereitung der Daten wichtig sind.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Daten laden</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read_csv</span>(<span class="st">"data/Cyber_salaries.csv"</span>))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1349 Columns: 11
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (7): experience_level, employment_type, job_title, salary_currency, empl...
-dbl (4): work_year, salary, salary_in_usd, remote_ratio
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read_csv</span>(<span class="st">"data/Cyber_salaries.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,349 × 11
    work_year experience…¹ emplo…² job_t…³ salary salar…⁴ salar…⁵ emplo…⁶ remot…⁷
@@ -207,6 +197,8 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 #   ⁶​employee_residence, ⁷​remote_ratio</code></pre>
 </div>
 </div>
+<section id="übersicht-der-daten" class="level3">
+<h3 class="anchored" data-anchor-id="übersicht-der-daten">2.1 Übersicht der Daten</h3>
 <p>Daraus folgt, dass die Daten erfolgreich importiert wurden und folgedne Datenstruktur aufweisen:</p>
 <table class="table">
 <colgroup>
@@ -293,6 +285,40 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 </tbody>
 </table>
 <p>Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. <code>experience_level</code> oder <code>employment_type</code>, als <code>chr</code> definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als <code>factor</code> definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden. Zusätzlich ist zu beachten, dass die Variablen <code>salary</code> und <code>salary_currency</code> nicht benötigt werden, da diese Informationen bereits in <code>salary_in_usd</code> umgerechnet in US-Dollar enthalten sind. Die Variablen <code>salary</code> und <code>salary_currency</code> sollten daher im nächsten Schritt gelöscht werden. Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschireben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.</p>
+</section>
+<section id="duplikate" class="level3">
+<h3 class="anchored" data-anchor-id="duplikate">2.2 Duplikate</h3>
+<p>Außerdem muss der Datensatz auf doppelte Einträge überprüft werden. Dazu wird die Funktion <code>duplicated()</code> verwendet, die alle doppelten Einträge zurückgibt. Die Funktion <code>sum()</code> gibt die Anzahl der doppelten Einträge zurück. Die Anzahl der doppelten Einträge sollte mit 0 übereinstimmen. Ist dies nicht der Fall, müssen die doppelten Einträge im nächsten Schritt bereinigt werden.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anzahl der doppelten Einträge</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>duplicate <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">duplicated</span>(data))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ausgeben der doppelten Einträge</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data[<span class="fu">duplicated</span>(data),]</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 115 × 11
+   work_year experience…¹ emplo…² job_t…³ salary salar…⁴ salar…⁵ emplo…⁶ remot…⁷
+       &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1      2022 SE           FT      Securi… 211600 USD      211600 US          100
+ 2      2022 SE           FT      Securi… 182160 USD      182160 US          100
+ 3      2022 SE           FT      Securi… 211600 USD      211600 US          100
+ 4      2022 SE           FT      Securi… 182160 USD      182160 US          100
+ 5      2022 SE           FT      Penetr… 125000 USD      125000 US          100
+ 6      2022 SE           FT      Securi… 154700 USD      154700 US          100
+ 7      2022 SE           FT      Securi… 131495 USD      131495 US          100
+ 8      2022 SE           FT      Cyber … 137000 USD      137000 US          100
+ 9      2022 SE           FT      Securi… 228600 USD      228600 US          100
+10      2022 SE           FT      Securi… 153600 USD      153600 US          100
+# … with 105 more rows, 2 more variables: company_location &lt;chr&gt;,
+#   company_size &lt;chr&gt;, and abbreviated variable names ¹​experience_level,
+#   ²​employment_type, ³​job_title, ⁴​salary_currency, ⁵​salary_in_usd,
+#   ⁶​employee_residence, ⁷​remote_ratio</code></pre>
+</div>
+</div>
+<p>Es sind also 115 doppelte Einträge vorhanden. Die Duplikate können jedoch nich aus dem Datensatz entfernt werden, da es keine eindeutigen Informatioen/Indentifikatoren über die einzelenen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternhemens handelt mit der selben Bezahlung.</p>
+</section>
+<section id="fehlende-werte" class="level3">
+<h3 class="anchored" data-anchor-id="fehlende-werte">2.3 Fehlende Werte</h3>
 <p>Bevor mit dem Bereinigen und umformatieren begonnen werden kann muss überprüft werden, ob die Daten vollständig sind. Dazu wird die Funktion <code>complete.cases()</code> verwendet, die alle Zeilen zurückgibt, die keine fehlenden Werte enthalten. Die Funktion <code>sum()</code> gibt die Anzahl der Zeilen zurück, die keine fehlenden Werte enthalten. Die Anzahl der Zeilen, die keine fehlenden Werte enthalten, sollte mit der Anzahl der Zeilen im Datensatz übereinstimmen. Ist dies nicht der Fall, müssen die fehlenden Werte im nächsten Schritt bereinigt werden.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anzahl der Zeilen ohne fehlende Werte</span></span>
@@ -303,35 +329,38 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 </div>
 <p>Es sind also keine NA’s vorhanden. Damit können die Daten bereinigt werden.</p>
 </section>
+</section>
 <section id="transformieren-und-säubern-der-daten" class="level2">
 <h2 class="anchored" data-anchor-id="transformieren-und-säubern-der-daten">3. Transformieren und säubern der Daten</h2>
+<p>Aus dem vorherigen Abschnitt folgt, dass verschiedene Faktoren für die einzelnen Spalten angelegt und die Spalten <code>salary</code> und <code>salary_currency</code> gelöscht werden müssen. Zusätzlich werden die Ländernamen in den Spalten <code>employee_residence</code> und <code>company_location</code> ausgeschrieben.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>locations <span class="ot">&lt;-</span> <span class="fu">unique</span>(data<span class="sc">$</span>company_location)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>titles <span class="ot">&lt;-</span> <span class="fu">unique</span>(data<span class="sc">$</span>job_title)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">experience_level  =</span> <span class="fu">factor</span>(experience_level, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'EN'</span>, <span class="st">'MI'</span>, <span class="st">'SE'</span>, <span class="st">'EX'</span>), <span class="at">ordered =</span> T),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">employment_type  =</span> <span class="fu">factor</span>(employment_type, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'PT'</span>, <span class="st">'FT'</span>, <span class="st">'CT'</span>, <span class="st">'FL'</span>), <span class="at">ordered =</span> T),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">company_size  =</span> <span class="fu">factor</span>(company_size, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'S'</span>, <span class="st">'M'</span>, <span class="st">'L'</span>), <span class="at">ordered =</span> T),</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">employee_residence =</span> <span class="fu">factor</span>(employee_residence, <span class="at">levels =</span> locations),</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">company_location =</span> <span class="fu">factor</span>(company_location, <span class="at">levels =</span> locations),</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">job_title =</span> <span class="fu">factor</span>(job_title, <span class="at">levels =</span> titles),</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">work_year  =</span> <span class="fu">factor</span>(work_year, <span class="at">levels=</span> <span class="fu">c</span>(<span class="dv">2020</span>,<span class="dv">2021</span>,<span class="dv">2022</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">experience_level  =</span> <span class="fu">factor</span>(experience_level, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'EN'</span>, <span class="st">'MI'</span>, <span class="st">'SE'</span>, <span class="st">'EX'</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Junior'</span>, <span class="st">'Intermediate'</span>, <span class="st">'Senior'</span>, <span class="st">'Executive'</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">employment_type  =</span> <span class="fu">factor</span>(employment_type, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'PT'</span>, <span class="st">'FT'</span>, <span class="st">'CT'</span>, <span class="st">'FL'</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">company_size  =</span> <span class="fu">factor</span>(company_size, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'S'</span>, <span class="st">'M'</span>, <span class="st">'L'</span>), <span class="at">ordered =</span> T),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># employee_residence = factor(employee_residence, levels = locations),</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># company_location = factor(company_location, levels = locations),</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">job_title =</span> <span class="fu">factor</span>(job_title, <span class="at">levels =</span> titles),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">salary =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">salary_currency =</span> <span class="cn">NULL</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    ) </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [1,349 × 11] (S3: tbl_df/tbl/data.frame)
- $ work_year         : num [1:1349] 2022 2022 2022 2022 2022 ...
- $ experience_level  : Ord.factor w/ 4 levels "EN"&lt;"MI"&lt;"SE"&lt;..: 1 3 3 3 3 2 3 3 3 3 ...
+<pre><code>tibble [1,349 × 9] (S3: tbl_df/tbl/data.frame)
+ $ work_year         : Ord.factor w/ 3 levels "2020"&lt;"2021"&lt;..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ experience_level  : Ord.factor w/ 4 levels "Junior"&lt;"Intermediate"&lt;..: 1 3 3 3 3 2 3 3 3 3 ...
  $ employment_type   : Ord.factor w/ 4 levels "PT"&lt;"FT"&lt;"CT"&lt;..: 2 2 2 2 2 2 2 2 2 2 ...
  $ job_title         : Factor w/ 87 levels "Information Security Officer",..: 1 2 2 3 3 4 5 5 3 3 ...
- $ salary            : num [1:1349] 68000 123400 88100 163575 115800 ...
- $ salary_currency   : chr [1:1349] "EUR" "USD" "USD" "USD" ...
  $ salary_in_usd     : num [1:1349] 72762 123400 88100 163575 115800 ...
- $ employee_residence: Factor w/ 57 levels "DE","US","CY",..: 1 2 2 2 2 3 2 2 2 2 ...
+ $ employee_residence: chr [1:1349] "DE" "US" "US" "US" ...
  $ remote_ratio      : num [1:1349] 100 0 0 100 100 100 100 100 100 100 ...
- $ company_location  : Factor w/ 57 levels "DE","US","CY",..: 1 2 2 2 2 3 2 2 2 2 ...
+ $ company_location  : chr [1:1349] "DE" "US" "US" "US" ...
  $ company_size      : Ord.factor w/ 3 levels "S"&lt;"M"&lt;"L": 1 2 2 2 2 3 2 2 2 2 ...</code></pre>
 </div>
 </div>
@@ -346,30 +375,96 @@ dbl (4): work_year, salary, salary_in_usd, remote_ratio
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">company_location =</span> Name.y,</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">Name.x =</span> <span class="cn">NULL</span>,</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">Name.y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> <span class="fu">drop_na</span>() <span class="co"># Löschen von Ländern die keine Verbindung gefunden g</span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Neue Datenstruktur</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_cleaned)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [1,737 × 11] (S3: tbl_df/tbl/data.frame)
- $ work_year         : num [1:1737] 2022 2022 2022 2022 2022 ...
- $ experience_level  : Ord.factor w/ 4 levels "EN"&lt;"MI"&lt;"SE"&lt;..: 1 3 3 3 3 2 3 3 3 3 ...
+<pre><code>tibble [1,349 × 9] (S3: tbl_df/tbl/data.frame)
+ $ work_year         : Ord.factor w/ 3 levels "2020"&lt;"2021"&lt;..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ experience_level  : Ord.factor w/ 4 levels "Junior"&lt;"Intermediate"&lt;..: 1 3 3 3 3 2 3 3 3 3 ...
  $ employment_type   : Ord.factor w/ 4 levels "PT"&lt;"FT"&lt;"CT"&lt;..: 2 2 2 2 2 2 2 2 2 2 ...
  $ job_title         : Factor w/ 87 levels "Information Security Officer",..: 1 2 2 3 3 4 5 5 3 3 ...
- $ salary            : num [1:1737] 68000 123400 88100 163575 115800 ...
- $ salary_currency   : chr [1:1737] "EUR" "USD" "USD" "USD" ...
- $ salary_in_usd     : num [1:1737] 72762 123400 88100 163575 115800 ...
- $ employee_residence: chr [1:1737] "Germany" "United States" "United States" "United States" ...
- $ remote_ratio      : num [1:1737] 100 0 0 100 100 100 100 100 100 100 ...
- $ company_location  : chr [1:1737] "Germany" "United States" "United States" "United States" ...
+ $ salary_in_usd     : num [1:1349] 72762 123400 88100 163575 115800 ...
+ $ employee_residence: chr [1:1349] "Germany" "United States" "United States" "United States" ...
+ $ remote_ratio      : num [1:1349] 100 0 0 100 100 100 100 100 100 100 ...
+ $ company_location  : chr [1:1349] "Germany" "United States" "United States" "United States" ...
  $ company_size      : Ord.factor w/ 3 levels "S"&lt;"M"&lt;"L": 1 2 2 2 2 3 2 2 2 2 ...</code></pre>
 </div>
 </div>
 </section>
 <section id="auswertungen" class="level2">
 <h2 class="anchored" data-anchor-id="auswertungen">4. Auswertungen</h2>
+<p>Die Aufbereiteten Daten können nun in diesem Abschnitt ausgewertet werden. Hierfür werden verschiedene Abbildungen und Grafiken generiert, sowie beschrieben.</p>
+<section id="betrachtung-von-gehalt-und-erfahrungslevel" class="level3">
+<h3 class="anchored" data-anchor-id="betrachtung-von-gehalt-und-erfahrungslevel">4.1 Betrachtung von Gehalt und Erfahrungslevel</h3>
+<p>Um einen Einblick zu erhalten, wie viele Daten pro Jahr und Erfahrungslevel vorliegen, wird eine Grafik erstellt, die die Anzahl an Daten pro Jahr darstellt. Hierfür werden die einzelnen Daten pro Jahr und Erfahrungslevel gezählt und in einem Balkendiagramm dargestellt.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Es ist zu sehen, dass über die Zeit mehr Daten erfasst wurden und am meisten Daten von <strong>Senior</strong> und <strong>Intermediate</strong> Mitarbeitern erfasst wurden. Die Daten von Executive Mitarbeitern sind dafür am geringsten. Das liegt vermutlich daran, dass es weniger Executive Mitarbeiter gibt und weniger Daten von diesen Mitarbeitern vorliegen.</p>
+</section>
+<section id="entwicklung-der-gehälter-pro-jahr-und-erfahrungslevel" class="level3">
+<h3 class="anchored" data-anchor-id="entwicklung-der-gehälter-pro-jahr-und-erfahrungslevel">4.1.2 Entwicklung der Gehälter pro Jahr und Erfahrungslevel</h3>
+<p>Um einen Einblick zu erhalten, wie sich die Gehälter im Laufe der Zeit entwickelt haben, wird eine Grafik erstellt, die die Entwicklung der Gehälter pro Jahr darstellt. Zusätzlich wird nach der Erfahrung gruppiert, um zu sehen, wie sich die Gehälter in Abhängigkeit der Erfahrung und Jahr entwickelt haben.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In der Grafik ist zu erkennen, dass die Gehälter von <strong>Senior</strong> und <strong>Executives</strong> im Laufe der Zeit gestiegen sind, bei den anderen beiden sind sie ähnlich geblieben. Zusätzlich ist zu erkennen, dass die Gehälter für die Erfahrungslevel <strong>Senior</strong> und <strong>Executives</strong> im Vergleich zu den anderen Erfahrungsleveln deutlich höher sind. Betrachtet man den Boxplot für das Verhältnis wird das auch nochmal deutlich. Zu beachten ist aber, dass die einzelnen Datenpunkte nicht alle gleich verteilt sind, da die Anzahl der Datenpunkte für die einzelnen Erfahrungslevel unterschiedlich ist.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Auch hier ist zu sehen, dass die Gehälter von <strong>Executives</strong> deutlich höher sind. Hier ist aber auch zu sehen, dass die Streuung der Datenpunkte bei den <strong>Executives</strong> am größten ist. Das liegt daran, dass es nur weniger Datenpunkte gibt und die Gehälter von <strong>Executives</strong> sehr unterschiedlich sind. Bei <strong>Junior</strong> und <strong>Intermediate</strong> Mitarbeitern ist die Streuung der Datenpunkte am geringsten. So liegt das Gehalt im Schnitt wie folgt:</p>
+<ul>
+<li><strong>Junior Mitarbeiter</strong>: 6.3727^{4} USD</li>
+<li><strong>Intermediate Mitarbeiter</strong>: 1.02297^{5} USD</li>
+<li><strong>Senior Mitarbeiter</strong>: 1.45937^{5} USD</li>
+<li><strong>Executive Mitarbeiter</strong>: 1.9802^{5} USD</li>
+</ul>
+</section>
+<section id="die-verschiedenen-berufstitel" class="level3">
+<h3 class="anchored" data-anchor-id="die-verschiedenen-berufstitel">4.2 Die verschiedenen Berufstitel</h3>
+<p>Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die 15 häufigsten Titel angegeben, alle anderen werden in der Gruppe <code>other</code> zusammengefasst.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 × 2
+   job_title                             n
+   &lt;fct&gt;                             &lt;int&gt;
+ 1 Security Engineer                   247
+ 2 Cyber Security Analyst              134
+ 3 Penetration Tester                   77
+ 4 Information Security Manager         65
+ 5 Cyber Security Engineer              63
+ 6 Security Analyst                     53
+ 7 Information Security Analyst         39
+ 8 Cyber Security Specialist            31
+ 9 Information Security Officer         29
+10 Cyber Threat Intelligence Analyst    29
+# … with 77 more rows</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>(Zusammen spätens am Freitag) - Correlations Matrix der einzelnen Faktoren gegenüber der Bezahlung - Erfahrung gegenüber gehalt - Auftretende Titel mit bezug auf Gehalt - Durschnittliches Gehalt innerhalb der Regionen - Timeline über das durchschnittliche Gehalt - Zusammenfassung der Betriebe mit jeweiligen Bezahlungen</p>
+</section>
 </section>
 <section id="zusammenfassung-und-schlussfolgerung" class="level2">
 <h2 class="anchored" data-anchor-id="zusammenfassung-und-schlussfolgerung">Zusammenfassung und Schlussfolgerung</h2>
