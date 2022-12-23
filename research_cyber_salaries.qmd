@@ -347,7 +347,110 @@ ggplot(t , aes(x = job_title, y = salary_in_usd)) +
 
 # 4.4 Standort des Betriebs (Tim)
 
+
+
 # 4.5 Betriebsgröße (Tom)
+
+Ein weiterer Btrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Verteilung der Betriebsgröße
+data_cleaned |>
+    count(company_size, sort = TRUE) |>
+    ggplot(aes(x = n, y = company_size)) +
+        geom_bar(stat = "identity", fill="#4682b4", color = "black") +
+        geom_text(aes(label=n), size = 4, vjust = -0.5, color="black") +
+        ggtitle("Verteilung der Betriebsgröße") +
+        labs(x = "Anzahl", y = "Betriebsgröße") +
+        theme_minimal() +
+        theme(
+            legend.position = "top",
+            legend.title = element_text(),
+            plot.title = element_text(hjust = .5, size = 16),
+            axis.title = element_text(size = 14),
+        ) + 
+        coord_flip()
+```
+
+Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichitg ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten. 
+
+Als nächstes wird die Verteilung der Gehälter in Abhängigkeit der Betriebsgröße betrachtet. Dazu wird zuerst eine Übersicht über die statistischen Eckdaten für das Verhältnis von Gehältern in Abhängigkeit zur Betriebsgröße und anschließend ein passender Boxplot erstellt. 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Statistische Daten für die Gehälter in Abhängigkeit der Betriebsgröße
+company_size_stats <- data_cleaned |>
+    group_by(company_size) |>
+    summarise(
+        mean = mean(salary_in_usd),
+        median = median(salary_in_usd),
+        sd = sd(salary_in_usd),
+        min = min(salary_in_usd),
+        max = max(salary_in_usd)
+    )
+    
+company_size_stats |> knitr::kable()
+
+
+# Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße
+ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd)) +
+    geom_boxplot() +
+    ggtitle("Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße") +
+    labs(y = "Gehalt in USD", x = "Betriebsgröße") +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 1, size = 16),
+        axis.title = element_text(size = 14),
+    )
+``` 
+
+Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert niedriger ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
+
+Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße auch in Abhängigkeit des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt. 
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Statistische Daten für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel
+company_size_stats_exp <- data_cleaned |>
+    group_by(company_size, experience_level) |>
+    summarise(
+        mean = mean(salary_in_usd),
+        median = median(salary_in_usd),
+        sd = sd(salary_in_usd),
+        min = min(salary_in_usd),
+        max = max(salary_in_usd)
+    )
+
+
+# Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel
+ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd, fill = experience_level)) +
+    geom_boxplot() +
+    ggtitle("Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel") +
+    labs(fill = "Erfahrungslevel", y = "Gehalt in USD", x = "Betriebsgröße") +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 1, size = 14),
+        axis.title = element_text(size = 14),
+    )
+
+company_size_stats_exp |> knitr::kable()
+```
+
+Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern. Dafür sind die Außreiser deutlich höher bei Senior Mitarbeitern.
 
 # 4.6 Vertragsart (Tom)
 

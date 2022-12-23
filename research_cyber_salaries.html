@@ -470,6 +470,201 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="betriebsgröße-tom" class="level1">
 <h1>4.5 Betriebsgröße (Tom)</h1>
+<p>Ein weiterer Btrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichitg ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten.</p>
+<p>Als nächstes wird die Verteilung der Gehälter in Abhängigkeit der Betriebsgröße betrachtet. Dazu wird zuerst eine Übersicht über die statistischen Eckdaten für das Verhältnis von Gehältern in Abhängigkeit zur Betriebsgröße und anschließend ein passender Boxplot erstellt.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">company_size</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">S</td>
+<td style="text-align: right;">83625.23</td>
+<td style="text-align: right;">71653.5</td>
+<td style="text-align: right;">47643.34</td>
+<td style="text-align: right;">4327</td>
+<td style="text-align: right;">240000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">130029.51</td>
+<td style="text-align: right;">130200.0</td>
+<td style="text-align: right;">55504.45</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">300000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">121093.36</td>
+<td style="text-align: right;">107500.0</td>
+<td style="text-align: right;">76216.74</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">899920</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert niedriger ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei 3e+05 USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei 83625 USD und die Streuung ist hier am geringsten.</p>
+<p>Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße auch in Abhängigkeit des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 23%">
+<col style="width: 14%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">company_size</th>
+<th style="text-align: left;">experience_level</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">Junior</td>
+<td style="text-align: right;">55835.94</td>
+<td style="text-align: right;">52596.0</td>
+<td style="text-align: right;">22780.73</td>
+<td style="text-align: right;">4327</td>
+<td style="text-align: right;">120000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">Intermediate</td>
+<td style="text-align: right;">81552.67</td>
+<td style="text-align: right;">78879.0</td>
+<td style="text-align: right;">37621.17</td>
+<td style="text-align: right;">12005</td>
+<td style="text-align: right;">160000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">Senior</td>
+<td style="text-align: right;">107022.28</td>
+<td style="text-align: right;">90000.0</td>
+<td style="text-align: right;">52350.99</td>
+<td style="text-align: right;">19445</td>
+<td style="text-align: right;">240000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">Executive</td>
+<td style="text-align: right;">131556.00</td>
+<td style="text-align: right;">117810.0</td>
+<td style="text-align: right;">72140.15</td>
+<td style="text-align: right;">51389</td>
+<td style="text-align: right;">239287</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">M</td>
+<td style="text-align: left;">Junior</td>
+<td style="text-align: right;">62388.78</td>
+<td style="text-align: right;">59787.5</td>
+<td style="text-align: right;">35065.66</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">150000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M</td>
+<td style="text-align: left;">Intermediate</td>
+<td style="text-align: right;">104670.45</td>
+<td style="text-align: right;">101399.0</td>
+<td style="text-align: right;">45369.24</td>
+<td style="text-align: right;">2056</td>
+<td style="text-align: right;">220000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">M</td>
+<td style="text-align: left;">Senior</td>
+<td style="text-align: right;">152544.03</td>
+<td style="text-align: right;">150000.0</td>
+<td style="text-align: right;">46468.96</td>
+<td style="text-align: right;">27000</td>
+<td style="text-align: right;">292000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M</td>
+<td style="text-align: left;">Executive</td>
+<td style="text-align: right;">156924.69</td>
+<td style="text-align: right;">166250.0</td>
+<td style="text-align: right;">78806.83</td>
+<td style="text-align: right;">15209</td>
+<td style="text-align: right;">300000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">Junior</td>
+<td style="text-align: right;">65961.33</td>
+<td style="text-align: right;">65500.0</td>
+<td style="text-align: right;">31984.63</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">200000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">Intermediate</td>
+<td style="text-align: right;">102662.07</td>
+<td style="text-align: right;">97950.0</td>
+<td style="text-align: right;">51087.65</td>
+<td style="text-align: right;">2202</td>
+<td style="text-align: right;">456621</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">Senior</td>
+<td style="text-align: right;">144481.43</td>
+<td style="text-align: right;">135000.0</td>
+<td style="text-align: right;">79880.41</td>
+<td style="text-align: right;">2764</td>
+<td style="text-align: right;">899920</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">Executive</td>
+<td style="text-align: right;">216016.73</td>
+<td style="text-align: right;">202000.0</td>
+<td style="text-align: right;">94625.60</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">600000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern. Dafür sind die Außreiser deutlich höher bei Senior Mitarbeitern.</p>
 </section>
 <section id="vertragsart-tom" class="level1">
 <h1>4.6 Vertragsart (Tom)</h1>
