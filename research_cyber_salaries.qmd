@@ -345,13 +345,24 @@ ggplot(t , aes(x = job_title, y = salary_in_usd)) +
     coord_flip()
 ```
 
-(Zusammen spätens am Freitag)
-- Correlations Matrix der einzelnen Faktoren gegenüber der Bezahlung
-- Erfahrung gegenüber gehalt
-- Auftretende Titel mit bezug auf Gehalt
-- Durschnittliches Gehalt innerhalb der Regionen
-- Timeline über das durchschnittliche Gehalt
-- Zusammenfassung der Betriebe mit jeweiligen Bezahlungen
+# 4.4 Standort des Betriebs (Tim)
 
+# 4.5 Betriebsgröße (Tom)
+
+# 4.6 Vertragsart (Tom)
+
+# 4.7 Remote vs. nicht Remote (Tim)
+
+
+# Todos
+
+* Erfahrung gegenüber gehalt (x)
+* Auftretende Titel mit bezug auf Gehalt (x)
+* Durschnittliches Gehalt innerhalb der Regionen (Tim) 
+* Timeline über das durchschnittliche Gehalt (x)
+* Zusammenfassung der Betriebsgröße mit jeweiligen Bezahlungen (Tom)
+* Zusammenhang gehalt remote vs. nicht remote (Tim)
+* Vergleich Vertragsart mit Anzahl (Tom)
+* Jeweils den Text von bisherigen plots ausschreiben (Tim & Tom)
 
 ## Zusammenfassung und Schlussfolgerung
