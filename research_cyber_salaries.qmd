@@ -452,13 +452,53 @@ company_size_stats_exp |> knitr::kable()
 ```
 
 Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad sind. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern, aber es gibt dennoch Ausreißer, die ein deutlich höheres Gehalt haben. Aus der Tabelle kann entnommen werden, dass mit 329 Datenpunkten, die meisten Datenpunkte in großen Betrieben mit einem Erfahrungslevel von Senior vorliegen. Daraufhin folgen die Mittelgroßen Betriebe mit einem Erfahrungslevel von Senior mit 261 Datenpunkten. In kleinen Betrieben mit einem Erfahrungslevel von Senior sind nur 32 Datenpunkte vorhanden.
+
+
 # 4.6 Vertragsart (Tom)
 
 # 4.7 Remote vs. nicht Remote (Tim)
 
+
 # 4.8 Anteil an Erfahrungsstufen pro Betriebsgröße (Tom)
 
+Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt. 
 
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Berechnung der Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße
+company_size_exp <- data_cleaned |>
+    group_by(company_size, experience_level) |>
+    summarise(
+        n = n()
+    )
+
+company_size_exp <- company_size_exp |>
+    group_by(company_size) |>
+    mutate(
+        percentage = (n / sum(n)) * 100
+    )
+
+# Kuchendiagramme für die Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße
+ggplot(company_size_exp, aes(x = "", y = percentage, fill = experience_level)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y", start=0) +
+    facet_wrap(~ company_size, ncol = 3) +
+    ggtitle("Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen der Betriebsgröße") +
+    geom_text(aes(label = paste0(round(percentage), "%")), position = position_stack(vjust=0.5)) +
+    labs(fill = "Erfahrungslevel", y = NULL, x = NULL) +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title = element_text(size = 14),
+    )
+```
+
+Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mitarbeiter mit einem Erfahrungslevel von Senior arbeiten. Dafür vor allem in kleinen Unternehmen Junior Mitarbeiter. Alle drei Diagramme haben aber gemeinsam, dass die wenigsten Mitarbeiter mit einem Erfahrungslevel von Executive arbeiten. Das ist auch nicht verwunderlich, da diese Mitarbeiter in der Regel die Führungskräfte sind und somit mehr Mitarbeiter unter sich haben. Erstaunlich ist hingegen der geringe Anteil an Junior Mitarbeitern in mittelgroßen Unternehmen. Dies könnte daran liegen, dass diese Unternehmen eher auf die Erfahrung der Mitarbeiter setzen und daher eher Senior Mitarbeiter einstellen. Große Firmen investieren hingegen mehr in die Ausbildung der Mitarbeiter und nehmen daher eher Junior Mitarbeiter auf. Kleine Unternehmen können hingegen Start-Ups sein, die noch nicht so viele Mitarbeiter haben und daher auch auf motivierte Junior Mitarbeiter setzen.
 
 # Todos
 
