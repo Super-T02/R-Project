@@ -395,8 +395,6 @@ company_size_stats <- data_cleaned |>
         min = min(salary_in_usd),
         max = max(salary_in_usd)
     )
-    
-company_size_stats |> knitr::kable()
 
 
 # Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße
@@ -411,6 +409,8 @@ ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd)) +
         plot.title = element_text(hjust = 1, size = 16),
         axis.title = element_text(size = 14),
     )
+
+company_size_stats |> knitr::kable()
 ``` 
 
 Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert niedriger ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
@@ -430,31 +430,34 @@ company_size_stats_exp <- data_cleaned |>
         median = median(salary_in_usd),
         sd = sd(salary_in_usd),
         min = min(salary_in_usd),
-        max = max(salary_in_usd)
+        max = max(salary_in_usd),
+        n = n()
     )
 
 
 # Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel
 ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd, fill = experience_level)) +
     geom_boxplot() +
-    ggtitle("Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel") +
+    ggtitle("Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel") +
     labs(fill = "Erfahrungslevel", y = "Gehalt in USD", x = "Betriebsgröße") +
     theme_minimal() +
     theme(
         legend.position = "top",
         legend.title = element_text(),
-        plot.title = element_text(hjust = 1, size = 14),
+        plot.title = element_text(hjust = 0.5, size = 14),
         axis.title = element_text(size = 14),
     )
 
 company_size_stats_exp |> knitr::kable()
 ```
 
-Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern. Dafür sind die Außreiser deutlich höher bei Senior Mitarbeitern.
-
+Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad sind. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern, aber es gibt dennoch Ausreißer, die ein deutlich höheres Gehalt haben. Aus der Tabelle kann entnommen werden, dass mit 329 Datenpunkten, die meisten Datenpunkte in großen Betrieben mit einem Erfahrungslevel von Senior vorliegen. Daraufhin folgen die Mittelgroßen Betriebe mit einem Erfahrungslevel von Senior mit 261 Datenpunkten. In kleinen Betrieben mit einem Erfahrungslevel von Senior sind nur 32 Datenpunkte vorhanden.
 # 4.6 Vertragsart (Tom)
 
 # 4.7 Remote vs. nicht Remote (Tim)
+
+# 4.8 Anteil an Erfahrungsstufen pro Betriebsgröße (Tom)
+
 
 
 # Todos
