@@ -508,6 +508,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 
 </div>
+</section>
+<section id="häufigkeit-der-berufstitel" class="level3">
+<h3 class="anchored" data-anchor-id="häufigkeit-der-berufstitel">4.2.1 Häufigkeit der Berufstitel</h3>
 <p>Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die 10 häufigsten Titel angegeben, alle anderen werden in der Gruppe <code>other</code> zusammengefasst.</p>
 <div class="cell">
 <details>
@@ -560,6 +563,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Zu sehen ist erstmal das ein großer Teil in der Gruppe others zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Trotzdessen ist zu erkennen das ein größerer Trend Trend in den Berufen <code>Security Engineer</code> und <code>Cyber Security Analyst</code> besteht.</p>
+<section id="durchschnittliche-gehälter-pro-berufstitel" class="level4">
+<h4 class="anchored" data-anchor-id="durchschnittliche-gehälter-pro-berufstitel">4.2.2 Durchschnittliche Gehälter pro Berufstitel</h4>
+<p>Nachfolgend werden nun noch die durchschnittlichen Gehälter pro Berufstitel dargestellt mit der jeweiligen Verteilung. Hierbei werden nur die 10 häufigsten Berufstitel berücksichtigt, die oben in der Verteilung der Berufstitel bereits dargestellt wurden.</p>
+<div class="cell">
+
+</div>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -582,8 +592,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
+</div>
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot für die Gehälter der 10 meist auftretenden Berufstitel</span></span>
@@ -602,9 +614,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Wie zu vermuten sind Berufe mit enhaltenen Titlen: Manager und Officer im Gehalt etwas höher als die anderen. Jedoch gibt es zum einem den Außreiser <code>Security Engineer</code>, der das höchste durchschnittlichste Gehalt ausmacht und zum anderen gibt es auch den Außreiser <code>Cyber Threat Intelligence Analyst</code> der womöglich ein spezieler Beruf ist und somit auch ein höheres Gehalt hat.</p>
+</section>
 </section>
 </section>
 <section id="standort-des-betriebs-tim" class="level1">
@@ -630,7 +644,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -658,7 +672,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichitg ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten.</p>
@@ -692,7 +706,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -771,7 +785,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -958,7 +972,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -998,7 +1012,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mitarbeiter mit einem Erfahrungslevel von Senior arbeiten. Dafür vor allem in kleinen Unternehmen Junior Mitarbeiter. Alle drei Diagramme haben aber gemeinsam, dass die wenigsten Mitarbeiter mit einem Erfahrungslevel von Executive arbeiten. Das ist auch nicht verwunderlich, da diese Mitarbeiter in der Regel die Führungskräfte sind und somit mehr Mitarbeiter unter sich haben. Erstaunlich ist hingegen der geringe Anteil an Junior Mitarbeitern in mittelgroßen Unternehmen. Dies könnte daran liegen, dass diese Unternehmen eher auf die Erfahrung der Mitarbeiter setzen und daher eher Senior Mitarbeiter einstellen. Große Firmen investieren hingegen mehr in die Ausbildung der Mitarbeiter und nehmen daher eher Junior Mitarbeiter auf. Kleine Unternehmen können hingegen Start-Ups sein, die noch nicht so viele Mitarbeiter haben und daher auch auf motivierte Junior Mitarbeiter setzen.</p>
