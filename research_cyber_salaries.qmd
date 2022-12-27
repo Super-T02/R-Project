@@ -400,7 +400,7 @@ ggplot(everage_salary_per_country, aes(x = reorder(company_location, mean_salary
 ```
 
 
-# 4.5 Betriebsgröße (Tom)
+# 4.5 Betriebsgröße
 
 Ein weiterer Btrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.
 
@@ -428,6 +428,9 @@ data_cleaned |>
 ```
 
 Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichitg ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten. 
+
+
+## 4.5.1 Gehälter in Abhängigkeit der Betriebsgröße
 
 Als nächstes wird die Verteilung der Gehälter in Abhängigkeit der Betriebsgröße betrachtet. Dazu wird zuerst eine Übersicht über die statistischen Eckdaten für das Verhältnis von Gehältern in Abhängigkeit zur Betriebsgröße und anschließend ein passender Boxplot erstellt. 
 
@@ -465,6 +468,9 @@ company_size_stats |> knitr::kable()
 ``` 
 
 Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert niedriger ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
+
+
+## 4.5.2 Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels
 
 Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße auch in Abhängigkeit des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt. 
 
@@ -505,7 +511,7 @@ company_size_stats_exp |> knitr::kable()
 Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad sind. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern, aber es gibt dennoch Ausreißer, die ein deutlich höheres Gehalt haben. Aus der Tabelle kann entnommen werden, dass mit 329 Datenpunkten, die meisten Datenpunkte in großen Betrieben mit einem Erfahrungslevel von Senior vorliegen. Daraufhin folgen die Mittelgroßen Betriebe mit einem Erfahrungslevel von Senior mit 261 Datenpunkten. In kleinen Betrieben mit einem Erfahrungslevel von Senior sind nur 32 Datenpunkte vorhanden.
 
 
-# 4.6 Vertragsart (Tom)
+# 4.6 Vertragsart
 
 Im zu grunde liegenden Datensatz gibt es verschiedene Vertragsarten. Im Folgenden sollen diese Vertragsarten genauer betrachtet werden. Hierfür wird zuerst betrachtet, welche Arten zu welchem Anteil enthalten sind.
 
@@ -583,7 +589,7 @@ ggplot(remote_ratio_salary_and_count, aes(x = remote_ratio, y = mean, fill = rem
 ```
 
 
-# 4.8 Anteil an Erfahrungsstufen pro Betriebsgröße (Tom)
+# 4.8 Anteil an Erfahrungsstufen pro Betriebsgröße
 
 Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt. 
 
@@ -630,9 +636,9 @@ Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mita
 * Auftretende Titel mit bezug auf Gehalt (x)
 * Durschnittliches Gehalt innerhalb der Regionen (Tim) 
 * Timeline über das durchschnittliche Gehalt (x)
-* Zusammenfassung der Betriebsgröße mit jeweiligen Bezahlungen (Tom)
+* Zusammenfassung der Betriebsgröße mit jeweiligen Bezahlungen (X)
 * Zusammenhang gehalt remote vs. nicht remote (Tim)
-* Vergleich Vertragsart mit Anzahl (Tom)
-* Jeweils den Text von bisherigen plots ausschreiben (Tim & Tom)
+* Vergleich Vertragsart mit Anzahl (X)
+* Jeweils den Text von bisherigen plots ausschreiben (Tim & X)
 
 ## Zusammenfassung und Schlussfolgerung
