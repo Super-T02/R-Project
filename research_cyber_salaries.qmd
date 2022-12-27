@@ -507,6 +507,48 @@ Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Geh�
 
 # 4.6 Vertragsart (Tom)
 
+Im zu grunde liegenden Datensatz gibt es verschiedene Vertragsarten. Im Folgenden sollen diese Vertragsarten genauer betrachtet werden. Hierfür wird zuerst betrachtet, welche Arten zu welchem Anteil enthalten sind.
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| fig-height: 7
+
+# Anteil der Vertragsarten
+contract_type <- data_cleaned |>
+    group_by(employment_type) |>
+    summarise(
+        n = n()
+    ) |>
+    mutate(
+        percent = n / sum(n) * 100
+    )
+
+# Anteil der Vertragsarten in Prozent
+ggplot(contract_type, aes(x = employment_type, y = percent, fill = employment_type)) +
+    geom_col() +
+    geom_text(aes(label = paste(round(percent, 1), "%", sep=" ")), vjust = -0.5, size = 3) +
+    ggtitle("Anteil der Vertragsarten") +
+    labs(fill = "Vertragsart", y = "Anteil in %", x = "Vertragsart") +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title = element_text(size = 14),
+    )
+```
+
+Es ist zu erkennen, dass die meisten Datenpunkte mit einem Vertrag vom Typ "Full Time" vorliegen. Die restlichen Vertragsarten sind deutlich seltener. Es gibt somit folgende absolute Häufigkeiten:
+
+* Part Time: `r contract_type[1, 2]`
+* Full Time: `r contract_type[2, 2]`
+* Contract: `r contract_type[3, 2]`
+* Free Lancer: `r contract_type[4, 2]`
+
+Dadurch, dass fast nur Verträge vom Typ "Full Time" vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden.
+
 # 4.7 Remote vs. nicht Remote (Tim)
 
 ```{r}
