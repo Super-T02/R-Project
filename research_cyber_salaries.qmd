@@ -19,6 +19,7 @@ lang: "de"
 library(tidyverse)
 library(ISOcodes)
 library(ggcorrplot)
+options(scipen=10000)
 ```
 
 ## 1. Formulierung der Fragestellung
@@ -277,17 +278,26 @@ Auch hier ist zu sehen, dass die Gehälter von **Executives** deutlich höher si
 
 ### 4.2 Die verschiedenen Berufstitel
  
-Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die 15 häufigsten Titel angegeben, alle anderen werden in der Gruppe `other` zusammengefasst.
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+count <- 10
+```
+
+
+Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die `r paste(count)` häufigsten Titel angegeben, alle anderen werden in der Gruppe `other` zusammengefasst.
 
 ```{r}
 #| echo: false
 #| message: false
 #| warning: false
+
 counting <- data_cleaned |> count(job_title, sort = TRUE)
 counting
-titles <- top_n(counting,15) |> pull(job_title)
+titles <- top_n(counting,count) |> pull(job_title)
 
-counting <- rbind(top_n(counting,15), slice(counting,16:n()) |>
+counting <- rbind(top_n(counting,count), slice(counting,(count+1):n()) |>
     summarise(job_title="other",n=sum(n))) |>
     mutate(n=round(n/sum(n)*100)) |> 
     arrange(desc(n))|> 
@@ -300,7 +310,13 @@ ggplot(counting, aes(x="", y=n, fill=job_title)) +
     geom_bar(stat="identity", width=1, color = "black") +
     coord_polar("y", start=0) +
     geom_text(aes(label = paste0(n, "%")), position = position_stack(vjust=0.5)) +
-    labs(x = NULL, y = NULL, fill = NULL) 
+    labs(x = NULL, y = NULL, fill = NULL) +
+    theme_minimal() +
+    ggtitle("Verteilung der Berufstitel") +
+    theme(
+        plot.title = element_text(hjust = 1, size = 16),
+        axis.title = element_text(size = 14),
+    )
 ```
 
 ```{r}
@@ -320,8 +336,6 @@ ggplot(job_title_mean_salary, aes(x = job_title, y = mean_salary)) +
     theme_minimal() +
     geom_text(aes(label=round(mean_salary)), size = 4, hjust = 1.1, color="black") +
     theme(
-        legend.position = "top",
-        legend.title = element_text(),
         plot.title = element_text(hjust = 1, size = 16),
         axis.title = element_text(size = 14),
     ) + 
@@ -337,8 +351,6 @@ ggplot(t , aes(x = job_title, y = salary_in_usd)) +
     labs(x = "Berufstitel", y = "Gehalt in USD") +
     theme_minimal() +
     theme(
-        legend.position = "top",
-        legend.title = element_text(),
         plot.title = element_text(hjust = 1, size = 16),
         axis.title = element_text(size = 14),
     ) + 
