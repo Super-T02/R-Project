@@ -140,7 +140,8 @@ data_cleaned <- data |> mutate(
         # company_location = factor(company_location, levels = locations),
         job_title = factor(job_title, levels = titles),
         salary = NULL,
-        salary_currency = NULL
+        salary_currency = NULL,
+        remote_ratio = factor(remote_ratio, levels = c(0, 50, 100), labels = c('0%', '50%', '100%'), ordered = T),
     ) 
 
 # Neue Datenstruktur
@@ -491,6 +492,37 @@ Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Geh�
 # 4.6 Vertragsart (Tom)
 
 # 4.7 Remote vs. nicht Remote (Tim)
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| fig-height: 7
+
+remote_ratio_salary_and_count <- data_cleaned |>
+    group_by(remote_ratio) |>
+    summarise(
+        mean = mean(salary_in_usd),
+        count = n()
+    )
+
+ggplot(remote_ratio_salary_and_count, aes(x = remote_ratio, y = mean, fill = remote_ratio)) +
+    geom_bar(stat = "identity") +
+    ggtitle("Remoteanteile mit jeweiliger Anzahl") +
+    labs(fill = "Remoteanteil", y = "Gehalt in USD", x = "Remoteanteil") +
+    geom_text(aes(label = count), vjust = -0.5, size = 5) +
+    geom_text(aes(label = paste(round(mean), "$", sep = "")), vjust = 2, size = 5) +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title = element_text(size = 14),
+    )
+   
+   
+
+```
 
 
 # 4.8 Anteil an Erfahrungsstufen pro Betriebsgröße (Tom)
