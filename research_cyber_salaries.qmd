@@ -176,7 +176,7 @@ Die Aufbereiteten Daten können nun in diesem Abschnitt ausgewertet werden. Hier
 Um einen Einblick zu erhalten, wie viele Daten pro Jahr und Erfahrungslevel vorliegen, wird eine Grafik erstellt, die die Anzahl an Daten pro Jahr darstellt. Hierfür werden die einzelnen Daten pro Jahr und Erfahrungslevel gezählt und in einem Balkendiagramm dargestellt.
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 # Anzahl an Daten pro Jahr
@@ -205,7 +205,7 @@ Es ist zu sehen, dass über die Zeit mehr Daten erfasst wurden und am meisten Da
 Um einen Einblick zu erhalten, wie sich die Gehälter im Laufe der Zeit entwickelt haben, wird eine Grafik erstellt, die die Entwicklung der Gehälter pro Jahr darstellt. Zusätzlich wird nach der Erfahrung gruppiert, um zu sehen, wie sich die Gehälter in Abhängigkeit zur Erfahrung und Jahr entwickelt haben.
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 # Berechnung der Eckdaten für die folgenden Plots
@@ -229,7 +229,7 @@ per_level <- data_cleaned |>
 ```
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 # Ehrfarung gegenüber Mitellwert der Gehälter pro Jahr
@@ -251,7 +251,7 @@ ggplot(plot_data, aes(x = experience_level, y = mean_salary, group = work_year, 
 In der Grafik ist zu erkennen, dass die Gehälter von **Senior** und **Executives** im Laufe der Zeit gestiegen sind, bei den anderen beiden sind sie ähnlich geblieben. Zusätzlich ist zu erkennen, dass die Gehälter für die Erfahrungslevel **Senior** und **Executives** im Vergleich zu den anderen Erfahrungsleveln deutlich höher sind. Betrachtet man den Boxplot für das Verhältnis wird das auch nochmal deutlich. Zu beachten ist aber, dass die einzelnen Datenpunkte nicht alle gleich verteilt sind, da die Anzahl der Datenpunkte für die einzelnen Erfahrungslevel unterschiedlich ist.
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 # Boxplot für das Verhältnis der Gehälter pro Jahr
@@ -289,7 +289,7 @@ count <- 10
 Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die `r paste(count)` häufigsten Titel angegeben, alle anderen werden in der Gruppe `other` zusammengefasst.
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 
@@ -320,7 +320,7 @@ ggplot(counting, aes(x="", y=n, fill=job_title)) +
 ```
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 job_title_mean_salary <- data_cleaned[data_cleaned$job_title %in% titles,] |>
@@ -358,7 +358,29 @@ ggplot(t , aes(x = job_title, y = salary_in_usd)) +
 ```
 
 # 4.4 Standort des Betriebs (Tim)
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| fig-height: 13
 
+everage_salary_per_country <- data_cleaned |>
+    group_by(company_location) |>
+    summarise(mean_salary = mean(salary_in_usd)) |>
+    arrange(desc(mean_salary))
+
+ggplot(everage_salary_per_country, aes(x = reorder(company_location, mean_salary), y = mean_salary)) +
+    geom_bar(stat = "identity", fill="#4682b4") +
+    ggtitle("Die durchschnittlichen Gehälter der Länder") +
+    labs(x = "Länder", y = "Gehalt in USD") +
+    theme_minimal() +
+    geom_text(data = subset(everage_salary_per_country, mean_salary > 15000), aes(label = round(mean_salary)), size = 3, hjust = 1.1, color="black") +
+    theme(
+        plot.title = element_text(hjust = 1, size = 16),
+        axis.title = element_text(size = 14),
+    ) + 
+    coord_flip()
+```
 
 
 # 4.5 Betriebsgröße (Tom)
@@ -366,7 +388,7 @@ ggplot(t , aes(x = job_title, y = salary_in_usd)) +
 Ein weiterer Btrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 
@@ -393,7 +415,7 @@ Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Daten
 Als nächstes wird die Verteilung der Gehälter in Abhängigkeit der Betriebsgröße betrachtet. Dazu wird zuerst eine Übersicht über die statistischen Eckdaten für das Verhältnis von Gehältern in Abhängigkeit zur Betriebsgröße und anschließend ein passender Boxplot erstellt. 
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 
@@ -430,7 +452,7 @@ Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höh
 Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße auch in Abhängigkeit des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt. 
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 
@@ -476,7 +498,7 @@ Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Geh�
 Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt. 
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
 
