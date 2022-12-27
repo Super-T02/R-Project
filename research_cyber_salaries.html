@@ -647,8 +647,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="betriebsgröße-tom" class="level1">
-<h1>4.5 Betriebsgröße (Tom)</h1>
+<section id="betriebsgröße" class="level1">
+<h1>4.5 Betriebsgröße</h1>
 <p>Ein weiterer Btrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.</p>
 <div class="cell">
 <details>
@@ -675,6 +675,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichitg ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten.</p>
+<section id="gehälter-in-abhängigkeit-der-betriebsgröße" class="level2">
+<h2 class="anchored" data-anchor-id="gehälter-in-abhängigkeit-der-betriebsgröße">4.5.1 Gehälter in Abhängigkeit der Betriebsgröße</h2>
 <p>Als nächstes wird die Verteilung der Gehälter in Abhängigkeit der Betriebsgröße betrachtet. Dazu wird zuerst eine Übersicht über die statistischen Eckdaten für das Verhältnis von Gehältern in Abhängigkeit zur Betriebsgröße und anschließend ein passender Boxplot erstellt.</p>
 <div class="cell">
 <details>
@@ -752,8 +754,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-<p>Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert niedriger ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei 300000 USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei 83625 USD und die Streuung ist hier am geringsten.</p>
-<p>Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße auch in Abhängigkeit des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt.</p>
+<p>Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert dafür genauer ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei 300000 USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei 83625 USD und die Streuung ist hier am geringsten.</p>
+</section>
+<section id="gehälter-in-abhängigkeit-der-betriebsgröße-und-des-erfahrungslevels" class="level2">
+<h2 class="anchored" data-anchor-id="gehälter-in-abhängigkeit-der-betriebsgröße-und-des-erfahrungslevels">4.5.2 Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels</h2>
+<p>Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -940,9 +945,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad sind. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern, aber es gibt dennoch Ausreißer, die ein deutlich höheres Gehalt haben. Aus der Tabelle kann entnommen werden, dass mit 329 Datenpunkten, die meisten Datenpunkte in großen Betrieben mit einem Erfahrungslevel von Senior vorliegen. Daraufhin folgen die Mittelgroßen Betriebe mit einem Erfahrungslevel von Senior mit 261 Datenpunkten. In kleinen Betrieben mit einem Erfahrungslevel von Senior sind nur 32 Datenpunkte vorhanden.</p>
+<p>Abgesehen davon, ist das durchschnittliche Gehalt von Junior Mitarbeitern in allen 3 Unternehmensgrößen mit 55836 USD, 62389 USD und 65961 USD in einem ähnlichen Bereich. Dennoch verdienen Junior angestellte in großen Betrieben im Schnitt am besten.</p>
+<p>Hingegen ist der Unterschied zwischen den verschiedenen Betrieben bei Intermediate Angestellten größer. Mit rund 81553 USD, 104670 USD und 102662 USD verdienen Intermediate Angestellte in mittelgroßen Betrieben, knapp gefolgt von großen Betrieben, am besten. In kleinen Betrieben verdienen die Intermediate Angestellten im Schnitt also fast 23118 USD weniger als in mittelgroßen Betrieben.</p>
+<p>Auch bei Senior Angestellten ist der Unterschied deutlich größer als bei den Junior Angestellten. Mit rund 107022 USD, 152544 USD und 144481 USD verdienen Senior Angestellte in mittelgroßen Betrieben am besten. Interssant ist, dass Senior Angestellen von kleinen Unternehmen ähnlich viel verdienen, wie Intermediate Angestellte von großen bzw. mittelgroßen Unternehmen.</p>
+<p>Zuletzt verdenienen Executive Angestellte am Meisten. Hier ist es aber schwierig eine allgemeine Aussage aus dem Datensatz zu ziehen, weil nur 5 Datensätze von Executive Mitarbeiter aus kleinen Unternehmen und 16 aus mittelgroßen Unternehmen vorliegen. Dennoch kann gesagt werden, dass sie am meisten im Schnitt verdienen.</p>
 </section>
-<section id="vertragsart-tom" class="level1">
-<h1>4.6 Vertragsart (Tom)</h1>
+</section>
+<section id="vertragsart" class="level1">
+<h1>4.6 Vertragsart</h1>
 <p>Im zu grunde liegenden Datensatz gibt es verschiedene Vertragsarten. Im Folgenden sollen diese Vertragsarten genauer betrachtet werden. Hierfür wird zuerst betrachtet, welche Arten zu welchem Anteil enthalten sind.</p>
 <div class="cell">
 <details>
@@ -982,7 +992,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Contract: 11</li>
 <li>Free Lancer: 3</li>
 </ul>
-<p>Dadurch, dass fast nur Verträge vom Typ “Full Time” vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden.</p>
+<p>Dadurch, dass fast nur Verträge vom Typ “Full Time” vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden und der Datensatz bezieht sich somit fast ausschließlich auf Vollzeit Angestellte. <!-- TODO: Diesen abschnitt in ein anderes Kapitel und eine Folgerung daraus ziehen! @Tom @Tim --></p>
 </section>
 <section id="remote-vs.-nicht-remote-tim" class="level1">
 <h1>4.7 Remote vs.&nbsp;nicht Remote (Tim)</h1>
@@ -1015,8 +1025,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="anteil-an-erfahrungsstufen-pro-betriebsgröße-tom" class="level1">
-<h1>4.8 Anteil an Erfahrungsstufen pro Betriebsgröße (Tom)</h1>
+<section id="anteil-an-erfahrungsstufen-pro-betriebsgröße" class="level1">
+<h1>4.8 Anteil an Erfahrungsstufen pro Betriebsgröße</h1>
 <p>Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt.</p>
 <div class="cell">
 <details>
@@ -1063,10 +1073,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Auftretende Titel mit bezug auf Gehalt (x)</li>
 <li>Durschnittliches Gehalt innerhalb der Regionen (Tim)</li>
 <li>Timeline über das durchschnittliche Gehalt (x)</li>
-<li>Zusammenfassung der Betriebsgröße mit jeweiligen Bezahlungen (Tom)</li>
+<li>Zusammenfassung der Betriebsgröße mit jeweiligen Bezahlungen (X)</li>
 <li>Zusammenhang gehalt remote vs.&nbsp;nicht remote (Tim)</li>
-<li>Vergleich Vertragsart mit Anzahl (Tom)</li>
-<li>Jeweils den Text von bisherigen plots ausschreiben (Tim &amp; Tom)</li>
+<li>Vergleich Vertragsart mit Anzahl (X)</li>
+<li>Jeweils den Text von bisherigen plots ausschreiben (Tim &amp; X)</li>
 </ul>
 <section id="zusammenfassung-und-schlussfolgerung" class="level2">
 <h2 class="anchored" data-anchor-id="zusammenfassung-und-schlussfolgerung">Zusammenfassung und Schlussfolgerung</h2>

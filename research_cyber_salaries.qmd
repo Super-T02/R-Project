@@ -467,12 +467,12 @@ ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd)) +
 company_size_stats |> knitr::kable()
 ``` 
 
-Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert niedriger ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
+Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert dafür genauer ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
 
 
 ## 4.5.2 Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels
 
-Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße auch in Abhängigkeit des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt. 
+Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt. 
 
 ```{r}
 #| code-fold: true
@@ -510,6 +510,13 @@ company_size_stats_exp |> knitr::kable()
 
 Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad sind. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern, aber es gibt dennoch Ausreißer, die ein deutlich höheres Gehalt haben. Aus der Tabelle kann entnommen werden, dass mit 329 Datenpunkten, die meisten Datenpunkte in großen Betrieben mit einem Erfahrungslevel von Senior vorliegen. Daraufhin folgen die Mittelgroßen Betriebe mit einem Erfahrungslevel von Senior mit 261 Datenpunkten. In kleinen Betrieben mit einem Erfahrungslevel von Senior sind nur 32 Datenpunkte vorhanden.
 
+Abgesehen davon, ist das durchschnittliche Gehalt von Junior Mitarbeitern in allen 3 Unternehmensgrößen mit `r round(company_size_stats_exp[1, "mean"])` USD, `r round(company_size_stats_exp[5, "mean"])` USD und `r round(company_size_stats_exp[9, "mean"])` USD in einem ähnlichen Bereich. Dennoch verdienen Junior angestellte in großen Betrieben im Schnitt am besten. 
+
+Hingegen ist der Unterschied zwischen den verschiedenen Betrieben bei Intermediate Angestellten größer. Mit rund `r round(company_size_stats_exp[2, "mean"])` USD, `r round(company_size_stats_exp[6, "mean"])` USD und `r round(company_size_stats_exp[10, "mean"])` USD verdienen Intermediate Angestellte in mittelgroßen Betrieben, knapp gefolgt von großen Betrieben, am besten. In kleinen Betrieben verdienen die Intermediate Angestellten im Schnitt also fast `r round(company_size_stats_exp[6, "mean"] - company_size_stats_exp[2, "mean"])` USD weniger als in mittelgroßen Betrieben.
+
+Auch bei Senior Angestellten ist der Unterschied deutlich größer als bei den Junior Angestellten. Mit rund `r round(company_size_stats_exp[3, "mean"])` USD, `r round(company_size_stats_exp[7, "mean"])` USD und `r round(company_size_stats_exp[11, "mean"])` USD verdienen Senior Angestellte in mittelgroßen Betrieben am besten. Interssant ist, dass Senior Angestellen von kleinen Unternehmen ähnlich viel verdienen, wie Intermediate Angestellte von großen bzw. mittelgroßen Unternehmen.
+
+Zuletzt verdenienen Executive Angestellte am Meisten. Hier ist es aber schwierig eine allgemeine Aussage aus dem Datensatz zu ziehen, weil nur 5 Datensätze von Executive Mitarbeiter aus kleinen Unternehmen und 16 aus mittelgroßen Unternehmen vorliegen. Dennoch kann gesagt werden, dass sie am meisten im Schnitt verdienen.
 
 # 4.6 Vertragsart
 
@@ -553,7 +560,8 @@ Es ist zu erkennen, dass die meisten Datenpunkte mit einem Vertrag vom Typ "Full
 * Contract: `r contract_type[3, 2]`
 * Free Lancer: `r contract_type[4, 2]`
 
-Dadurch, dass fast nur Verträge vom Typ "Full Time" vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden.
+Dadurch, dass fast nur Verträge vom Typ "Full Time" vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden und der Datensatz bezieht sich somit fast ausschließlich auf Vollzeit Angestellte.
+<!-- TODO: Diesen abschnitt in ein anderes Kapitel und eine Folgerung daraus ziehen! @Tom @Tim -->
 
 # 4.7 Remote vs. nicht Remote (Tim)
 
