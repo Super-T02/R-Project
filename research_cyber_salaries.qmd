@@ -16,11 +16,15 @@ lang: "de"
 # ggcorrplot muss installiert werden
 # install.packages("ISOcodes")
 # install.packages("ggcorrplot")
+# install.packages("wesanderson")
 library(tidyverse)
 library(ISOcodes)
 library(ggcorrplot)
+library(wesanderson)
 options(scipen=10000)
 count <- 10
+color_palette <- "GrandBudapest2"
+color <- "#e6a0c4"
 ```
 
 ## 1. Formulierung der Fragestellung
@@ -55,6 +59,7 @@ Abgesehen davon könnte sich auch die Fragestellung ergeben, ob sich die Gehält
 ### 1.3 Erwartete Ergebnisse
 
 Folgende Erwartungen kamen in der ersten Auseinandersetzung mit dem Datensatz anhand persönlicher Überlegungen auf:
+
 * Starke Korrelation des Gehalts mit Erfahrungen
 * Bekannte/Größere Betriebe zahlen ihren Mitarbeitern mehr
 * Regionale unterschiede vergelichbar mit BIP
@@ -190,6 +195,7 @@ data_cleaned |>
     geom_text(aes(label = n), size = 3, position = position_stack(vjust = 0.5)) +
     ggtitle("Anzahl an Daten pro Jahr und Erfahrung") +
     labs(fill = "Erfahrung", x = "Jahr", y = "Anzahl an Daten") +
+    scale_fill_manual(values=wes_palette(n = 4, name = color_palette)) +
     theme_minimal() +
     theme(
         legend.position = "top",
@@ -240,6 +246,7 @@ ggplot(plot_data, aes(x = experience_level, y = mean_salary, group = work_year, 
     geom_text(aes(label = round(mean_salary, 0)), position = position_dodge(width = 0.9), vjust = -0.25) +
     ggtitle("Gehalt für pro Erfahrungslevel und Jahr") +
     labs(fill = "Arbeitsjahr", x = "Erfahrung", y = "Gehalt in USD") +
+    scale_fill_manual(values=wes_palette(n = 3, name = color_palette)) +
     theme_minimal() +
     theme(
         legend.position = "top",
@@ -283,7 +290,7 @@ Jeder Datensatz enthält den Titel des jeweiligen Berufes der Person. Im folgend
 
 
 ### 4.2.1 Häufigkeit der Berufstitel 
-Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die `r paste(count)` häufigsten Titel angegeben, alle anderen werden in der Gruppe `other` zusammengefasst.
+Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die `r paste(count)` häufigsten Titel angegeben, alle anderen werden in der Gruppe `Andere` zusammengefasst.
 
 ```{r}
 #| code-fold: true
@@ -295,7 +302,7 @@ head(counting, count) |> knitr::kable()
 titles <- top_n(counting,count) |> pull(job_title)
 
 counting <- rbind(top_n(counting,count), slice(counting,(count+1):n()) |>
-    summarise(job_title="other",n=sum(n))) |>
+    summarise(job_title="Andere",n=sum(n))) |>
     mutate(n=round(n/sum(n)*100)) |> 
     arrange(desc(n))|> 
     mutate(
@@ -309,19 +316,18 @@ ggplot(counting, aes(x="", y=n, fill=job_title)) +
     geom_text(aes(label = paste0(n, "%")), position = position_stack(vjust=0.5)) +
     labs(x = NULL, y = NULL, fill = NULL) +
     theme_minimal() +
+    scale_fill_manual(values=wes_palette(n = 11, name = color_palette, type="continuous")) +
     ggtitle("Verteilung der Berufstitel") +
     theme(
         plot.title = element_text(hjust = 1, size = 16),
         axis.title = element_text(size = 14),
     )
 ```
-Zu sehen ist erstmal das ein großer Teil in der Gruppe ``other`` zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den ``43%`` der Gruppe ``other`` die ``2%`` Hürde überschreitet.
+Zu sehen ist erstmal das ein großer Teil in der Gruppe `Andere` zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den `43%` der Gruppe `Andere` die `2%` Hürde überschreitet.
 Trotzdessen ist zu erkennen das ein größerer Trend Trend in den Berufen ``r paste(titles[1])`` und ``r paste(titles[2])`` besteht.  
 
 #### 4.2.2 Durchschnittliche Gehälter pro Berufstitel
 Nachfolgend werden noch die durchschnittlichen Gehälter pro Berufstitel dargestellt mit der jeweiligen Verteilung. Hierbei werden nur die `r paste(count)` häufigsten Berufstitel berücksichtigt, die oben in der Verteilung der Berufstitel bereits dargestellt wurden.
-```{r}
-
 
 ```{r}
 #| code-fold: true
@@ -334,7 +340,7 @@ job_title_mean_salary <- data_cleaned[data_cleaned$job_title %in% titles,] |>
 
 # Bar Plot für die durchschnittlichen Gehälter pro Berufstitel
 ggplot(job_title_mean_salary, aes(x = job_title, y = mean_salary)) +
-    geom_bar(stat = "identity", fill="#4682b4", color = "black") +
+    geom_bar(stat = "identity", fill=color, color = "black") +
     ggtitle("Die durchschnittlichen Gehälter der 10 häufigsten Berufstitel") +
     labs(x = "Berufstitel", y = "Gehalt in USD") +
     theme_minimal() +
@@ -387,7 +393,7 @@ job_title_mean_salary <- data_cleaned[data_cleaned$job_title == "Information Sec
 
 # plot the job_title_mean_salary in a bar plot with a bar for each country
 ggplot(job_title_mean_salary, aes(x = reorder(company_location, mean_salary), y = mean_salary)) +
-    geom_bar(stat = "identity", fill="#4682b4") +
+    geom_bar(stat = "identity", fill=color) +
     ggtitle("Die durchschnittlichen Gehälter der Länder für den Beruf 'Information Security Officer'") +
     labs(x = "Länder", y = "Gehalt in USD") +
     theme_minimal() +
@@ -402,7 +408,8 @@ ggplot(job_title_mean_salary, aes(x = reorder(company_location, mean_salary), y 
 ```
 Der Vermutung fürsprechend ist zu erkennen, dass das Gehalt in den ``USA`` höher als in den restlichen Länderen. Auch sind deutlich mehr Tätige in den ``USA`` vorhanden als in den anderen Länden die in der Darstellung zu erkennen sind.
 
-# 4.4 Standort des Betriebs (Tim)
+# 4.4 Standort des Betriebs
+Ein weiterer Aspekt der die Gehälter beeinflussen kann ist der Standort des Betriebs. In der folgenden Darstellung wird die durchschnittliche Bezahlung der Länder dargestellt.
 ```{r}
 #| message: false
 #| warning: false
@@ -415,7 +422,7 @@ everage_salary_per_country <- data_cleaned |>
     arrange(desc(mean_salary))
 
 ggplot(everage_salary_per_country, aes(x = reorder(company_location, mean_salary), y = mean_salary)) +
-    geom_bar(stat = "identity", fill="#4682b4") +
+    geom_bar(stat = "identity", fill=color) +
     ggtitle("Die durchschnittlichen Gehälter der Länder") +
     labs(x = "Länder", y = "Gehalt in USD") +
     theme_minimal() +
@@ -426,6 +433,36 @@ ggplot(everage_salary_per_country, aes(x = reorder(company_location, mean_salary
     ) + 
     coord_flip()
 ```
+Die ausgewerteten Gehälter der einzelnen Länder sind auch mit den ungefähren Durchschnittsgehältern der Länder vergleichbar. Jedoch wird auf eine tiefere Analyse mit der durchschnittlichen Bezahlung der einzelnen Ländern verzichtit, da dies nicht der Fokus der Auswertung ist.
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| fig-height: 6
+
+# Berechnung der Anzahl der Datensätze pro Land
+count_per_country <- data_cleaned |> count(company_location, sort = TRUE)
+
+# Zusammenfassen der Länder mit weniger als 10 Datensätzen
+count_per_country <- rbind(top_n(count_per_country, count), slice(count_per_country,(count + 1):n()) |>
+    summarise(company_location="Andere",n=sum(n))) |>
+    arrange(desc(n))
+
+# Plot für die die Anzahl der Datensätze pro Land
+ggplot(count_per_country, aes(x = n, y = reorder(company_location, n))) +
+    geom_bar(stat = "identity", fill=color, color = "black") +
+    geom_text(aes(label = n), hjust = -0.25, size = 3) +
+    ggtitle("Anzahl der Datensätze pro Land") +
+    labs(x = "Anzahl der Datensätze", y = "Länder") +
+    theme_minimal() +
+    theme(
+        plot.title = element_text(hjust = 0.5, size = 10),
+        axis.title = element_text(size = 14),
+    )
+
+```
+Klar zu erkennen ist, dass der ausgesuchte Datensatz auf einer mehrzahl an Datensätzen aus den ``USA`` basiert. Da dadurch kein klarer Vergleich zwischen den Ländern möglich ist, wird auf eine weitere Auswertung verzichtet.
 
 
 # 4.5 Betriebsgröße
@@ -441,7 +478,7 @@ Ein weiterer Btrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben g
 data_cleaned |>
     count(company_size, sort = TRUE) |>
     ggplot(aes(x = n, y = company_size)) +
-        geom_bar(stat = "identity", fill="#4682b4", color = "black") +
+        geom_bar(stat = "identity", fill=color, color = "black") +
         geom_text(aes(label=n), size = 4, vjust = -0.5, color="black") +
         ggtitle("Verteilung der Betriebsgröße") +
         labs(x = "Anzahl", y = "Betriebsgröße") +
@@ -497,8 +534,50 @@ company_size_stats |> knitr::kable()
 
 Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert dafür genauer ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
 
+## 4.5.3 Anteil an Erfahrungsstufen pro Betriebsgröße
 
-## 4.5.2 Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels
+Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt. 
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+
+# Berechnung der Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße
+company_size_exp <- data_cleaned |>
+    group_by(company_size, experience_level) |>
+    summarise(
+        n = n()
+    )
+
+company_size_exp <- company_size_exp |>
+    group_by(company_size) |>
+    mutate(
+        percentage = (n / sum(n)) * 100
+    )
+
+# Kuchendiagramme für die Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße
+ggplot(company_size_exp, aes(x = "", y = percentage, fill = experience_level)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y", start=0) +
+    facet_wrap(~ company_size, ncol = 3) +
+    ggtitle("Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen der Betriebsgröße") +
+    geom_text(aes(label = paste0(round(percentage), "%")), position = position_stack(vjust=0.5)) +
+    labs(fill = "Erfahrungslevel", y = NULL, x = NULL) +
+    scale_fill_manual(values=wes_palette(n = 4, name = color_palette)) +
+    theme_minimal() +
+    theme(
+        legend.position = "top",
+        legend.title = element_text(),
+        plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title = element_text(size = 14),
+    )
+```
+
+Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mitarbeiter mit einem Erfahrungslevel von Senior arbeiten. Dafür vor allem in kleinen Unternehmen Junior Mitarbeiter. Alle drei Diagramme haben aber gemeinsam, dass die wenigsten Mitarbeiter mit einem Erfahrungslevel von Executive arbeiten. Das ist auch nicht verwunderlich, da diese Mitarbeiter in der Regel die Führungskräfte sind und somit mehr Mitarbeiter unter sich haben. Erstaunlich ist hingegen der geringe Anteil an Junior Mitarbeitern in mittelgroßen Unternehmen. Dies könnte daran liegen, dass diese Unternehmen eher auf die Erfahrung der Mitarbeiter setzen und daher eher Senior Mitarbeiter einstellen. Große Firmen investieren hingegen mehr in die Ausbildung der Mitarbeiter und nehmen daher eher Junior Mitarbeiter auf. Kleine Unternehmen können hingegen Start-Ups sein, die noch nicht so viele Mitarbeiter haben und daher auch auf motivierte Junior Mitarbeiter setzen.
+
+
+## 4.5.3 Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels
 
 Es muss nun genauer untersucht werden, ob die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels sind. Dazu wird ein Boxplot erstellt, der die Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels darstellt. 
 
@@ -525,6 +604,7 @@ ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd, fill = experience_
     geom_boxplot() +
     ggtitle("Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel") +
     labs(fill = "Erfahrungslevel", y = "Gehalt in USD", x = "Betriebsgröße") +
+    scale_fill_manual(values=wes_palette(n = 4, name = color_palette)) +
     theme_minimal() +
     theme(
         legend.position = "top",
@@ -573,6 +653,7 @@ ggplot(contract_type, aes(x = employment_type, y = percent, fill = employment_ty
     ggtitle("Anteil der Vertragsarten") +
     labs(fill = "Vertragsart", y = "Anteil in %", x = "Vertragsart") +
     theme_minimal() +
+    scale_fill_manual(values=wes_palette(n = 4, name = color_palette)) +
     theme(
         legend.position = "top",
         legend.title = element_text(),
@@ -589,9 +670,9 @@ Es ist zu erkennen, dass die meisten Datenpunkte mit einem Vertrag vom Typ "Full
 * Free Lancer: `r contract_type[4, 2]`
 
 Dadurch, dass fast nur Verträge vom Typ "Full Time" vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden und der Datensatz bezieht sich somit fast ausschließlich auf Vollzeit Angestellte.
-<!-- TODO: Diesen abschnitt in ein anderes Kapitel und eine Folgerung daraus ziehen! @Tom @Tim -->
 
-# 4.7 Remote vs. nicht Remote (Tim)
+# 4.7 Remote vs. nicht Remote
+Im folgenden Abschnitt werden nun noch die Gehälter der Angestellten in Abhängigkeit davon, ob zu wie viel Prozent sie remote arbeiten (0%, 50%, 100%), betrachtet. Hierzu wird zusammengefasst die einzelnen Remoteraten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt dargestellt.
 
 ```{r}
 #| code-fold: true
@@ -613,6 +694,7 @@ ggplot(remote_ratio_salary_and_count, aes(x = remote_ratio, y = mean, fill = rem
     geom_text(aes(label = count), vjust = -0.5, size = 5) +
     geom_text(aes(label = paste(round(mean), "$", sep = "")), vjust = 2, size = 5) +
     theme_minimal() +
+    scale_fill_manual(values=wes_palette(n = 3, name = color_palette)) +
     theme(
         legend.position = "top",
         legend.title = element_text(),
@@ -624,57 +706,7 @@ ggplot(remote_ratio_salary_and_count, aes(x = remote_ratio, y = mean, fill = rem
 
 ```
 
+Zu erkennen ist, dass die meisten Angestellten zu 100% remote arbeiten. Auch interessant ist, dass die Angestellten, die zu 100% remote arbeiten im durchschnitt ein höhreres Gehalt erhalten als Angestellte die 0% oder 50% remote arbeiten.
 
-# 4.8 Anteil an Erfahrungsstufen pro Betriebsgröße
-
-Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt. 
-
-```{r}
-#| code-fold: true
-#| message: false
-#| warning: false
-
-# Berechnung der Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße
-company_size_exp <- data_cleaned |>
-    group_by(company_size, experience_level) |>
-    summarise(
-        n = n()
-    )
-
-company_size_exp <- company_size_exp |>
-    group_by(company_size) |>
-    mutate(
-        percentage = (n / sum(n)) * 100
-    )
-
-# Kuchendiagramme für die Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße
-ggplot(company_size_exp, aes(x = "", y = percentage, fill = experience_level)) +
-    geom_bar(stat = "identity") +
-    coord_polar("y", start=0) +
-    facet_wrap(~ company_size, ncol = 3) +
-    ggtitle("Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen der Betriebsgröße") +
-    geom_text(aes(label = paste0(round(percentage), "%")), position = position_stack(vjust=0.5)) +
-    labs(fill = "Erfahrungslevel", y = NULL, x = NULL) +
-    theme_minimal() +
-    theme(
-        legend.position = "top",
-        legend.title = element_text(),
-        plot.title = element_text(hjust = 0.5, size = 14),
-        axis.title = element_text(size = 14),
-    )
-```
-
-Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mitarbeiter mit einem Erfahrungslevel von Senior arbeiten. Dafür vor allem in kleinen Unternehmen Junior Mitarbeiter. Alle drei Diagramme haben aber gemeinsam, dass die wenigsten Mitarbeiter mit einem Erfahrungslevel von Executive arbeiten. Das ist auch nicht verwunderlich, da diese Mitarbeiter in der Regel die Führungskräfte sind und somit mehr Mitarbeiter unter sich haben. Erstaunlich ist hingegen der geringe Anteil an Junior Mitarbeitern in mittelgroßen Unternehmen. Dies könnte daran liegen, dass diese Unternehmen eher auf die Erfahrung der Mitarbeiter setzen und daher eher Senior Mitarbeiter einstellen. Große Firmen investieren hingegen mehr in die Ausbildung der Mitarbeiter und nehmen daher eher Junior Mitarbeiter auf. Kleine Unternehmen können hingegen Start-Ups sein, die noch nicht so viele Mitarbeiter haben und daher auch auf motivierte Junior Mitarbeiter setzen.
-
-# Todos
-
-* Erfahrung gegenüber gehalt (x)
-* Auftretende Titel mit bezug auf Gehalt (x)
-* Durschnittliches Gehalt innerhalb der Regionen (Tim) 
-* Timeline über das durchschnittliche Gehalt (x)
-* Zusammenfassung der Betriebsgröße mit jeweiligen Bezahlungen (X)
-* Zusammenhang gehalt remote vs. nicht remote (Tim)
-* Vergleich Vertragsart mit Anzahl (X)
-* Jeweils den Text von bisherigen plots ausschreiben (Tim & X)
 
 ## Zusammenfassung und Schlussfolgerung
