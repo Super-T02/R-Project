@@ -20,6 +20,7 @@ library(tidyverse)
 library(ISOcodes)
 library(ggcorrplot)
 options(scipen=10000)
+count <- 10
 ```
 
 ## 1. Formulierung der Fragestellung
@@ -69,7 +70,7 @@ In diesem Schritt werden die Daten geladen und genauer untersucht. Dabei werden 
 ```{r}
 # Daten laden
 data <- as_tibble(read_csv("data/Cyber_salaries.csv", show_col_types = FALSE))
-data
+head(data, count) |> knitr::kable()
 ```
 
 
@@ -105,7 +106,7 @@ Außerdem muss der Datensatz auf doppelte Einträge überprüft werden. Dazu wir
 duplicate <- sum(duplicated(data))
 
 # Ausgeben der doppelten Einträge
-data[duplicated(data),]
+head(data[duplicated(data),], count) |> knitr::kable()
 ```
 
 Es sind also `r duplicate` doppelte Einträge vorhanden. Die Duplikate können jedoch nich aus dem Datensatz entfernt werden, da es keine eindeutigen Informatioen/Indentifikatoren über die einzelenen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternhemens handelt mit der selben Bezahlung.
@@ -279,13 +280,7 @@ Auch hier ist zu sehen, dass die Gehälter von **Executives** deutlich höher si
 
 ### 4.2 Die verschiedenen Berufstitel
 Jeder Datensatz enthält den Titel des jeweiligen Berufes der Person. Im folgenden Abschnitt werden diese untersucht auf Häufigkeit sowie auf deren durchschnittliche Gehälter. Jedoch ist anzumerken, dass nur wenig über die einzelnen Berufstitel ausgesagt werden kann, da die genaue Tätigkeit vom jeweiligen Unternehmen abhängt und unterschiedliche Tätigkeiten auch in einem Berufstitel zusammengefasst werden können.
- 
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-count <- 10
-```
+
 
 ### 4.2.1 Häufigkeit der Berufstitel 
 Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die `r paste(count)` häufigsten Titel angegeben, alle anderen werden in der Gruppe `other` zusammengefasst.
@@ -296,7 +291,7 @@ Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die B
 #| warning: false
 
 counting <- data_cleaned |> count(job_title, sort = TRUE)
-counting
+head(counting, count) |> knitr::kable()
 titles <- top_n(counting,count) |> pull(job_title)
 
 counting <- rbind(top_n(counting,count), slice(counting,(count+1):n()) |>
