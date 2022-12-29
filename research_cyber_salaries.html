@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="formulierung-der-fragestellung" class="level2">
 <h2 class="anchored" data-anchor-id="formulierung-der-fragestellung">1. Formulierung der Fragestellung</h2>
-<p>Der vorligende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angeställten im Bereich Cyber-Security und werden unter folgendem Link <a href="https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries" class="uri">https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries</a> bereitgestellt. Der Datensatz enthält folgende Informationen:</p>
+<p>Der vorliegende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angestellten im Bereich Cyber-Security und werden unter folgendem Link <a href="https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries" class="uri">https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries</a> bereitgestellt. Der Datensatz enthält folgende Informationen:</p>
 <ul>
 <li>Arbeitsjahr</li>
 <li>Jobtitel</li>
@@ -160,8 +160,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="fragestellung" class="level3">
 <h3 class="anchored" data-anchor-id="fragestellung">1.2 Fragestellung</h3>
-<p>Die übergeordnete Fragestellung liegt darin, herrauszufinden welche Faktoren von der Bezahlung eines Cyber-Security Experten abhängen. Dabei sind die einzelnen Faktoren miteinander zu vergleichen und mögliche Korrelationen aufzudecken.</p>
-<p>Innerhalb des Cyber-Security Bereichs existieren zudem viele unterschiedliche Titel die auf den genaueren Einsatzbereich des Angestellen schließen können. Hier können möglicherweise einzelne Gruppen gebildet werden, die ebenfalls einen gewissen Einfluss auf das Gehalt eines Mitarbeiters haben.</p>
+<p>Die übergeordnete Fragestellung liegt darin, herauszufinden welche Faktoren von der Bezahlung eines Cyber-Security Experten abhängen. Dabei sind die einzelnen Faktoren miteinander zu vergleichen und mögliche Korrelationen aufzudecken.</p>
+<p>Innerhalb des Cyber-Security Bereichs existieren zudem viele unterschiedliche Titel die auf den genaueren Einsatzbereich des Angestellten schließen können. Hier können möglicherweise einzelne Gruppen gebildet werden, die ebenfalls einen gewissen Einfluss auf das Gehalt eines Mitarbeiters haben.</p>
 <p>Abgesehen davon könnte sich auch die Fragestellung ergeben, ob sich die Gehälter von Cyber-Security Experten über die Zeit verändert haben. Hierbei ist zu untersuchen, wo und durch welche Faktoren sich die Gehälter verändert haben.</p>
 </section>
 <section id="erwartete-ergebnisse" class="level3">
@@ -170,11 +170,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Starke Korrelation des Gehalts mit Erfahrungen</li>
 <li>Bekannte/Größere Betriebe zahlen ihren Mitarbeitern mehr</li>
-<li>Regionale unterschiede vergelichbar mit BIP</li>
+<li>Regionale Unterschiede sind vergleichbar mit den Lebensunterhaltungskosten</li>
 <li>Remote Anteil an der Arbeit hat keinen Einfluss auf das Gehalt</li>
 <li>Über die Zeit verdienen Cyber-Security Experten mehr Geld</li>
 </ul>
-<p>Innerhalb des Projekts wird versucht Beweise für die aufgestellten Erwartungen zu sammeln, die dafür- oder dagensprechen können.</p>
+<p>Innerhalb des Projekts wird versucht Beweise für die aufgestellten Erwartungen zu sammeln, die dafür- oder dagegen sprechen können.</p>
 </section>
 </section>
 <section id="laden-der-daten-und-entdecken-der-datenstruktur" class="level2">
@@ -351,7 +351,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="übersicht-der-daten" class="level3">
 <h3 class="anchored" data-anchor-id="übersicht-der-daten">2.1 Übersicht der Daten</h3>
-<p>Daraus folgt, dass die Daten erfolgreich importiert wurden und folgedne Datenstruktur aufweisen:</p>
+<p>Daraus folgt, dass die Daten erfolgreich importiert wurden und folgende Datenstruktur aufweisen:</p>
 <table class="table">
 <colgroup>
 <col style="width: 22%">
@@ -436,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. <code>experience_level</code> oder <code>employment_type</code>, als <code>chr</code> definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als <code>factor</code> definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden. Zusätzlich ist zu beachten, dass die Variablen <code>salary</code> und <code>salary_currency</code> nicht benötigt werden, da diese Informationen bereits in <code>salary_in_usd</code> umgerechnet in US-Dollar enthalten sind. Die Variablen <code>salary</code> und <code>salary_currency</code> sollten daher im nächsten Schritt gelöscht werden. Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschireben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.</p>
+<p>Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. <code>experience_level</code> oder <code>employment_type</code>, als <code>chr</code> definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als <code>factor</code> definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden. Zusätzlich ist zu beachten, dass die Variablen <code>salary</code> und <code>salary_currency</code> nicht benötigt werden, da diese Informationen bereits in <code>salary_in_usd</code> umgerechnet in US-Dollar enthalten sind. Die Variablen <code>salary</code> und <code>salary_currency</code> sollten daher im nächsten Schritt gelöscht werden. Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschrieben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.</p>
 </section>
 <section id="duplikate" class="level3">
 <h3 class="anchored" data-anchor-id="duplikate">2.2 Duplikate</h3>
@@ -612,7 +612,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-<p>Es sind also 115 doppelte Einträge vorhanden. Die Duplikate können jedoch nich aus dem Datensatz entfernt werden, da es keine eindeutigen Informatioen/Indentifikatoren über die einzelenen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternhemens handelt mit der selben Bezahlung.</p>
+<p>Es sind also 115 doppelte Einträge vorhanden. Die Duplikate können jedoch nicht aus dem Datensatz entfernt werden, da es keine eindeutigen Informationen/Identifikatoren über die einzelnen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternehmens handelt mit der selben Bezahlung.</p>
 </section>
 <section id="fehlende-werte" class="level3">
 <h3 class="anchored" data-anchor-id="fehlende-werte">2.3 Fehlende Werte</h3>
@@ -896,7 +896,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Zu sehen ist erst mal das ein großer Teil in der Gruppe <code>Andere</code> zusammengefasst wurde. Dies könnte damit zusammenhängen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security-Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den <code>43%</code> der Gruppe <code>Andere</code> die <code>2 %</code> Hürde überschreitet. Trotz dessen ist zu erkennen, dass ein größerer Trend in den Berufen <code>Security Engineer</code> und <code>Cyber Security Analyst</code> besteht.</p>
 <section id="durchschnittliche-gehälter-pro-berufstitel" class="level4">
 <h4 class="anchored" data-anchor-id="durchschnittliche-gehälter-pro-berufstitel">4.2.2 Durchschnittliche Gehälter pro Berufstitel</h4>
-<p>Nachfolgend werden die durchschnittlichen Gehälter pro Berufstitel mit der jeweiligen Verteilung angezeigt. Hierbei werden nur die 10 häufigsten Berufstitel berücksichtigt, die in der vorherhigen Verteilung der Berufstitel bereits dargestellt wurden.</p>
+<p>Nachfolgend werden die durchschnittlichen Gehälter pro Berufstitel mit der jeweiligen Verteilung angezeigt. Hierbei werden nur die 10 häufigsten Berufstitel berücksichtigt, die in der vorherigen Verteilung der Berufstitel bereits dargestellt wurden.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -945,7 +945,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Wie zu vermuten sind Berufe mit enthaltenen Titeln: <code>Manager</code> und <code>Officer</code> im Gehalt etwas höher einzustufen als die Anderen. Jedoch gibt es zum einen den Ausreißer <code>Security Engineer</code>, der das höchste durchschnittlichste Gehalt ausmacht und zum anderen gibt es den Ausreißer <code>Cyber Threat Intelligence Analyst</code> der womöglich ein spezieller Beruf ist und somit auch ein höheres Gehalt hat.</p>
+<p>Wie zu vermuten sind Berufe mit enthaltenen Titeln: <code>Manager</code> und <code>Officer</code> im Gehalt etwas höher einzustufen als die Anderen. Jedoch gibt es zum einen den Ausreißer <code>Security Engineer</code>, der das höchste durchschnittliche Gehalt ausmacht und zum anderen gibt es den Ausreißer <code>Cyber Threat Intelligence Analyst</code> der womöglich ein spezieller Beruf ist und somit auch ein höheres Gehalt hat.</p>
 <p>Die Verteilung der Gehälter ist bei den meisten Berufstiteln recht gleichmäßig, jedoch gibt es auch hier Ausreißer. Dies könnte damit zusammenhängen, dass es sich bei den Gehältern um die der jeweiligen Länder handelt. Aufgrund dessen werden in der folgenden Darstellung die einzelnen Länder mit der jeweiligen durchschnittlichen Bezahlung dargestellt. Als Referenz Titel wurde hierbei <code>Information Security Officer</code> genommen, da dieser eine starke Verteilung ausmacht.</p>
 <div class="cell">
 <details>
@@ -972,7 +972,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Der Vermutung fürsprechend ist zu erkennen, dass das Gehalt in den <code>USA</code> höher als in den restlichen Ländern ist. Zudem, sind deutlich mehr Datensätze in den <code>USA</code> vorhanden als in den anderen Ländern, die in der Darstellung zu erkennen sind.</p>
+<p>Für die Vermutung spricht, dass das Gehalt in den <code>USA</code> höher als in den restlichen Ländern ist. Zudem, sind deutlich mehr Datensätze in den <code>USA</code> vorhanden als in den anderen Ländern, die in der Darstellung zu erkennen sind.</p>
 </section>
 </section>
 </section>
@@ -1140,7 +1140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-<p>Es fällt auf, dass der Mittelwert der Gehälter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert dafür genauer ist. Abgesehen davon ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei 300000 USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei 83625 USD und die Streuung ist hier am geringsten.</p>
+<p>Es fällt auf, dass der Mittelwert der Gehälter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert dafür genauer ist. Abgesehen davon ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreißer, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei 300000 USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei 83625 USD und die Streuung ist hier am geringsten.</p>
 </section>
 <section id="anteil-an-erfahrungsstufen-pro-betriebsgröße" class="level2">
 <h2 class="anchored" data-anchor-id="anteil-an-erfahrungsstufen-pro-betriebsgröße">4.5.3 Anteil an Erfahrungsstufen pro Betriebsgröße</h2>
@@ -1426,7 +1426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="remote-vs.-nicht-remote" class="level1">
 <h1>4.7 Remote vs.&nbsp;nicht Remote</h1>
-<p>Im folgenden Abschnitt werden nun noch die Gehälter der Angestellten in Abhängigkeit davon, ob zu wie viel Prozent sie remote arbeiten (0%, 50%, 100%), betrachtet. Hierzu werden die einzelnen Remoteraten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt zusammengefasst dargestellt.</p>
+<p>Im folgenden Abschnitt werden nun noch die Gehälter der Angestellten in Abhängigkeit davon, ob zu wie viel Prozent sie remote arbeiten (0%, 50%, 100%), betrachtet. Hierzu werden die einzelnen Remote-Raten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt zusammengefasst dargestellt.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1459,28 +1459,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Zu erkennen ist, dass die meisten Angestellten zu 100% remote arbeiten. Auch interessant ist, dass die Angestellten, die zu 100% remote arbeiten, im durchschnitt ein höheres Gehalt erhalten als Angestellte, die 0% oder 50% remote arbeiten.</p>
 <section id="zusammenfassung-und-schlussfolgerung" class="level2">
 <h2 class="anchored" data-anchor-id="zusammenfassung-und-schlussfolgerung">Zusammenfassung und Schlussfolgerung</h2>
-<p>Zusammenfassend sind folgende Erknentnisse aus dieser Ausarbeitung zu ziehen:</p>
+<p>Zusammenfassend sind folgende Erkenntnisse aus dieser Ausarbeitung zu ziehen:</p>
 <ul>
 <li>Die meisten Angestellten arbeiten zu 100% remote.</li>
 <li>Die meisten Datensätze sind in aus den USA gefolgt von Deutschland.</li>
-<li>Fast Ausschließlich Daten von Vollzeit Angestellten, sodass keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden können.</li>
-<li>Es gibt viele verschiedene Job Bezeichnungen, die von jedem Betrieb selbst festgelegt und ausgeschrieben werden können. Dadurch ist es schwierig, eine Aussage in Abhängigkeit der Titel zu nennen. Es ist jedoch zu erkennen, dass die meisten Datensätze den Titel “Security Engineer” tragen.</li>
+<li>Der Datensatz besteht fast ausschließlich aus Daten von Vollzeit Angestellten, sodass keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden können.</li>
+<li>Es gibt viele verschiedene Job Bezeichnungen, die von jedem Betrieb selbst festgelegt und ausgeschrieben werden können. Dadurch ist es schwierig, eine Aussage in Abhängigkeit der Titel zu geben. Es ist jedoch zu erkennen, dass die meisten Datensätze den Titel “Security Engineer” tragen.</li>
 <li>Ein generell höheres Erfahrungslevel sorgt für ein höheres Gehalt.</li>
 <li>Angestellte in mittelgroßen Unternehmen verdienen im Schnitt am meisten und Angestellte in kleinen Unternehmen verdienen im Schnitt am wenigsten.</li>
-<li>Sehr interessant ist, dass Seniormitarbeiter aus mittelgroßen bis großen Unternehmen so viel verdienen wie Executive Angestellte aus kleinen Unternehmen.</li>
+<li>Sehr interessant ist, dass Senior-Mitarbeiter aus mittelgroßen bis großen Unternehmen so viel verdienen wie Executive Angestellte aus kleinen Unternehmen.</li>
 </ul>
-<p>Bezieht man diese Erkenntnise auf die gestellten Fragestellungen, können die meisten Fragen beantwortet werden. So sind die Gählter abhängig vom Erfahrungslevel, aber auch von der jeweiligen Betriebsgöße. Dazu kommt, dass das Gehalt in jedem Land unterschiedlich ist und die Bezahlung sich an den jweiligen Lebenshaltungskosten orientiert. Denkbar wäre somit auch, dass die Gehälter abhängig von der Vertragsart sind. Darüber kann aber leider mit diesem Datensatz keine Aussage getroffenw werden, weil fast nur Vollzeit Angestellte vorliegen.</p>
-<p>Auf die Frage der unterschiedlichen Titel kann beatwortet werden. So gibt es viele verschiedene Berufsbezeichnungen, die ähnliche Funktionen haben: (TODO: Beispiel). Somit wäre hier eine Gruppierung denkbar.</p>
+<p>Bezieht man diese Erkenntnisse auf die gestellten Fragestellungen, können die meisten Fragen beantwortet werden. So sind die Gehälter abhängig vom Erfahrungslevel, aber auch von der jeweiligen Betriebsgröße. Dazu kommt, dass das Gehalt in jedem Land unterschiedlich ist und die Bezahlung sich an den jeweiligen Lebenshaltungskosten orientiert. Denkbar wäre somit auch, dass die Gehälter abhängig von der Vertragsart sind. Darüber kann aber leider mit diesem Datensatz keine Aussage getroffen werden, weil fast nur Vollzeit Angestellte vorliegen.</p>
+<p>Auch die Frage der unterschiedlichen Titel kann beantwortet werden. So gibt es viele verschiedene Berufsbezeichnungen mit zu erkennenden Tendenzen im Bereich der auftretenden Häufigkeit. Jedoch kann keine genaue Aussage darüber getroffen werden, ob die Gehälter mit den Tätigkeiten zusammenhängen, da es zu viele verschiedene Berufsbezeichnungen gibt und die Unternehmen unterschiedliche Ansichten auf die Tätigkeiten der einzelnen Berufsbezeichnungen haben.</p>
 <p>Zuletzt ist noch die Frage der Zeitlichen Änderung von Gehältern zu betrachten. Es ist schwierig hier eine allgemein gültige Aussage zu liefern, weil Daten von nur 3 Jahren vorliegen. Trotzdem ist in diesen Jahren zu erkennen, dass die Gehälter im Schnitt zunehmen.</p>
 <p>Im Folgenden werden nun zum Schluss noch die einzelnen aufgestellten erwarteten Ergebnisse mit den tatsächlichen Ergebnissen verglichen.</p>
 <ul>
-<li><em>Starke Korrelation des Gehalts mit Erfahrungen</em>: Durch die entnommenen Ergebnisse konnte diese Erwartung bestätigt werden. Es ist zu erkennen, dass das Gehalt mit dem Erfahrungslevel steigt und somit eine starke Korrelation besteht. Es ist jedoch zu beachten, dass diese Korrelation nicht für jede Betriebsgröße gleich stark ausfällt, und somit für jede größe einzeln betrachtet werden muss.</li>
+<li><em>Starke Korrelation des Gehalts mit Erfahrungen</em>: Durch die entnommenen Ergebnisse konnte diese Erwartung bestätigt werden. Es ist zu erkennen, dass das Gehalt mit dem Erfahrungslevel steigt und somit eine starke Korrelation besteht. Es ist jedoch zu beachten, dass diese Korrelation nicht für jede Betriebsgröße gleich stark ausfällt, und somit für jede Größe einzeln betrachtet werden muss.</li>
 <li><em>Bekannte/Größere Betriebe zahlen ihren Mitarbeitern mehr</em>: Durch die entnommenen Ergebnisse konnte diese Erwartung abgelehnt werden. Die Angestellten in mittelständischen Unternehmen verdienen im Schnitt am meisten.</li>
-<li><em>Regionale unterschiede vergelichbar mit BIP</em>: Schwierig zu beantworten, da ein großteil der Daten aus den USA und Deutschland stammen. Die restlichen Länder sind nur einzeln vertreten, so dass keine Aussage möglich ist.</li>
+<li><em>Regionale Unterschiede sind vergleichbar mit den Lebensunterhaltungskosten</em>: Schwierig zu beantworten, da ein großteil der Daten aus den USA und Deutschland stammen. Die restlichen Länder sind nur einzeln vertreten sodass keine Aussage möglich ist.</li>
 <li><em>Remote Anteil an der Arbeit hat keinen Einfluss auf das Gehalt</em>: Durch die entnommenen Ergebnisse konnte diese Erwartung abgelehnt werden. Es ist zu erkennen, dass Angestellte, die zu 100% remote arbeiten, im durchschnitt ein höheres Gehalt erhalten als Angestellte, die 0% oder 50% remote arbeiten.</li>
-<li><em>Über die Zeit verdienen Cyber-Security Experten mehr Geld</em>: Durch die entnommenen Ergebnisse konnte diese Erwartung bestätigt werden. Es ist zu erkennen, dass die Gehälter im Schnitt zunehmen. (Auch wenn nur Daten aus 3 Jahren vorliegen)</li>
+<li><em>Über die Zeit verdienen Cyber-Security Experten mehr Geld</em>: Durch die entnommenen Ergebnisse konnte diese Erwartung bestätigt werden. Es ist zu erkennen, dass die Gehälter im Schnitt zunehmen. (Auch, wenn nur Daten aus 3 Jahren vorliegen)</li>
 </ul>
-<p>Abschließend kann gesagt werden, dass die meisten Erwartungen bestätigt werden konnten. Aber auch, dass der Datensatz nicht alle Fragestellungen beantworten kann. Des Weiteren hätte mehr auf die regionale Verteilung eingegangen werden können, da hier offensichtliche unterschiede aufzufinden sind. Jedoch ist es schwierig mithilfe des Datensaetzes eine Aussage zu treffen, da die Daten hauptsächlich aus den USA erhoben wurden. Das algemeine Problem ist, dass Informationen, wie die Vertragsart und Land, nicht verteilt vorliegen. Wird der Datensatz in Zukunft weiter ausgebaut, mehr Unternehmen und Länder hinzugefügt, können die Ergebnisse noch genauer und andere Fragen beantwortet werden.</p>
+<p>Abschließend kann gesagt werden, dass die meisten Erwartungen bestätigt werden konnten. Aber auch, dass der Datensatz nicht alle Fragestellungen beantworten kann. Des Weiteren hätte mehr auf die regionale Verteilung eingegangen werden können, da hier offensichtliche Unterschiede aufzufinden sind. Jedoch ist es schwierig, mithilfe des Datensatzes eine Aussage zu treffen, da hauptsächlich Daten aus den USA erhoben wurden. Das allgemeine Problem ist somit, dass Informationen wie die Vertragsart und Land nicht verteilt vorliegen. Wird der Datensatz in Zukunft weiter ausgebaut, mehr Unternehmen und Länder hinzugefügt, können die Ergebnisse noch genauer und andere Fragen beantwortet werden.</p>
 </section>
 </section>
 
