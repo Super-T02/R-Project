@@ -736,3 +736,7 @@ Im Folgenden werden nun zum Schluss noch die einzelnen aufgestellten erwarteten 
 * *Über die Zeit verdienen Cyber-Security Experten mehr Geld*: Durch die entnommenen Ergebnisse konnte diese Erwartung bestätigt werden. Es ist zu erkennen, dass die Gehälter im Schnitt zunehmen. (Auch, wenn nur Daten aus 3 Jahren vorliegen)
 
 Abschließend kann gesagt werden, dass die meisten Erwartungen bestätigt werden konnten. Aber auch, dass der Datensatz nicht alle Fragestellungen beantworten kann. Des Weiteren hätte mehr auf die regionale Verteilung eingegangen werden können, da hier offensichtliche Unterschiede aufzufinden sind. Jedoch ist es schwierig, mithilfe des Datensatzes eine Aussage zu treffen, da hauptsächlich Daten aus den USA erhoben wurden. Das allgemeine Problem ist somit, dass Informationen wie die Vertragsart und Land nicht verteilt vorliegen. Wird der Datensatz in Zukunft weiter ausgebaut, mehr Unternehmen und Länder hinzugefügt, können die Ergebnisse noch genauer und andere Fragen beantwortet werden.
+
+# 5. Quellen
+
+* Datensatz aus: <https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries> 
