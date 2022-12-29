@@ -29,7 +29,7 @@ color <- "#e6a0c4"
 
 ## 1. Formulierung der Fragestellung
 
-Der vorligende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angeställten im Bereich Cyber-Security und werden unter folgendem Link <https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries> bereitgestellt. Der Datensatz enthält folgende Informationen:
+Der vorliegende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angestellten im Bereich Cyber-Security und werden unter folgendem Link <https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries> bereitgestellt. Der Datensatz enthält folgende Informationen:
 
 * Arbeitsjahr
 * Jobtitel
@@ -49,9 +49,9 @@ Dadurch, dass immer mehr Prozesse in Unternehmen digitalisiert werden, steigt au
 
 ### 1.2 Fragestellung
 
-Die übergeordnete Fragestellung liegt darin, herrauszufinden welche Faktoren von der Bezahlung eines Cyber-Security Experten abhängen. Dabei sind die einzelnen Faktoren miteinander zu vergleichen und mögliche Korrelationen aufzudecken.
+Die übergeordnete Fragestellung liegt darin, herauszufinden welche Faktoren von der Bezahlung eines Cyber-Security Experten abhängen. Dabei sind die einzelnen Faktoren miteinander zu vergleichen und mögliche Korrelationen aufzudecken.
 
-Innerhalb des Cyber-Security Bereichs existieren zudem viele unterschiedliche Titel die auf den genaueren Einsatzbereich des Angestellen schließen können. Hier können möglicherweise einzelne Gruppen gebildet werden, die ebenfalls einen gewissen Einfluss auf das Gehalt eines Mitarbeiters haben.
+Innerhalb des Cyber-Security Bereichs existieren zudem viele unterschiedliche Titel die auf den genaueren Einsatzbereich des Angestellten schließen können. Hier können möglicherweise einzelne Gruppen gebildet werden, die ebenfalls einen gewissen Einfluss auf das Gehalt eines Mitarbeiters haben.
 
 Abgesehen davon könnte sich auch die Fragestellung ergeben, ob sich die Gehälter von Cyber-Security Experten über die Zeit verändert haben. Hierbei ist zu untersuchen, wo und durch welche Faktoren sich die Gehälter verändert haben.
 
@@ -62,11 +62,11 @@ Folgende Erwartungen kamen in der ersten Auseinandersetzung mit dem Datensatz an
 
 * Starke Korrelation des Gehalts mit Erfahrungen
 * Bekannte/Größere Betriebe zahlen ihren Mitarbeitern mehr
-* Regionale unterschiede vergelichbar mit BIP
+* Regionale Unterschiede sind vergleichbar mit den Lebensunterhaltungskosten
 * Remote Anteil an der Arbeit hat keinen Einfluss auf das Gehalt
 * Über die Zeit verdienen Cyber-Security Experten mehr Geld
 
-Innerhalb des Projekts wird versucht Beweise für die aufgestellten Erwartungen zu sammeln, die dafür- oder dagensprechen können.
+Innerhalb des Projekts wird versucht Beweise für die aufgestellten Erwartungen zu sammeln, die dafür- oder dagegen sprechen können.
 
 ## 2. Laden der Daten und entdecken der Datenstruktur
 
@@ -81,7 +81,7 @@ head(data, count) |> knitr::kable()
 
 ### 2.1 Übersicht der Daten
 
-Daraus folgt, dass die Daten erfolgreich importiert wurden und folgedne Datenstruktur aufweisen:
+Daraus folgt, dass die Daten erfolgreich importiert wurden und folgende Datenstruktur aufweisen:
 
 | Variable | Typ | Unique Values | Beschreibung |
 |----------|-----|---------------|--------------|
@@ -99,7 +99,7 @@ Daraus folgt, dass die Daten erfolgreich importiert wurden und folgedne Datenstr
 
 Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. `experience_level` oder `employment_type`, als `chr` definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als `factor` definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden.
 Zusätzlich ist zu beachten, dass die Variablen `salary` und `salary_currency` nicht benötigt werden, da diese Informationen bereits in `salary_in_usd` umgerechnet in US-Dollar enthalten sind. Die Variablen `salary` und `salary_currency` sollten daher im nächsten Schritt gelöscht werden.
-Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschireben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.
+Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschrieben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.
 
 
 ### 2.2 Duplikate
@@ -114,7 +114,7 @@ duplicate <- sum(duplicated(data))
 head(data[duplicated(data),], count) |> knitr::kable()
 ```
 
-Es sind also `r duplicate` doppelte Einträge vorhanden. Die Duplikate können jedoch nich aus dem Datensatz entfernt werden, da es keine eindeutigen Informatioen/Indentifikatoren über die einzelenen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternhemens handelt mit der selben Bezahlung.
+Es sind also `r duplicate` doppelte Einträge vorhanden. Die Duplikate können jedoch nicht aus dem Datensatz entfernt werden, da es keine eindeutigen Informationen/Identifikatoren über die einzelnen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternehmens handelt mit der selben Bezahlung.
 
 ### 2.3 Fehlende Werte
 
@@ -180,12 +180,13 @@ Die Aufbereiteten Daten können nun in diesem Abschnitt ausgewertet werden. Hier
 
 ### 4.1 Betrachtung von Gehalt und Erfahrungslevel
 
-Um einen Einblick zu erhalten, wie viele Daten pro Jahr und Erfahrungslevel vorliegen, wird eine Grafik erstellt, die die Anzahl an Daten pro Jahr darstellt. Hierfür werden die einzelnen Daten pro Jahr und Erfahrungslevel gezählt und in einem Balkendiagramm dargestellt.
+Um einen Einblick zu erhalten, wie viele Daten pro Jahr und Erfahrungslevel vorliegen, wird eine Grafik erstellt, die die Anzahl an Daten pro Jahr aufzeigt. Hierfür werden die einzelnen Daten pro Jahr und Erfahrungslevel gezählt und in einem Balkendiagramm dargestellt.
 
 ```{r}
 #| code-fold: true
 #| message: false
 #| warning: false
+
 # Anzahl an Daten pro Jahr
 data_cleaned |>
     group_by(work_year, experience_level) |>
@@ -205,17 +206,18 @@ data_cleaned |>
     )
 ```
 
-Es ist zu sehen, dass über die Zeit mehr Daten erfasst wurden und am meisten Daten von **Senior** und **Intermediate** Mitarbeitern enthalten sind. Die Daten von Executive Mitarbeitern sind dafür am geringsten. Das liegt vermutlich daran, dass es weniger Executive Mitarbeiter gibt und weniger Daten von diesen Mitarbeitern vorliegen.
+Es ist zu sehen, dass über die Zeit mehr Daten erfasst wurden und am meisten Daten von `Senior` und `Intermediate` Mitarbeitern enthalten sind. Die Daten von `Executive` Mitarbeitern sind dafür am wenigsten. Das liegt vermutlich daran, dass es weniger `Executive` Mitarbeiter gibt und weniger Daten von diesen Mitarbeitern vorliegen.
 
 
 ### 4.1.2 Entwicklung der Gehälter pro Jahr und Erfahrungslevel
 
-Um einen Einblick zu erhalten, wie sich die Gehälter im Laufe der Zeit entwickelt haben, wird eine Grafik erstellt, die die Entwicklung der Gehälter pro Jahr darstellt. Zusätzlich wird nach der Erfahrung gruppiert, um zu sehen, wie sich die Gehälter in Abhängigkeit zur Erfahrung und Jahr entwickelt haben.
+Um einen Einblick zu erhalten, wie sich die Gehälter im Laufe der Zeit entwickelt haben, wird eine Grafik erstellt, die die Entwicklung der Gehälter pro Jahr anzeigt. Zusätzlich wird nach der Erfahrung gruppiert, um zu sehen, wie sich die Gehälter in Abhängigkeit zur Erfahrung und Jahr entwickelt haben.
 
 ```{r}
 #| code-fold: true
 #| message: false
 #| warning: false
+
 # Berechnung der Eckdaten für die folgenden Plots
 plot_data <- data_cleaned |>
     group_by(experience_level, work_year) |>
@@ -234,16 +236,11 @@ per_level <- data_cleaned |>
         sd_salary = sd(salary_in_usd, na.rm = T),
         n = n()
     )
-```
 
-```{r}
-#| code-fold: true
-#| message: false
-#| warning: false
 # Ehrfarung gegenüber Mitellwert der Gehälter pro Jahr
 ggplot(plot_data, aes(x = experience_level, y = mean_salary, group = work_year, fill = work_year)) +
     geom_col(position = "dodge") +
-    geom_text(aes(label = round(mean_salary, 0)), position = position_dodge(width = 0.9), vjust = -0.25) +
+    geom_text(aes(label = round(mean_salary, 0)), position = position_dodge(width = 0.9), vjust = -0.25, size=3) +
     ggtitle("Gehalt für pro Erfahrungslevel und Jahr") +
     labs(fill = "Arbeitsjahr", x = "Erfahrung", y = "Gehalt in USD") +
     scale_fill_manual(values=wes_palette(n = 3, name = color_palette)) +
@@ -257,12 +254,13 @@ ggplot(plot_data, aes(x = experience_level, y = mean_salary, group = work_year, 
 
 ```
 
-In der Grafik ist zu erkennen, dass die Gehälter von **Senior** und **Executives** im Laufe der Zeit gestiegen sind, bei den anderen beiden sind sie ähnlich geblieben. Zusätzlich ist zu erkennen, dass die Gehälter für die Erfahrungslevel **Senior** und **Executives** im Vergleich zu den anderen Erfahrungsleveln deutlich höher sind. Betrachtet man den Boxplot für das Verhältnis wird das auch nochmal deutlich. Zu beachten ist aber, dass die einzelnen Datenpunkte nicht alle gleich verteilt sind, da die Anzahl der Datenpunkte für die einzelnen Erfahrungslevel unterschiedlich ist.
+In der Grafik ist zu erkennen, dass die Gehälter von `Senior` und `Executives` im Laufe der Zeit gestiegen sind, bei den anderen beiden sind sie ähnlich geblieben. Zusätzlich ist zu erkennen, dass die Gehälter für die Erfahrungslevel `Senior` und `Executives` im Vergleich zu den anderen Erfahrungsleveln deutlich höher sind. Betrachtet man den Boxplot für das Verhältnis, wird das deutlich. Zu beachten ist aber, dass die einzelnen Datenpunkte nicht alle gleich verteilt sind, da die Anzahl der Datenpunkte für die einzelnen Erfahrungslevel unterschiedlich ist.
 
 ```{r}
 #| code-fold: true
 #| message: false
 #| warning: false
+
 # Boxplot für das Verhältnis der Gehälter pro Jahr
 ggplot(plot_data, aes(x = experience_level, y = mean_salary)) +
     geom_boxplot() +
@@ -277,20 +275,20 @@ ggplot(plot_data, aes(x = experience_level, y = mean_salary)) +
     )
 ```
 
-Auch hier ist zu sehen, dass die Gehälter von **Executives** deutlich höher sind. Hier ist aber auch zu sehen, dass die Streuung der Datenpunkte bei den **Executives** am größten ist. Das liegt daran, dass es nur weniger Datenpunkte gibt und die Gehälter von **Executives** sehr unterschiedlich sind (Standardabweichung in 2022: `r  paste(round(plot_data[plot_data$experience_level == "Executive" & plot_data$work_year == "2022", "sd_salary"]))` USD). Bei **Junior** und **Intermediate** Mitarbeitern ist die Streuung der Datenpunkte am geringsten. So liegt das Gehalt im Schnitt wie folgt:
+Auch hier ist zu sehen, dass die Gehälter von `Executives` deutlich höher sind und die Streuung der Datenpunkte bei den `Executives` am größten ist. Das liegt daran, dass es nur wenige Datenpunkte gibt und die Gehälter von `Executives` sehr unterschiedlich sind (Standardabweichung in 2022: `r  paste(round(plot_data[plot_data$experience_level == "Executive" & plot_data$work_year == "2022", "sd_salary"]))` USD). Bei `Junior` und `Intermediate` Mitarbeitern ist die Streuung der Datenpunkte am geringsten. So liegt das Gehalt im Schnitt wie folgt:
 
-* **Junior Mitarbeiter**: `r paste(round(per_level[1,"mean_salary"]))` USD
-* **Intermediate Mitarbeiter**: `r paste(round(per_level[2,"mean_salary"]))` USD
-* **Senior Mitarbeiter**: `r paste(round(per_level[3,"mean_salary"]))` USD
-* **Executive Mitarbeiter**: `r paste(round(per_level[4,"mean_salary"]))` USD
+* `Junior` Mitarbeiter: `r paste(round(per_level[1,"mean_salary"]))` USD
+* `Intermediate` Mitarbeiter: `r paste(round(per_level[2,"mean_salary"]))` USD
+* `Senior` Mitarbeiter: `r paste(round(per_level[3,"mean_salary"]))` USD
+* `Executive` Mitarbeiter: `r paste(round(per_level[4,"mean_salary"]))` USD
 
 
 ### 4.2 Die verschiedenen Berufstitel
-Jeder Datensatz enthält den Titel des jeweiligen Berufes der Person. Im folgenden Abschnitt werden diese untersucht auf Häufigkeit sowie auf deren durchschnittliche Gehälter. Jedoch ist anzumerken, dass nur wenig über die einzelnen Berufstitel ausgesagt werden kann, da die genaue Tätigkeit vom jeweiligen Unternehmen abhängt und unterschiedliche Tätigkeiten auch in einem Berufstitel zusammengefasst werden können.
+Jeder Datensatz enthält den Titel des jeweiligen Berufes der Person. Im folgenden Abschnitt werden diese untersucht auf Häufigkeit sowie auf deren durchschnittliche Gehälter. Jedoch ist anzumerken, dass nur wenig über die einzelnen Berufstitel ausgesagt werden kann, da die genaue Tätigkeit vom jeweiligen Unternehmen abhängt und in einem Berufstitel zusammengefasst werden können.
 
 
 ### 4.2.1 Häufigkeit der Berufstitel 
-Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die Bedeutung der Position der einzelenen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrunddessen werden in der folgenden Darstellung die einzelen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die `r paste(count)` häufigsten Titel angegeben, alle anderen werden in der Gruppe `Andere` zusammengefasst.
+Bei den einzelnen Berufstiteln ist es schwer herauszufinden, was genau die Bedeutung und Position der einzelnen Person ist, da diese gerne durch das Unternehmen selbst definiert werden. Aufgrund dessen werden in der folgenden Darstellung die einzelnen Titel nach Häufigkeit gruppiert und die einzelnen Gruppen in Prozent angegeben. Es werden nur die `r paste(count)` häufigsten Titel angegeben, alle anderen werden in der Gruppe `Andere` zusammengefasst.
 
 ```{r}
 #| code-fold: true
@@ -298,7 +296,9 @@ Bei den einzelnen Titeln der Berufe ist es schwer herauszufinden was genau die B
 #| warning: false
 
 counting <- data_cleaned |> count(job_title, sort = TRUE)
+
 head(counting, count) |> knitr::kable()
+
 titles <- top_n(counting,count) |> pull(job_title)
 
 counting <- rbind(top_n(counting,count), slice(counting,(count+1):n()) |>
@@ -323,16 +323,18 @@ ggplot(counting, aes(x="", y=n, fill=job_title)) +
         axis.title = element_text(size = 14),
     )
 ```
-Zu sehen ist erstmal das ein großer Teil in der Gruppe `Andere` zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den `43%` der Gruppe `Andere` die `2%` Hürde überschreitet.
-Trotzdessen ist zu erkennen das ein größerer Trend Trend in den Berufen ``r paste(titles[1])`` und ``r paste(titles[2])`` besteht.  
+Zu sehen ist erst mal das ein großer Teil in der Gruppe `Andere` zusammengefasst wurde. Dies könnte damit zusammenhängen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security-Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den `43%` der Gruppe `Andere` die `2 %` Hürde überschreitet.
+Trotz dessen ist zu erkennen, dass ein größerer Trend in den Berufen ``r paste(titles[1])`` und ``r paste(titles[2])`` besteht.  
 
 #### 4.2.2 Durchschnittliche Gehälter pro Berufstitel
-Nachfolgend werden noch die durchschnittlichen Gehälter pro Berufstitel dargestellt mit der jeweiligen Verteilung. Hierbei werden nur die `r paste(count)` häufigsten Berufstitel berücksichtigt, die oben in der Verteilung der Berufstitel bereits dargestellt wurden.
+Nachfolgend werden die durchschnittlichen Gehälter pro Berufstitel  mit der jeweiligen Verteilung angezeigt. Hierbei werden nur die `r paste(count)` häufigsten Berufstitel berücksichtigt, die in der vorherigen Verteilung der Berufstitel bereits dargestellt wurden.
 
 ```{r}
 #| code-fold: true
 #| message: false
 #| warning: false
+
+# Durchschnittliche Gehälter der zuvor ausgewählten Berufstitel
 job_title_mean_salary <- data_cleaned[data_cleaned$job_title %in% titles,] |>
     group_by(job_title) |> 
     summarise(mean_salary = mean(salary_in_usd)) |> 
@@ -374,24 +376,21 @@ ggplot(t , aes(x = job_title, y = salary_in_usd)) +
     coord_flip()
 
 ```
-Wie zu vermuten sind Berufe mit enhaltenen Titlen: Manager und Officer im Gehalt etwas höher als die anderen. Jedoch gibt es zum einem den Außreiser ``r paste(titles[1])``, der das höchste durchschnittlichste Gehalt ausmacht und zum anderen gibt es auch den Außreiser ``r paste(titles[10])`` der womöglich ein spezieler Beruf ist und somit auch ein höheres Gehalt hat.
+Wie zu vermuten sind Berufe mit enthaltenen Titeln: `Manager` und `Officer` im Gehalt etwas höher einzustufen als die Anderen. Jedoch gibt es zum einen den Ausreißer ``r paste(titles[1])``, der das höchste durchschnittliche Gehalt ausmacht und zum anderen gibt es den Ausreißer ``r paste(titles[10])`` der womöglich ein spezieller Beruf ist und somit auch ein höheres Gehalt hat.
 
-Die Verteilung der Gehälter ist bei den meisten Berufstiteln recht gleichmäßig, jedoch gibt es auch hier Ausreißer. Dies könnte damit zusammenhängen, dass es sich bei den Gehältern um die Gehälter der jeweiligen Länder handelt.
-Aufgrunddessen wird in der folgenden Darstellung die einzlenen Länder mit der jeweiligen durchschnittlichen Bezahlung dargestellt. Als Refeferenz Titel wurde hierbei ``r paste(titles[9])`` genommen, da dieser eine starke Verteilung ausmacht.
+Die Verteilung der Gehälter ist bei den meisten Berufstiteln recht gleichmäßig, jedoch gibt es auch hier Ausreißer. Dies könnte damit zusammenhängen, dass es sich bei den Gehältern um die der jeweiligen Länder handelt.
+Aufgrund dessen werden in der folgenden Darstellung die einzelnen Länder mit der jeweiligen durchschnittlichen Bezahlung dargestellt. Als Referenz Titel wurde hierbei ``r paste(titles[9])`` genommen, da dieser eine starke Verteilung ausmacht.
 ```{r}
 #| code-fold: true
 #| message: false
 #| warning: false
 #| fig-height: 3
 
-# calculate the mean salary of the job "information security officer" for each country
-
 job_title_mean_salary <- data_cleaned[data_cleaned$job_title == "Information Security Officer",] |>
     group_by(company_location) |> 
     summarise(mean_salary = mean(salary_in_usd), count = n()) |> 
     arrange(desc(mean_salary))
 
-# plot the job_title_mean_salary in a bar plot with a bar for each country
 ggplot(job_title_mean_salary, aes(x = reorder(company_location, mean_salary), y = mean_salary)) +
     geom_bar(stat = "identity", fill=color) +
     ggtitle("Die durchschnittlichen Gehälter der Länder für den Beruf 'Information Security Officer'") +
@@ -406,10 +405,10 @@ ggplot(job_title_mean_salary, aes(x = reorder(company_location, mean_salary), y 
     coord_flip()
 
 ```
-Der Vermutung fürsprechend ist zu erkennen, dass das Gehalt in den ``USA`` höher als in den restlichen Länderen. Auch sind deutlich mehr Tätige in den ``USA`` vorhanden als in den anderen Länden die in der Darstellung zu erkennen sind.
+Für die Vermutung spricht, dass das Gehalt in den ``USA`` höher als in den restlichen Ländern ist. Zudem, sind deutlich mehr Datensätze in den ``USA`` vorhanden als in den anderen Ländern, die in der Darstellung zu erkennen sind.
 
 # 4.4 Standort des Betriebs
-Ein weiterer Aspekt der die Gehälter beeinflussen kann ist der Standort des Betriebs. In der folgenden Darstellung wird die durchschnittliche Bezahlung der Länder dargestellt.
+Ein weiterer Aspekt, der die Gehälter beeinflussen kann, ist der Standort des Betriebs. In der folgenden Darstellung wird die durchschnittliche Bezahlung der Länder dargestellt.
 ```{r}
 #| message: false
 #| warning: false
@@ -433,7 +432,7 @@ ggplot(everage_salary_per_country, aes(x = reorder(company_location, mean_salary
     ) + 
     coord_flip()
 ```
-Die ausgewerteten Gehälter der einzelnen Länder sind auch mit den ungefähren Durchschnittsgehältern der Länder vergleichbar. Jedoch wird auf eine tiefere Analyse mit der durchschnittlichen Bezahlung der einzelnen Ländern verzichtit, da dies nicht der Fokus der Auswertung ist.
+Die ausgewerteten Gehälter der einzelnen Länder sind auch mit den ungefähren Durchschnittsgehältern der Länder vergleichbar. Jedoch wird auf eine tiefere Analyse mit der durchschnittlichen Bezahlung der einzelnen Ländern verzichtet, da dies nicht der Fokus der Auswertung ist.
 
 ```{r}
 #| code-fold: true
@@ -462,12 +461,12 @@ ggplot(count_per_country, aes(x = n, y = reorder(company_location, n))) +
     )
 
 ```
-Klar zu erkennen ist, dass der ausgesuchte Datensatz auf einer mehrzahl an Datensätzen aus den ``USA`` basiert. Da dadurch kein klarer Vergleich zwischen den Ländern möglich ist, wird auf eine weitere Auswertung verzichtet.
+Klar zu erkennen ist, dass der ausgesuchte Datensatz auf einer Mehrzahl an Datensätzen aus den `USA` basiert. Da dadurch kein klarer Vergleich zwischen den Ländern möglich ist, wird auf eine weitere Auswertung verzichtet.
 
 
 # 4.5 Betriebsgröße
 
-Ein weiterer Btrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.
+Ein weiterer Betrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben, gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der Größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der Größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der Größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.
 
 ```{r}
 #| code-fold: true
@@ -492,12 +491,12 @@ data_cleaned |>
         coord_flip()
 ```
 
-Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichitg ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten. 
+Es ist zu sehen, dass überwiegend Mitarbeiter aus großen Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichtig ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür, wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten. 
 
 
 ## 4.5.1 Gehälter in Abhängigkeit der Betriebsgröße
 
-Als nächstes wird die Verteilung der Gehälter in Abhängigkeit der Betriebsgröße betrachtet. Dazu wird zuerst eine Übersicht über die statistischen Eckdaten für das Verhältnis von Gehältern in Abhängigkeit zur Betriebsgröße und anschließend ein passender Boxplot erstellt. 
+Als Nächstes wird die Verteilung der Gehälter in Abhängigkeit der Betriebsgröße betrachtet. Dazu wird zuerst eine Übersicht über die statistischen Eckdaten für das Verhältnis von Gehältern in Abhängigkeit zur Betriebsgröße und anschließend ein passender Boxplot erstellt. 
 
 ```{r}
 #| code-fold: true
@@ -532,7 +531,7 @@ ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd)) +
 company_size_stats |> knitr::kable()
 ``` 
 
-Es fällt auf, dass der Mittelwert der Geählter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert dafür genauer ist. Abgesehen davon, ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreiser, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
+Es fällt auf, dass der Mittelwert der Gehälter in mittelgroßen Betrieben höher ist als in großen Betrieben. Das kann darauf zurückzuführen sein, dass in großen Betrieben mehr Mitarbeiter beschäftigt sind, die ein ähnliches Gehalt haben und somit der Mittelwert dafür genauer ist. Abgesehen davon ist die Streuung der Gehälter in großen Betrieben größer als in mittelgroßen Betrieben. Hier gibt es einzelne Ausreißer, die ein sehr viel höheres Gehalt haben als die anderen Mitarbeiter. So ist der höchste Wert in großen Betrieben bei 300000 USD und in mittelgroßen Betrieben bei `r paste(round(company_size_stats[2, "max"]))` USD. In kleinen Betrieben ist der Mittelwert am geringsten. Er liegt bei `r paste(round(company_size_stats[1, "mean"]))` USD und die Streuung ist hier am geringsten.
 
 ## 4.5.3 Anteil an Erfahrungsstufen pro Betriebsgröße
 
@@ -574,7 +573,7 @@ ggplot(company_size_exp, aes(x = "", y = percentage, fill = experience_level)) +
     )
 ```
 
-Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mitarbeiter mit einem Erfahrungslevel von Senior arbeiten. Dafür vor allem in kleinen Unternehmen Junior Mitarbeiter. Alle drei Diagramme haben aber gemeinsam, dass die wenigsten Mitarbeiter mit einem Erfahrungslevel von Executive arbeiten. Das ist auch nicht verwunderlich, da diese Mitarbeiter in der Regel die Führungskräfte sind und somit mehr Mitarbeiter unter sich haben. Erstaunlich ist hingegen der geringe Anteil an Junior Mitarbeitern in mittelgroßen Unternehmen. Dies könnte daran liegen, dass diese Unternehmen eher auf die Erfahrung der Mitarbeiter setzen und daher eher Senior Mitarbeiter einstellen. Große Firmen investieren hingegen mehr in die Ausbildung der Mitarbeiter und nehmen daher eher Junior Mitarbeiter auf. Kleine Unternehmen können hingegen Start-Ups sein, die noch nicht so viele Mitarbeiter haben und daher auch auf motivierte Junior Mitarbeiter setzen.
+Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mitarbeiter mit einem Erfahrungslevel von `Senior` arbeiten. Dafür vor allem in kleinen Unternehmen `Junior` Mitarbeiter. Alle drei Diagramme haben aber gemeinsam, dass die wenigsten Mitarbeiter mit einem Erfahrungslevel von `Executive` arbeiten. Das ist auch nicht verwunderlich, da diese Mitarbeiter in der Regel die Führungskräfte sind und somit mehr Mitarbeiter unter sich haben. Erstaunlich ist hingegen der geringe Anteil an `Junior` Mitarbeitern in mittelgroßen Unternehmen. Dies könnte daran liegen, dass diese Unternehmen eher auf die Erfahrung der Mitarbeiter setzen und daher eher `Senior` Mitarbeiter einstellen. Große Firmen investieren hingegen mehr in die Ausbildung der Mitarbeiter und nehmen daher eher `Junior` Mitarbeiter auf. Kleine Unternehmen können hingegen Start-ups sein, die noch nicht so viele Mitarbeiter haben und daher auch auf motivierte `Junior` Mitarbeiter setzen.
 
 
 ## 4.5.3 Gehälter in Abhängigkeit der Betriebsgröße und des Erfahrungslevels
@@ -616,19 +615,19 @@ ggplot(data_cleaned, aes(x = company_size, y = salary_in_usd, fill = experience_
 company_size_stats_exp |> knitr::kable()
 ```
 
-Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad sind. So sind die Gehäler von Senior Mitarbeitern im Schnitt zwar niedriger, als die von Executive Mitarbeitern, aber es gibt dennoch Ausreißer, die ein deutlich höheres Gehalt haben. Aus der Tabelle kann entnommen werden, dass mit 329 Datenpunkten, die meisten Datenpunkte in großen Betrieben mit einem Erfahrungslevel von Senior vorliegen. Daraufhin folgen die Mittelgroßen Betriebe mit einem Erfahrungslevel von Senior mit 261 Datenpunkten. In kleinen Betrieben mit einem Erfahrungslevel von Senior sind nur 32 Datenpunkte vorhanden.
+Aus dieser Darstellung geht hervor, dass vor allem in großen Betrieben die Gehälter nicht unbedingt bei jedem Mitarbeiter abhängig vom Erfahrungsgrad sind. So sind die Gehälter von `Senior` Mitarbeitern im Schnitt zwar niedriger als die von `Executive` Mitarbeitern, aber es gibt dennoch Ausreißer, die ein deutlich höheres Gehalt haben. Aus der Tabelle kann entnommen werden, dass mit 329 Datenpunkten die meisten Datenpunkte in großen Betrieben mit einem Erfahrungslevel von `Senior` vorliegen. Daraufhin folgen die mittelgroßen Betriebe mit einem Erfahrungslevel von `Senior` mit 261 Datenpunkten. In kleinen Betrieben mit einem Erfahrungslevel von `Senior` sind nur 32 Datenpunkte vorhanden.
 
-Abgesehen davon, ist das durchschnittliche Gehalt von Junior Mitarbeitern in allen 3 Unternehmensgrößen mit `r round(company_size_stats_exp[1, "mean"])` USD, `r round(company_size_stats_exp[5, "mean"])` USD und `r round(company_size_stats_exp[9, "mean"])` USD in einem ähnlichen Bereich. Dennoch verdienen Junior angestellte in großen Betrieben im Schnitt am besten. 
+Abgesehen davon ist das durchschnittliche Gehalt von `Junior` Mitarbeitern in allen 3 Unternehmensgrößen mit `r round(company_size_stats_exp[1, "mean"])` USD, `r round(company_size_stats_exp[5, "mean"])` USD und `r round(company_size_stats_exp[9, "mean"])` USD in einem ähnlichen Bereich. Dennoch verdienen `Junior` Angestellte in großen Betrieben im Schnitt am besten. 
 
-Hingegen ist der Unterschied zwischen den verschiedenen Betrieben bei Intermediate Angestellten größer. Mit rund `r round(company_size_stats_exp[2, "mean"])` USD, `r round(company_size_stats_exp[6, "mean"])` USD und `r round(company_size_stats_exp[10, "mean"])` USD verdienen Intermediate Angestellte in mittelgroßen Betrieben, knapp gefolgt von großen Betrieben, am besten. In kleinen Betrieben verdienen die Intermediate Angestellten im Schnitt also fast `r round(company_size_stats_exp[6, "mean"] - company_size_stats_exp[2, "mean"])` USD weniger als in mittelgroßen Betrieben.
+Hingegen ist der Unterschied zwischen den verschiedenen Betrieben bei `Intermediate` Angestellten größer. Mit rund `r round(company_size_stats_exp[2, "mean"])` USD, `r round(company_size_stats_exp[6, "mean"])` USD und `r round(company_size_stats_exp[10, "mean"])` USD verdienen `Intermediate` Angestellte in mittelgroßen Betrieben, knapp gefolgt von großen Betrieben am besten. In kleinen Betrieben verdienen die `Intermediate` Angestellten im Schnitt also fast `r round(company_size_stats_exp[6, "mean"] - company_size_stats_exp[2, "mean"])` USD weniger als in mittelgroßen Betrieben.
 
-Auch bei Senior Angestellten ist der Unterschied deutlich größer als bei den Junior Angestellten. Mit rund `r round(company_size_stats_exp[3, "mean"])` USD, `r round(company_size_stats_exp[7, "mean"])` USD und `r round(company_size_stats_exp[11, "mean"])` USD verdienen Senior Angestellte in mittelgroßen Betrieben am besten. Interssant ist, dass Senior Angestellen von kleinen Unternehmen ähnlich viel verdienen, wie Intermediate Angestellte von großen bzw. mittelgroßen Unternehmen.
+Auch bei `Senior` Angestellten ist der Unterschied deutlich größer als bei den `Junior` Angestellten. Mit rund `r round(company_size_stats_exp[3, "mean"])` USD, `r round(company_size_stats_exp[7, "mean"])` USD und `r round(company_size_stats_exp[11, "mean"])` USD verdienen `Senior` Angestellte in mittelgroßen Betrieben am besten. Interessant ist, dass `Senior` Angestellten von kleinen Unternehmen ähnlich viel verdienen wie `Intermediate` Angestellte von großen bzw. mittelgroßen Unternehmen.
 
-Zuletzt verdenienen Executive Angestellte am Meisten. Hier ist es aber schwierig eine allgemeine Aussage aus dem Datensatz zu ziehen, weil nur 5 Datensätze von Executive Mitarbeiter aus kleinen Unternehmen und 16 aus mittelgroßen Unternehmen vorliegen. Dennoch kann gesagt werden, dass sie am meisten im Schnitt verdienen.
+Zuletzt verdienen `Executive` Angestellte am Meisten. Hier ist es aber schwierig, eine allgemeine Aussage aus dem Datensatz zu ziehen, weil nur 5 Datensätze von `Executive` Mitarbeiter aus kleinen Unternehmen und 16 aus mittelgroßen Unternehmen vorliegen. Dennoch kann gesagt werden, dass sie im Schnitt am meisten verdienen.
 
 # 4.6 Vertragsart
 
-Im zu grunde liegenden Datensatz gibt es verschiedene Vertragsarten. Im Folgenden sollen diese Vertragsarten genauer betrachtet werden. Hierfür wird zuerst betrachtet, welche Arten zu welchem Anteil enthalten sind.
+Im zu Grunde liegenden Datensatz gibt es verschiedene Vertragsarten. Im Folgenden sollen diese Vertragsarten genauer betrachtet werden. Hierfür wird zuerst dargestellt, welche Arten zu welchem Anteil enthalten sind.
 
 ```{r}
 #| code-fold: true
@@ -662,17 +661,17 @@ ggplot(contract_type, aes(x = employment_type, y = percent, fill = employment_ty
     )
 ```
 
-Es ist zu erkennen, dass die meisten Datenpunkte mit einem Vertrag vom Typ "Full Time" vorliegen. Die restlichen Vertragsarten sind deutlich seltener. Es gibt somit folgende absolute Häufigkeiten:
+Es ist zu erkennen, dass die meisten Datenpunkte mit einem Vertrag vom Typ `Full Time` vorliegen. Die restlichen Vertragsarten sind deutlich seltener. Es gibt somit folgende absolute Häufigkeiten:
 
 * Part Time: `r contract_type[1, 2]`
 * Full Time: `r contract_type[2, 2]`
 * Contract: `r contract_type[3, 2]`
 * Free Lancer: `r contract_type[4, 2]`
 
-Dadurch, dass fast nur Verträge vom Typ "Full Time" vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden und der Datensatz bezieht sich somit fast ausschließlich auf Vollzeit Angestellte.
+Dadurch, dass fast nur Verträge vom Typ `Full Time` vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden und der Datensatz bezieht sich somit fast ausschließlich auf Vollzeit Angestellte.
 
 # 4.7 Remote vs. nicht Remote
-Im folgenden Abschnitt werden nun noch die Gehälter der Angestellten in Abhängigkeit davon, ob zu wie viel Prozent sie remote arbeiten (0%, 50%, 100%), betrachtet. Hierzu wird zusammengefasst die einzelnen Remoteraten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt dargestellt.
+Im folgenden Abschnitt werden nun noch die Gehälter der Angestellten in Abhängigkeit davon, ob zu wie viel Prozent sie remote arbeiten (0%, 50%, 100%), betrachtet. Hierzu werden die einzelnen Remote-Raten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt zusammengefasst dargestellt.
 
 ```{r}
 #| code-fold: true
@@ -692,7 +691,7 @@ ggplot(remote_ratio_salary_and_count, aes(x = remote_ratio, y = mean, fill = rem
     ggtitle("Remoteanteile mit jeweiliger Anzahl") +
     labs(fill = "Remoteanteil", y = "Gehalt in USD", x = "Remoteanteil") +
     geom_text(aes(label = count), vjust = -0.5, size = 5) +
-    geom_text(aes(label = paste(round(mean), "$", sep = "")), vjust = 2, size = 5) +
+    geom_text(aes(label = paste(round(mean), "USD", sep = " ")), vjust = 2, size = 5) +
     theme_minimal() +
     scale_fill_manual(values=wes_palette(n = 3, name = color_palette)) +
     theme(
@@ -706,7 +705,34 @@ ggplot(remote_ratio_salary_and_count, aes(x = remote_ratio, y = mean, fill = rem
 
 ```
 
-Zu erkennen ist, dass die meisten Angestellten zu 100% remote arbeiten. Auch interessant ist, dass die Angestellten, die zu 100% remote arbeiten im durchschnitt ein höhreres Gehalt erhalten als Angestellte die 0% oder 50% remote arbeiten.
+Zu erkennen ist, dass die meisten Angestellten zu 100% remote arbeiten. Auch interessant ist, dass die Angestellten, die zu 100% remote arbeiten, im durchschnitt ein höheres Gehalt erhalten als Angestellte, die 0% oder 50% remote arbeiten.
 
 
 ## Zusammenfassung und Schlussfolgerung
+
+Zusammenfassend sind folgende Erkenntnisse aus dieser Ausarbeitung zu ziehen:
+
+* Die meisten Angestellten arbeiten zu 100% remote.
+* Die meisten Datensätze sind in aus den USA gefolgt von Deutschland.
+* Der Datensatz besteht fast ausschließlich aus Daten von Vollzeit Angestellten, sodass keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden können.
+* Es gibt viele verschiedene Job Bezeichnungen, die von jedem Betrieb selbst festgelegt und ausgeschrieben werden können. Dadurch ist es schwierig, eine Aussage in Abhängigkeit der Titel zu geben. Es ist jedoch zu erkennen, dass die meisten Datensätze den Titel "Security Engineer" tragen.
+* Ein generell höheres Erfahrungslevel sorgt für ein höheres Gehalt.
+* Angestellte in mittelgroßen Unternehmen verdienen im Schnitt am meisten und Angestellte in kleinen Unternehmen verdienen im Schnitt am wenigsten.
+* Sehr interessant ist, dass Senior-Mitarbeiter aus mittelgroßen bis großen Unternehmen so viel verdienen wie Executive Angestellte aus kleinen Unternehmen.
+
+Bezieht man diese Erkenntnisse auf die gestellten Fragestellungen, können die meisten Fragen beantwortet werden. So sind die Gehälter abhängig vom Erfahrungslevel, aber auch von der jeweiligen Betriebsgröße. Dazu kommt, dass das Gehalt in jedem Land unterschiedlich ist und die Bezahlung sich an den jeweiligen Lebenshaltungskosten orientiert. Denkbar wäre somit auch, dass die Gehälter abhängig von der Vertragsart sind. Darüber kann aber leider mit diesem Datensatz keine Aussage getroffen werden, weil fast nur Vollzeit Angestellte vorliegen. 
+
+Auch die Frage der unterschiedlichen Titel kann beantwortet werden. So gibt es viele verschiedene Berufsbezeichnungen mit zu erkennenden Tendenzen im Bereich der auftretenden Häufigkeit. Jedoch kann keine genaue Aussage darüber getroffen werden, ob die Gehälter mit den Tätigkeiten zusammenhängen, da es zu viele verschiedene Berufsbezeichnungen gibt und die Unternehmen unterschiedliche Ansichten auf die Tätigkeiten der einzelnen Berufsbezeichnungen haben.
+
+Zuletzt ist noch die Frage der Zeitlichen Änderung von Gehältern zu betrachten. Es ist schwierig hier eine allgemein gültige Aussage zu liefern, weil Daten von nur 3 Jahren vorliegen. Trotzdem ist in diesen Jahren zu erkennen, dass die Gehälter im Schnitt zunehmen.
+
+
+Im Folgenden werden nun zum Schluss noch die einzelnen aufgestellten erwarteten Ergebnisse mit den tatsächlichen Ergebnissen verglichen.
+
+* *Starke Korrelation des Gehalts mit Erfahrungen*: Durch die entnommenen Ergebnisse konnte diese Erwartung bestätigt werden. Es ist zu erkennen, dass das Gehalt mit dem Erfahrungslevel steigt und somit eine starke Korrelation besteht. Es ist jedoch zu beachten, dass diese Korrelation nicht für jede Betriebsgröße gleich stark ausfällt, und somit für jede Größe einzeln betrachtet werden muss.
+* *Bekannte/Größere Betriebe zahlen ihren Mitarbeitern mehr*: Durch die entnommenen Ergebnisse konnte diese Erwartung abgelehnt werden. Die Angestellten in mittelständischen Unternehmen verdienen im Schnitt am meisten.
+* *Regionale Unterschiede sind vergleichbar mit den Lebensunterhaltungskosten*: Schwierig zu beantworten, da ein großteil der Daten aus den USA und Deutschland stammen. Die restlichen Länder sind nur einzeln vertreten, so dass keine Aussage möglich ist.
+* *Remote Anteil an der Arbeit hat keinen Einfluss auf das Gehalt*: Durch die entnommenen Ergebnisse konnte diese Erwartung abgelehnt werden. Es ist zu erkennen, dass Angestellte, die zu 100% remote arbeiten, im durchschnitt ein höheres Gehalt erhalten als Angestellte, die 0% oder 50% remote arbeiten.
+* *Über die Zeit verdienen Cyber-Security Experten mehr Geld*: Durch die entnommenen Ergebnisse konnte diese Erwartung bestätigt werden. Es ist zu erkennen, dass die Gehälter im Schnitt zunehmen. (Auch wenn nur Daten aus 3 Jahren vorliegen)
+
+Abschließend kann gesagt werden, dass die meisten Erwartungen bestätigt werden konnten. Aber auch, dass der Datensatz nicht alle Fragestellungen beantworten kann. Des Weiteren hätte mehr auf die regionale Verteilung eingegangen werden können, da hier offensichtliche Unterschiede aufzufinden sind. Jedoch ist es schwierig mithilfe des Datensatzes eine Aussage zu treffen, da hauptsächlich Daten aus den USA erhoben wurden. Das allgemeine Problem ist somit, dass Informationen, wie die Vertragsart und Land, nicht verteilt vorliegen. Wird der Datensatz in Zukunft weiter ausgebaut, mehr Unternehmen und Länder hinzugefügt, können die Ergebnisse noch genauer und andere Fragen beantwortet werden.
