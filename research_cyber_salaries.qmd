@@ -278,6 +278,7 @@ Auch hier ist zu sehen, dass die Gehälter von **Executives** deutlich höher si
 
 
 ### 4.2 Die verschiedenen Berufstitel
+Jeder Datensatz enthält den Titel des jeweiligen Berufes der Person. Im folgenden Abschnitt werden diese untersucht auf Häufigkeit sowie auf deren durchschnittliche Gehälter. Jedoch ist anzumerken, dass nur wenig über die einzelnen Berufstitel ausgesagt werden kann, da die genaue Tätigkeit vom jeweiligen Unternehmen abhängt und unterschiedliche Tätigkeiten auch in einem Berufstitel zusammengefasst werden können.
  
 ```{r}
 #| echo: false
@@ -319,11 +320,11 @@ ggplot(counting, aes(x="", y=n, fill=job_title)) +
         axis.title = element_text(size = 14),
     )
 ```
-Zu sehen ist erstmal das ein großer Teil in der Gruppe others zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden.
+Zu sehen ist erstmal das ein großer Teil in der Gruppe ``other`` zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den ``43%`` der Gruppe ``other`` die ``2%`` Hürde überschreitet.
 Trotzdessen ist zu erkennen das ein größerer Trend Trend in den Berufen ``r paste(titles[1])`` und ``r paste(titles[2])`` besteht.  
 
 #### 4.2.2 Durchschnittliche Gehälter pro Berufstitel
-Nachfolgend werden nun noch die durchschnittlichen Gehälter pro Berufstitel dargestellt mit der jeweiligen Verteilung. Hierbei werden nur die `r paste(count)` häufigsten Berufstitel berücksichtigt, die oben in der Verteilung der Berufstitel bereits dargestellt wurden.
+Nachfolgend werden noch die durchschnittlichen Gehälter pro Berufstitel dargestellt mit der jeweiligen Verteilung. Hierbei werden nur die `r paste(count)` häufigsten Berufstitel berücksichtigt, die oben in der Verteilung der Berufstitel bereits dargestellt wurden.
 ```{r}
 
 
@@ -373,6 +374,38 @@ ggplot(t , aes(x = job_title, y = salary_in_usd)) +
 
 ```
 Wie zu vermuten sind Berufe mit enhaltenen Titlen: Manager und Officer im Gehalt etwas höher als die anderen. Jedoch gibt es zum einem den Außreiser ``r paste(titles[1])``, der das höchste durchschnittlichste Gehalt ausmacht und zum anderen gibt es auch den Außreiser ``r paste(titles[10])`` der womöglich ein spezieler Beruf ist und somit auch ein höheres Gehalt hat.
+
+Die Verteilung der Gehälter ist bei den meisten Berufstiteln recht gleichmäßig, jedoch gibt es auch hier Ausreißer. Dies könnte damit zusammenhängen, dass es sich bei den Gehältern um die Gehälter der jeweiligen Länder handelt.
+Aufgrunddessen wird in der folgenden Darstellung die einzlenen Länder mit der jeweiligen durchschnittlichen Bezahlung dargestellt. Als Refeferenz Titel wurde hierbei ``r paste(titles[9])`` genommen, da dieser eine starke Verteilung ausmacht.
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+#| fig-height: 3
+
+# calculate the mean salary of the job "information security officer" for each country
+
+job_title_mean_salary <- data_cleaned[data_cleaned$job_title == "Information Security Officer",] |>
+    group_by(company_location) |> 
+    summarise(mean_salary = mean(salary_in_usd), count = n()) |> 
+    arrange(desc(mean_salary))
+
+# plot the job_title_mean_salary in a bar plot with a bar for each country
+ggplot(job_title_mean_salary, aes(x = reorder(company_location, mean_salary), y = mean_salary)) +
+    geom_bar(stat = "identity", fill="#4682b4") +
+    ggtitle("Die durchschnittlichen Gehälter der Länder für den Beruf 'Information Security Officer'") +
+    labs(x = "Länder", y = "Gehalt in USD") +
+    theme_minimal() +
+    geom_text(data = subset(job_title_mean_salary, mean_salary > 15000), aes(label = round(mean_salary)), size = 3, hjust = 1.1, color="black") +
+    geom_text(aes(label = count), hjust = -0.5, size = 3) +
+    theme(
+        plot.title = element_text(hjust = 0.5, size = 10),
+        axis.title = element_text(size = 14),
+    ) + 
+    coord_flip()
+
+```
+Der Vermutung fürsprechend ist zu erkennen, dass das Gehalt in den ``USA`` höher als in den restlichen Länderen. Auch sind deutlich mehr Tätige in den ``USA`` vorhanden als in den anderen Länden die in der Darstellung zu erkennen sind.
 
 # 4.4 Standort des Betriebs (Tim)
 ```{r}

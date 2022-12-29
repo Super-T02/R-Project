@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.280">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -131,6 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <p class="date">2. Januar 2023</p>
     </div>
   </div>
+  
     
   </div>
   
@@ -504,6 +505,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="die-verschiedenen-berufstitel" class="level3">
 <h3 class="anchored" data-anchor-id="die-verschiedenen-berufstitel">4.2 Die verschiedenen Berufstitel</h3>
+<p>Jeder Datensatz enthält den Titel des jeweiligen Berufes der Person. Im folgenden Abschnitt werden diese untersucht auf Häufigkeit sowie auf deren durchschnittliche Gehälter. Jedoch ist anzumerken, dass nur wenig über die einzelnen Berufstitel ausgesagt werden kann, da die genaue Tätigkeit vom jeweiligen Unternehmen abhängt und unterschiedliche Tätigkeiten auch in einem Berufstitel zusammengefasst werden können.</p>
 <div class="cell">
 
 </div>
@@ -562,10 +564,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Zu sehen ist erstmal das ein großer Teil in der Gruppe others zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Trotzdessen ist zu erkennen das ein größerer Trend Trend in den Berufen <code>Security Engineer</code> und <code>Cyber Security Analyst</code> besteht.</p>
+<p>Zu sehen ist erstmal das ein großer Teil in der Gruppe <code>other</code> zusammengefasst wurde. Dies könnte damit zusammenliegen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den <code>43%</code> der Gruppe <code>other</code> die <code>2%</code> Hürde überschreitet. Trotzdessen ist zu erkennen das ein größerer Trend Trend in den Berufen <code>Security Engineer</code> und <code>Cyber Security Analyst</code> besteht.</p>
 <section id="durchschnittliche-gehälter-pro-berufstitel" class="level4">
 <h4 class="anchored" data-anchor-id="durchschnittliche-gehälter-pro-berufstitel">4.2.2 Durchschnittliche Gehälter pro Berufstitel</h4>
-<p>Nachfolgend werden nun noch die durchschnittlichen Gehälter pro Berufstitel dargestellt mit der jeweiligen Verteilung. Hierbei werden nur die 10 häufigsten Berufstitel berücksichtigt, die oben in der Verteilung der Berufstitel bereits dargestellt wurden.</p>
+<p>Nachfolgend werden noch die durchschnittlichen Gehälter pro Berufstitel dargestellt mit der jeweiligen Verteilung. Hierbei werden nur die 10 häufigsten Berufstitel berücksichtigt, die oben in der Verteilung der Berufstitel bereits dargestellt wurden.</p>
 <div class="cell">
 
 </div>
@@ -617,6 +619,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Wie zu vermuten sind Berufe mit enhaltenen Titlen: Manager und Officer im Gehalt etwas höher als die anderen. Jedoch gibt es zum einem den Außreiser <code>Security Engineer</code>, der das höchste durchschnittlichste Gehalt ausmacht und zum anderen gibt es auch den Außreiser <code>Cyber Threat Intelligence Analyst</code> der womöglich ein spezieler Beruf ist und somit auch ein höheres Gehalt hat.</p>
+<p>Die Verteilung der Gehälter ist bei den meisten Berufstiteln recht gleichmäßig, jedoch gibt es auch hier Ausreißer. Dies könnte damit zusammenhängen, dass es sich bei den Gehältern um die Gehälter der jeweiligen Länder handelt. Aufgrunddessen wird in der folgenden Darstellung die einzlenen Länder mit der jeweiligen durchschnittlichen Bezahlung dargestellt. Als Refeferenz Titel wurde hierbei <code>Information Security Officer</code> genommen, da dieser eine starke Verteilung ausmacht.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the mean salary of the job "information security officer" for each country</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>job_title_mean_salary <span class="ot">&lt;-</span> data_cleaned[data_cleaned<span class="sc">$</span>job_title <span class="sc">==</span> <span class="st">"Information Security Officer"</span>,] <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_location) <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_salary =</span> <span class="fu">mean</span>(salary_in_usd), <span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_salary))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the job_title_mean_salary in a bar plot with a bar for each country</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(job_title_mean_salary, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(company_location, mean_salary), <span class="at">y =</span> mean_salary)) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#4682b4"</span>) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Die durchschnittlichen Gehälter der Länder für den Beruf 'Information Security Officer'"</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Länder"</span>, <span class="at">y =</span> <span class="st">"Gehalt in USD"</span>) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">subset</span>(job_title_mean_salary, mean_salary <span class="sc">&gt;</span> <span class="dv">15000</span>), <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_salary)), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> count), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Der Vermutung fürsprechend ist zu erkennen, dass das Gehalt in den <code>USA</code> höher als in den restlichen Länderen. Auch sind deutlich mehr Tätige in den <code>USA</code> vorhanden als in den anderen Länden die in der Darstellung zu erkennen sind.</p>
 </section>
 </section>
 </section>
@@ -625,25 +657,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>everage_salary_per_country <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_location) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_salary =</span> <span class="fu">mean</span>(salary_in_usd)) <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_salary))</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(everage_salary_per_country, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(company_location, mean_salary), <span class="at">y =</span> mean_salary)) <span class="sc">+</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#4682b4"</span>) <span class="sc">+</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Die durchschnittlichen Gehälter der Länder"</span>) <span class="sc">+</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Länder"</span>, <span class="at">y =</span> <span class="st">"Gehalt in USD"</span>) <span class="sc">+</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">subset</span>(everage_salary_per_country, mean_salary <span class="sc">&gt;</span> <span class="dv">15000</span>), <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_salary)), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>everage_salary_per_country <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_location) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_salary =</span> <span class="fu">mean</span>(salary_in_usd)) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_salary))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(everage_salary_per_country, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(company_location, mean_salary), <span class="at">y =</span> mean_salary)) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#4682b4"</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Die durchschnittlichen Gehälter der Länder"</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Länder"</span>, <span class="at">y =</span> <span class="st">"Gehalt in USD"</span>) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">subset</span>(everage_salary_per_country, mean_salary <span class="sc">&gt;</span> <span class="dv">15000</span>), <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_salary)), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -653,25 +685,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verteilung der Betriebsgröße</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(company_size, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> company_size)) <span class="sc">+</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#4682b4"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggtitle</span>(<span class="st">"Verteilung der Betriebsgröße"</span>) <span class="sc">+</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anzahl"</span>, <span class="at">y =</span> <span class="st">"Betriebsgröße"</span>) <span class="sc">+</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span> </span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verteilung der Betriebsgröße</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(company_size, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> company_size)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#4682b4"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggtitle</span>(<span class="st">"Verteilung der Betriebsgröße"</span>) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anzahl"</span>, <span class="at">y =</span> <span class="st">"Betriebsgröße"</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> .<span class="dv">5</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span> </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">coord_flip</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Es ist zu sehen, dass überwiegend Mitarbeiter aus große Firmen in diesem Datensatz enthalten sind. Das kann darauf zurückzuführen sein, dass einzelne große Firmen die Daten freigegeben haben, aber mehr Mitarbeiter beschäftigen als kleinere Firmen. Wichitg ist, dass diese Zahl keine Aussage liefert, wie viele verschiedene Unternehmen enthalten sind, sondern dafür wie viele Mitarbeiter aus diesem Datensatz in einem großen, mittleren bzw. kleinen Unternehmen arbeiten.</p>
@@ -681,37 +713,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistische Daten für die Gehälter in Abhängigkeit der Betriebsgröße</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>company_size_stats <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size) <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">mean</span>(salary_in_usd),</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">median =</span> <span class="fu">median</span>(salary_in_usd),</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd =</span> <span class="fu">sd</span>(salary_in_usd),</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">min =</span> <span class="fu">min</span>(salary_in_usd),</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">max =</span> <span class="fu">max</span>(salary_in_usd)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_cleaned, <span class="fu">aes</span>(<span class="at">x =</span> company_size, <span class="at">y =</span> salary_in_usd)) <span class="sc">+</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße"</span>) <span class="sc">+</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Gehalt in USD"</span>, <span class="at">x =</span> <span class="st">"Betriebsgröße"</span>) <span class="sc">+</span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistische Daten für die Gehälter in Abhängigkeit der Betriebsgröße</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>company_size_stats <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">mean</span>(salary_in_usd),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">median =</span> <span class="fu">median</span>(salary_in_usd),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd =</span> <span class="fu">sd</span>(salary_in_usd),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">min =</span> <span class="fu">min</span>(salary_in_usd),</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">max =</span> <span class="fu">max</span>(salary_in_usd)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_cleaned, <span class="fu">aes</span>(<span class="at">x =</span> company_size, <span class="at">y =</span> salary_in_usd)) <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße"</span>) <span class="sc">+</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Gehalt in USD"</span>, <span class="at">x =</span> <span class="st">"Betriebsgröße"</span>) <span class="sc">+</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>company_size_stats <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>company_size_stats <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -762,38 +794,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistische Daten für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>company_size_stats_exp <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size, experience_level) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">mean</span>(salary_in_usd),</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">median =</span> <span class="fu">median</span>(salary_in_usd),</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd =</span> <span class="fu">sd</span>(salary_in_usd),</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">min =</span> <span class="fu">min</span>(salary_in_usd),</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">max =</span> <span class="fu">max</span>(salary_in_usd),</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_cleaned, <span class="fu">aes</span>(<span class="at">x =</span> company_size, <span class="at">y =</span> salary_in_usd, <span class="at">fill =</span> experience_level)) <span class="sc">+</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel"</span>) <span class="sc">+</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Erfahrungslevel"</span>, <span class="at">y =</span> <span class="st">"Gehalt in USD"</span>, <span class="at">x =</span> <span class="st">"Betriebsgröße"</span>) <span class="sc">+</span></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistische Daten für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>company_size_stats_exp <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size, experience_level) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">mean</span>(salary_in_usd),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">median =</span> <span class="fu">median</span>(salary_in_usd),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd =</span> <span class="fu">sd</span>(salary_in_usd),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">min =</span> <span class="fu">min</span>(salary_in_usd),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">max =</span> <span class="fu">max</span>(salary_in_usd),</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot für die Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_cleaned, <span class="fu">aes</span>(<span class="at">x =</span> company_size, <span class="at">y =</span> salary_in_usd, <span class="at">fill =</span> experience_level)) <span class="sc">+</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Gehälter in Abhängigkeit der Betriebsgröße pro Erfahrungslevel"</span>) <span class="sc">+</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Erfahrungslevel"</span>, <span class="at">y =</span> <span class="st">"Gehalt in USD"</span>, <span class="at">x =</span> <span class="st">"Betriebsgröße"</span>) <span class="sc">+</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>company_size_stats_exp <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>company_size_stats_exp <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -957,32 +989,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anteil der Vertragsarten</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>contract_type <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(employment_type) <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">percent =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Anteil der Vertragsarten in Prozent</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(contract_type, <span class="fu">aes</span>(<span class="at">x =</span> employment_type, <span class="at">y =</span> percent, <span class="at">fill =</span> employment_type)) <span class="sc">+</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(percent, <span class="dv">1</span>), <span class="st">"%"</span>, <span class="at">sep=</span><span class="st">" "</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Anteil der Vertragsarten"</span>) <span class="sc">+</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Vertragsart"</span>, <span class="at">y =</span> <span class="st">"Anteil in %"</span>, <span class="at">x =</span> <span class="st">"Vertragsart"</span>) <span class="sc">+</span></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Anteil der Vertragsarten</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>contract_type <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(employment_type) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">percent =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Anteil der Vertragsarten in Prozent</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(contract_type, <span class="fu">aes</span>(<span class="at">x =</span> employment_type, <span class="at">y =</span> percent, <span class="at">fill =</span> employment_type)) <span class="sc">+</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(percent, <span class="dv">1</span>), <span class="st">"%"</span>, <span class="at">sep=</span><span class="st">" "</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Anteil der Vertragsarten"</span>) <span class="sc">+</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Vertragsart"</span>, <span class="at">y =</span> <span class="st">"Anteil in %"</span>, <span class="at">x =</span> <span class="st">"Vertragsart"</span>) <span class="sc">+</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Es ist zu erkennen, dass die meisten Datenpunkte mit einem Vertrag vom Typ “Full Time” vorliegen. Die restlichen Vertragsarten sind deutlich seltener. Es gibt somit folgende absolute Häufigkeiten:</p>
@@ -999,29 +1031,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>remote_ratio_salary_and_count <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(remote_ratio) <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">mean</span>(salary_in_usd),</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">n</span>()</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(remote_ratio_salary_and_count, <span class="fu">aes</span>(<span class="at">x =</span> remote_ratio, <span class="at">y =</span> mean, <span class="at">fill =</span> remote_ratio)) <span class="sc">+</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Remoteanteile mit jeweiliger Anzahl"</span>) <span class="sc">+</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Remoteanteil"</span>, <span class="at">y =</span> <span class="st">"Gehalt in USD"</span>, <span class="at">x =</span> <span class="st">"Remoteanteil"</span>) <span class="sc">+</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> count), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(mean), <span class="st">"$"</span>, <span class="at">sep =</span> <span class="st">""</span>)), <span class="at">vjust =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>remote_ratio_salary_and_count <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(remote_ratio) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">mean</span>(salary_in_usd),</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">n</span>()</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(remote_ratio_salary_and_count, <span class="fu">aes</span>(<span class="at">x =</span> remote_ratio, <span class="at">y =</span> mean, <span class="at">fill =</span> remote_ratio)) <span class="sc">+</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Remoteanteile mit jeweiliger Anzahl"</span>) <span class="sc">+</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Remoteanteil"</span>, <span class="at">y =</span> <span class="st">"Gehalt in USD"</span>, <span class="at">x =</span> <span class="st">"Remoteanteil"</span>) <span class="sc">+</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> count), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(mean), <span class="st">"$"</span>, <span class="at">sep =</span> <span class="st">""</span>)), <span class="at">vjust =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1031,37 +1063,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechnung der Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>company_size_exp <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size, experience_level) <span class="sc">|&gt;</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>company_size_exp <span class="ot">&lt;-</span> company_size_exp <span class="sc">|&gt;</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size) <span class="sc">|&gt;</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">percentage =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Kuchendiagramme für die Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(company_size_exp, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> percentage, <span class="at">fill =</span> experience_level)) <span class="sc">+</span></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> company_size, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen der Betriebsgröße"</span>) <span class="sc">+</span></span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(percentage), <span class="st">"%"</span>)), <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Erfahrungslevel"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechnung der Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>company_size_exp <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size, experience_level) <span class="sc">|&gt;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>company_size_exp <span class="ot">&lt;-</span> company_size_exp <span class="sc">|&gt;</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(company_size) <span class="sc">|&gt;</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">percentage =</span> (n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Kuchendiagramme für die Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(company_size_exp, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> percentage, <span class="at">fill =</span> experience_level)) <span class="sc">+</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> company_size, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen der Betriebsgröße"</span>) <span class="sc">+</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(percentage), <span class="st">"%"</span>)), <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Erfahrungslevel"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(),</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Es ist zu erkennen, dass in den mittleren und großen Betrieben die meisten Mitarbeiter mit einem Erfahrungslevel von Senior arbeiten. Dafür vor allem in kleinen Unternehmen Junior Mitarbeiter. Alle drei Diagramme haben aber gemeinsam, dass die wenigsten Mitarbeiter mit einem Erfahrungslevel von Executive arbeiten. Das ist auch nicht verwunderlich, da diese Mitarbeiter in der Regel die Führungskräfte sind und somit mehr Mitarbeiter unter sich haben. Erstaunlich ist hingegen der geringe Anteil an Junior Mitarbeitern in mittelgroßen Unternehmen. Dies könnte daran liegen, dass diese Unternehmen eher auf die Erfahrung der Mitarbeiter setzen und daher eher Senior Mitarbeiter einstellen. Große Firmen investieren hingegen mehr in die Ausbildung der Mitarbeiter und nehmen daher eher Junior Mitarbeiter auf. Kleine Unternehmen können hingegen Start-Ups sein, die noch nicht so viele Mitarbeiter haben und daher auch auf motivierte Junior Mitarbeiter setzen.</p>
@@ -1126,7 +1158,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Kopiert");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Kopiert");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1162,24 +1211,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
