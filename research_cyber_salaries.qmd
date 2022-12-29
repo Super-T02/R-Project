@@ -134,7 +134,6 @@ Es sind also keine NA's vorhanden. Damit können die Daten bereinigt werden.
 Aus dem vorherigen Abschnitt folgt, dass verschiedene Faktoren für die einzelnen Spalten angelegt und die Spalten `salary` und `salary_currency` gelöscht werden müssen. Zusätzlich werden die Ländernamen in den Spalten `employee_residence` und `company_location` ausgeschrieben.
 
 ```{r}
-locations <- unique(data$company_location)
 titles <- unique(data$job_title)
 
 data_cleaned <- data |> mutate(
@@ -142,8 +141,6 @@ data_cleaned <- data |> mutate(
         experience_level  = factor(experience_level, levels= c('EN', 'MI', 'SE', 'EX'), labels = c('Junior', 'Intermediate', 'Senior', 'Executive'), ordered = T),
         employment_type  = factor(employment_type, levels= c('PT', 'FT', 'CT', 'FL'), ordered = T),
         company_size  = factor(company_size, levels= c('S', 'M', 'L'), ordered = T),
-        # employee_residence = factor(employee_residence, levels = locations),
-        # company_location = factor(company_location, levels = locations),
         job_title = factor(job_title, levels = titles),
         salary = NULL,
         salary_currency = NULL,
@@ -166,7 +163,7 @@ data_cleaned <- data_cleaned |>
         company_location = Name.y,
         Name.x = NULL,
         Name.y = NULL,
-    ) |> drop_na() # Löschen von Ländern die keine Verbindung gefunden g
+    ) |> drop_na() # Löschen von Ländern die keine Verbindung gefunden haben
 
 # Neue Datenstruktur
 str(data_cleaned)
@@ -175,7 +172,7 @@ str(data_cleaned)
 
 ## 4. Auswertungen
 
-Die Aufbereiteten Daten können nun in diesem Abschnitt ausgewertet werden. Hierfür werden verschiedene Abbildungen und Grafiken generiert, sowie beschrieben. 
+Die aufbereiteten Daten können nun in diesem Abschnitt ausgewertet werden. Hierfür werden verschiedene Abbildungen und Grafiken generiert sowie beschrieben. 
 
 
 ### 4.1 Betrachtung von Gehalt und Erfahrungslevel
@@ -240,7 +237,7 @@ per_level <- data_cleaned |>
 # Ehrfarung gegenüber Mitellwert der Gehälter pro Jahr
 ggplot(plot_data, aes(x = experience_level, y = mean_salary, group = work_year, fill = work_year)) +
     geom_col(position = "dodge") +
-    geom_text(aes(label = round(mean_salary, 0)), position = position_dodge(width = 0.9), vjust = -0.25, size=3) +
+    geom_text(aes(label = round(mean_salary, 0)), position = position_dodge(width = 0.9), vjust = -0.25, size = 3) +
     ggtitle("Gehalt für pro Erfahrungslevel und Jahr") +
     labs(fill = "Arbeitsjahr", x = "Erfahrung", y = "Gehalt in USD") +
     scale_fill_manual(values=wes_palette(n = 3, name = color_palette)) +
@@ -303,20 +300,20 @@ titles <- top_n(counting,count) |> pull(job_title)
 
 counting <- rbind(top_n(counting,count), slice(counting,(count+1):n()) |>
     summarise(job_title="Andere",n=sum(n))) |>
-    mutate(n=round(n/sum(n)*100)) |> 
+    mutate(n = round(n/sum(n) * 100)) |> 
     arrange(desc(n))|> 
     mutate(
         job_title = factor(job_title, levels = job_title, ordered = T)
     )
     
 
-ggplot(counting, aes(x="", y=n, fill=job_title)) +
-    geom_bar(stat="identity", width=1, color = "black") +
-    coord_polar("y", start=0) +
-    geom_text(aes(label = paste0(n, "%")), position = position_stack(vjust=0.5)) +
+ggplot(counting, aes(x = "", y=n, fill=job_title)) +
+    geom_bar(stat = "identity", width=1, color = "black") +
+    coord_polar("y", start = 0) +
+    geom_text(aes(label = paste0(n, "%")), position = position_stack(vjust = 0.5)) +
     labs(x = NULL, y = NULL, fill = NULL) +
     theme_minimal() +
-    scale_fill_manual(values=wes_palette(n = 11, name = color_palette, type="continuous")) +
+    scale_fill_manual(values=wes_palette(n = 11, name = color_palette, type = "continuous")) +
     ggtitle("Verteilung der Berufstitel") +
     theme(
         plot.title = element_text(hjust = 1, size = 16),
@@ -342,11 +339,11 @@ job_title_mean_salary <- data_cleaned[data_cleaned$job_title %in% titles,] |>
 
 # Bar Plot für die durchschnittlichen Gehälter pro Berufstitel
 ggplot(job_title_mean_salary, aes(x = job_title, y = mean_salary)) +
-    geom_bar(stat = "identity", fill=color, color = "black") +
+    geom_bar(stat = "identity", fill = color, color = "black") +
     ggtitle("Die durchschnittlichen Gehälter der 10 häufigsten Berufstitel") +
     labs(x = "Berufstitel", y = "Gehalt in USD") +
     theme_minimal() +
-    geom_text(aes(label=round(mean_salary)), size = 4, hjust = 1.1, color="black") +
+    geom_text(aes(label = round(mean_salary)), size = 4, hjust = 1.1, color="black") +
     theme(
         plot.title = element_text(hjust = 1, size = 16),
         axis.title = element_text(size = 14),
@@ -425,7 +422,7 @@ ggplot(everage_salary_per_country, aes(x = reorder(company_location, mean_salary
     ggtitle("Die durchschnittlichen Gehälter der Länder") +
     labs(x = "Länder", y = "Gehalt in USD") +
     theme_minimal() +
-    geom_text(data = subset(everage_salary_per_country, mean_salary > 15000), aes(label = round(mean_salary)), size = 3, hjust = 1.1, color="black") +
+    geom_text(data = subset(everage_salary_per_country, mean_salary > 15000), aes(label = round(mean_salary)), size = 3, hjust = 1.1, color = "black") +
     theme(
         plot.title = element_text(hjust = 1, size = 16),
         axis.title = element_text(size = 14),
@@ -444,13 +441,13 @@ Die ausgewerteten Gehälter der einzelnen Länder sind auch mit den ungefähren 
 count_per_country <- data_cleaned |> count(company_location, sort = TRUE)
 
 # Zusammenfassen der Länder mit weniger als 10 Datensätzen
-count_per_country <- rbind(top_n(count_per_country, count), slice(count_per_country,(count + 1):n()) |>
-    summarise(company_location="Andere",n=sum(n))) |>
+count_per_country <- rbind(top_n(count_per_country, count), slice(count_per_country, (count + 1):n()) |>
+    summarise(company_location = "Andere",n = sum(n))) |>
     arrange(desc(n))
 
 # Plot für die die Anzahl der Datensätze pro Land
 ggplot(count_per_country, aes(x = n, y = reorder(company_location, n))) +
-    geom_bar(stat = "identity", fill=color, color = "black") +
+    geom_bar(stat = "identity", fill = color, color = "black") +
     geom_text(aes(label = n), hjust = -0.25, size = 3) +
     ggtitle("Anzahl der Datensätze pro Land") +
     labs(x = "Anzahl der Datensätze", y = "Länder") +
@@ -461,7 +458,7 @@ ggplot(count_per_country, aes(x = n, y = reorder(company_location, n))) +
     )
 
 ```
-Klar zu erkennen ist, dass der ausgesuchte Datensatz auf einer Mehrzahl an Datensätzen aus den `USA` basiert. Da dadurch kein klarer Vergleich zwischen den Ländern möglich ist, wird auf eine weitere Auswertung verzichtet.
+Klar zu erkennen ist auch, dass der ausgesuchte Datensatz auf einer Mehrzahl an Datensätzen aus den `USA` basiert. Da dadurch kein klarer Vergleich zwischen den Ländern möglich ist, wird auf eine weitere Auswertung verzichtet.
 
 
 # 4.5 Betriebsgröße
@@ -478,7 +475,7 @@ data_cleaned |>
     count(company_size, sort = TRUE) |>
     ggplot(aes(x = n, y = company_size)) +
         geom_bar(stat = "identity", fill=color, color = "black") +
-        geom_text(aes(label=n), size = 4, vjust = -0.5, color="black") +
+        geom_text(aes(label = n), size = 4, vjust = -0.5, color = "black") +
         ggtitle("Verteilung der Betriebsgröße") +
         labs(x = "Anzahl", y = "Betriebsgröße") +
         theme_minimal() +
@@ -558,7 +555,7 @@ company_size_exp <- company_size_exp |>
 # Kuchendiagramme für die Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße
 ggplot(company_size_exp, aes(x = "", y = percentage, fill = experience_level)) +
     geom_bar(stat = "identity") +
-    coord_polar("y", start=0) +
+    coord_polar("y", start = 0) +
     facet_wrap(~ company_size, ncol = 3) +
     ggtitle("Anteile der Mitarbeiter mit unterschiedlichen Erfahrungsstufen der Betriebsgröße") +
     geom_text(aes(label = paste0(round(percentage), "%")), position = position_stack(vjust=0.5)) +
@@ -648,11 +645,11 @@ contract_type <- data_cleaned |>
 # Anteil der Vertragsarten in Prozent
 ggplot(contract_type, aes(x = employment_type, y = percent, fill = employment_type)) +
     geom_col() +
-    geom_text(aes(label = paste(round(percent, 1), "%", sep=" ")), vjust = -0.5, size = 3) +
+    geom_text(aes(label = paste(round(percent, 1), "%", sep = " ")), vjust = -0.5, size = 3) +
     ggtitle("Anteil der Vertragsarten") +
     labs(fill = "Vertragsart", y = "Anteil in %", x = "Vertragsart") +
     theme_minimal() +
-    scale_fill_manual(values=wes_palette(n = 4, name = color_palette)) +
+    scale_fill_manual(values = wes_palette(n = 4, name = color_palette)) +
     theme(
         legend.position = "top",
         legend.title = element_text(),
@@ -693,7 +690,7 @@ ggplot(remote_ratio_salary_and_count, aes(x = remote_ratio, y = mean, fill = rem
     geom_text(aes(label = count), vjust = -0.5, size = 5) +
     geom_text(aes(label = paste(round(mean), "USD", sep = " ")), vjust = 2, size = 5) +
     theme_minimal() +
-    scale_fill_manual(values=wes_palette(n = 3, name = color_palette)) +
+    scale_fill_manual(values = wes_palette(n = 3, name = color_palette)) +
     theme(
         legend.position = "top",
         legend.title = element_text(),
