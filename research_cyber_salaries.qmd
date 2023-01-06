@@ -29,7 +29,7 @@ color <- "#e6a0c4"
 
 ## 1. Formulierung der Fragestellung
 
-Der vorliegende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angestellten im Bereich Cyber-Security und werden unter folgendem Link <https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries> bereitgestellt. Der Datensatz enthält folgende Informationen:
+Der vorliegende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angestellten im Bereich Cyber-Security und wird unter folgendem Link <https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries> bereitgestellt. Der Datensatz enthält folgende Informationen:
 
 * Arbeitsjahr
 * Jobtitel
@@ -99,7 +99,7 @@ Daraus folgt, dass die Daten erfolgreich importiert wurden und folgende Datenstr
 
 Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. `experience_level` oder `employment_type`, als `chr` definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als `factor` definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden.
 Zusätzlich ist zu beachten, dass die Variablen `salary` und `salary_currency` nicht benötigt werden, da diese Informationen bereits in `salary_in_usd` umgerechnet in US-Dollar enthalten sind. Die Variablen `salary` und `salary_currency` sollten daher im nächsten Schritt gelöscht werden.
-Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschrieben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.
+Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschrieben werden. So sollten zum Schluss z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.
 
 
 ### 2.2 Duplikate
@@ -114,7 +114,7 @@ duplicate <- sum(duplicated(data))
 head(data[duplicated(data),], count) |> knitr::kable()
 ```
 
-Es sind also `r duplicate` doppelte Einträge vorhanden. Die Duplikate können jedoch nicht aus dem Datensatz entfernt werden, da es keine eindeutigen Informationen/Identifikatoren über die einzelnen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternehmens handelt mit der selben Bezahlung.
+Es sind also `r duplicate` doppelte Einträge vorhanden. Die Duplikate können jedoch nicht aus dem Datensatz entfernt werden, da es keine eindeutigen Informationen/Identifikatoren über die einzelnen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternehmens mit der selben Bezahlung handelt.
 
 ### 2.3 Fehlende Werte
 
@@ -151,7 +151,7 @@ data_cleaned <- data |> mutate(
 str(data_cleaned)
 ```
 
-Damit die einzelnen Länder lesbar sind und in einen Zusammenhang mit den Daten gebracht werden kann, werden hier die Länder-Codes durch die Ländernamen ersetzt. Dafür wird der Dataframe `ISO_3166_1` verwendet, die die Ländercodes und die zugehörigen Ländernamen enthält. Die Ländercodes werden mit den Ländernamen aus dem Dataframe `ISO_3166_1` ersetzt.
+Damit die einzelnen Länder lesbar sind und in einen Zusammenhang mit den Daten gebracht werden können, werden hier die Länder-Codes durch die Ländernamen ersetzt. Dafür wird der Dataframe `ISO_3166_1` verwendet, der die Ländercodes und die zugehörigen Ländernamen enthält. Die Ländercodes werden mit den Ländernamen aus dem Dataframe `ISO_3166_1` ersetzt.
 
 ```{r}
 # Ländernamen hinzufügen
@@ -320,7 +320,7 @@ ggplot(counting, aes(x = "", y=n, fill=job_title)) +
         axis.title = element_text(size = 14),
     )
 ```
-Zu sehen ist erst mal das ein großer Teil in der Gruppe `Andere` zusammengefasst wurde. Dies könnte damit zusammenhängen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security-Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den `43%` der Gruppe `Andere` die `2 %` Hürde überschreitet.
+Zu sehen ist, dass ein großer Teil in der Gruppe `Andere` zusammengefasst wurde. Dies könnte damit zusammenhängen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security-Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den `43%` der Gruppe `Andere` die `2 %` Hürde überschreitet.
 Trotz dessen ist zu erkennen, dass ein größerer Trend in den Berufen ``r paste(titles[1])`` und ``r paste(titles[2])`` besteht.  
 
 #### 4.2.2 Durchschnittliche Gehälter pro Berufstitel
@@ -463,7 +463,7 @@ Klar zu erkennen ist auch, dass der ausgesuchte Datensatz auf einer Mehrzahl an 
 
 # 4.5 Betriebsgröße
 
-Ein weiterer Betrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben, gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der Größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der Größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der Größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.
+Ein weiterer Betrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben, gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der Größe S weniger als 50 Mitarbeiter, ein Unternehmen der Größe M zwischen 50 und 500 Mitarbeiter und ein Unternehmen der Größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.
 
 ```{r}
 #| code-fold: true
@@ -532,7 +532,7 @@ Es fällt auf, dass der Mittelwert der Gehälter in mittelgroßen Betrieben höh
 
 ## 4.5.3 Anteil an Erfahrungsstufen pro Betriebsgröße
 
-Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt. 
+Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Kuchendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt. 
 
 ```{r}
 #| code-fold: true
@@ -668,7 +668,7 @@ Es ist zu erkennen, dass die meisten Datenpunkte mit einem Vertrag vom Typ `Full
 Dadurch, dass fast nur Verträge vom Typ `Full Time` vorliegen, können keine Aussagen über die Gehälter in Abhängigkeit der Vertragsart getroffen werden und der Datensatz bezieht sich somit fast ausschließlich auf Vollzeit Angestellte.
 
 # 4.7 Remote vs. nicht Remote
-Im folgenden Abschnitt werden nun noch die Gehälter der Angestellten in Abhängigkeit davon, ob zu wie viel Prozent sie remote arbeiten (0%, 50%, 100%), betrachtet. Hierzu werden die einzelnen Remote-Raten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt zusammengefasst dargestellt.
+Im folgenden Abschnitt werden die Gehälter der Angestellten in Abhängigkeit ihrer Remote-Rate (0%, 50%, 100%) betrachtet. Hierzu werden die einzelnen Remote-Raten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt zusammengefasst dargestellt.
 
 ```{r}
 #| code-fold: true

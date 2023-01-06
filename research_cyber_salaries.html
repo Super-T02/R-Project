@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -131,7 +131,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <p class="date">2. Januar 2023</p>
     </div>
   </div>
-  
     
   </div>
   
@@ -143,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="formulierung-der-fragestellung" class="level2">
 <h2 class="anchored" data-anchor-id="formulierung-der-fragestellung">1. Formulierung der Fragestellung</h2>
-<p>Der vorliegende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angestellten im Bereich Cyber-Security und werden unter folgendem Link <a href="https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries" class="uri">https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries</a> bereitgestellt. Der Datensatz enthält folgende Informationen:</p>
+<p>Der vorliegende Datensatz enthält Daten über die Jahresgehälter von verschiedenen Angestellten im Bereich Cyber-Security und wird unter folgendem Link <a href="https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries" class="uri">https://www.kaggle.com/datasets/whenamancodes/infoseccyber-security-salaries</a> bereitgestellt. Der Datensatz enthält folgende Informationen:</p>
 <ul>
 <li>Arbeitsjahr</li>
 <li>Jobtitel</li>
@@ -437,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. <code>experience_level</code> oder <code>employment_type</code>, als <code>chr</code> definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als <code>factor</code> definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden. Zusätzlich ist zu beachten, dass die Variablen <code>salary</code> und <code>salary_currency</code> nicht benötigt werden, da diese Informationen bereits in <code>salary_in_usd</code> umgerechnet in US-Dollar enthalten sind. Die Variablen <code>salary</code> und <code>salary_currency</code> sollten daher im nächsten Schritt gelöscht werden. Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschrieben werden. So sollten z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.</p>
+<p>Bei genauerer Betrachtung der vorhandenen Daten fällt auf, dass einzelne Variablen, wie z.B. <code>experience_level</code> oder <code>employment_type</code>, als <code>chr</code> definiert sind. Dies ist jedoch nicht korrekt, da diese Variablen als <code>factor</code> definiert sein sollten. Dafür müssen für die einzelnen Variablen Faktoren bzw. geordnete Faktoren angelegt werden. Zusätzlich ist zu beachten, dass die Variablen <code>salary</code> und <code>salary_currency</code> nicht benötigt werden, da diese Informationen bereits in <code>salary_in_usd</code> umgerechnet in US-Dollar enthalten sind. Die Variablen <code>salary</code> und <code>salary_currency</code> sollten daher im nächsten Schritt gelöscht werden. Damit die Daten auch lesbar sind, können die Inhalte der character Felder ausgeschrieben werden. So sollten zum Schluss z.B. die Ländernamen nicht mehr nur abgekürzt vorhanden sein, sondern auch in ausgeschriebenem Format.</p>
 </section>
 <section id="duplikate" class="level3">
 <h3 class="anchored" data-anchor-id="duplikate">2.2 Duplikate</h3>
@@ -613,7 +612,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-<p>Es sind also 115 doppelte Einträge vorhanden. Die Duplikate können jedoch nicht aus dem Datensatz entfernt werden, da es keine eindeutigen Informationen/Identifikatoren über die einzelnen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternehmens handelt mit der selben Bezahlung.</p>
+<p>Es sind also 115 doppelte Einträge vorhanden. Die Duplikate können jedoch nicht aus dem Datensatz entfernt werden, da es keine eindeutigen Informationen/Identifikatoren über die einzelnen Personen gibt und davon ausgegangen werden muss, dass es sich um unterschiedliche Personen des selben Unternehmens mit der selben Bezahlung handelt.</p>
 </section>
 <section id="fehlende-werte" class="level3">
 <h3 class="anchored" data-anchor-id="fehlende-werte">2.3 Fehlende Werte</h3>
@@ -660,7 +659,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  $ company_size      : Ord.factor w/ 3 levels "S"&lt;"M"&lt;"L": 1 2 2 2 2 3 2 2 2 2 ...</code></pre>
 </div>
 </div>
-<p>Damit die einzelnen Länder lesbar sind und in einen Zusammenhang mit den Daten gebracht werden kann, werden hier die Länder-Codes durch die Ländernamen ersetzt. Dafür wird der Dataframe <code>ISO_3166_1</code> verwendet, die die Ländercodes und die zugehörigen Ländernamen enthält. Die Ländercodes werden mit den Ländernamen aus dem Dataframe <code>ISO_3166_1</code> ersetzt.</p>
+<p>Damit die einzelnen Länder lesbar sind und in einen Zusammenhang mit den Daten gebracht werden können, werden hier die Länder-Codes durch die Ländernamen ersetzt. Dafür wird der Dataframe <code>ISO_3166_1</code> verwendet, der die Ländercodes und die zugehörigen Ländernamen enthält. Die Ländercodes werden mit den Ländernamen aus dem Dataframe <code>ISO_3166_1</code> ersetzt.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ländernamen hinzufügen</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> data_cleaned <span class="sc">|&gt;</span></span>
@@ -891,7 +890,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Zu sehen ist erst mal das ein großer Teil in der Gruppe <code>Andere</code> zusammengefasst wurde. Dies könnte damit zusammenhängen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security-Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den <code>43%</code> der Gruppe <code>Andere</code> die <code>2 %</code> Hürde überschreitet. Trotz dessen ist zu erkennen, dass ein größerer Trend in den Berufen <code>Security Engineer</code> und <code>Cyber Security Analyst</code> besteht.</p>
+<p>Zu sehen ist, dass ein großer Teil in der Gruppe <code>Andere</code> zusammengefasst wurde. Dies könnte damit zusammenhängen, dass es entweder eine große Anzahl an unterschiedlichen Berufen innerhalb des IT-Security-Sektors existieren oder gleiche Berufe in den Betrieben unterschiedlich benannt werden. Jedoch ist davon auszugehen, dass es sich um eine starke Verteilung handelt, da kein Berufstitel in den <code>43%</code> der Gruppe <code>Andere</code> die <code>2 %</code> Hürde überschreitet. Trotz dessen ist zu erkennen, dass ein größerer Trend in den Berufen <code>Security Engineer</code> und <code>Cyber Security Analyst</code> besteht.</p>
 <section id="durchschnittliche-gehälter-pro-berufstitel" class="level4">
 <h4 class="anchored" data-anchor-id="durchschnittliche-gehälter-pro-berufstitel">4.2.2 Durchschnittliche Gehälter pro Berufstitel</h4>
 <p>Nachfolgend werden die durchschnittlichen Gehälter pro Berufstitel mit der jeweiligen Verteilung angezeigt. Hierbei werden nur die 10 häufigsten Berufstitel berücksichtigt, die in der vorherigen Verteilung der Berufstitel bereits dargestellt wurden.</p>
@@ -1029,11 +1028,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="research_cyber_salaries_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Klar zu erkennen ist, dass der ausgesuchte Datensatz auf einer Mehrzahl an Datensätzen aus den <code>USA</code> basiert. Da dadurch kein klarer Vergleich zwischen den Ländern möglich ist, wird auf eine weitere Auswertung verzichtet.</p>
+<p>Klar zu erkennen ist auch, dass der ausgesuchte Datensatz auf einer Mehrzahl an Datensätzen aus den <code>USA</code> basiert. Da dadurch kein klarer Vergleich zwischen den Ländern möglich ist, wird auf eine weitere Auswertung verzichtet.</p>
 </section>
 <section id="betriebsgröße" class="level1">
 <h1>4.5 Betriebsgröße</h1>
-<p>Ein weiterer Betrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben, gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der Größe S weniger als 50 Mitarbeiter hat, ein Unternehmen der Größe M zwischen 50 und 500 Mitarbeiter hat und ein Unternehmen der Größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.</p>
+<p>Ein weiterer Betrachtungspunkt ist die Betriebsgröße. Wie bereits beschrieben, gibt es drei verschiedene Größen: S, M, L. Wobei ein Unternehmen der Größe S weniger als 50 Mitarbeiter, ein Unternehmen der Größe M zwischen 50 und 500 Mitarbeiter und ein Unternehmen der Größe L mehr als 500 Mitarbeiter hat. Die folgende Grafik zeigt die Verteilung der Betriebsgröße.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1142,7 +1141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="anteil-an-erfahrungsstufen-pro-betriebsgröße" class="level2">
 <h2 class="anchored" data-anchor-id="anteil-an-erfahrungsstufen-pro-betriebsgröße">4.5.3 Anteil an Erfahrungsstufen pro Betriebsgröße</h2>
-<p>Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Balkendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt.</p>
+<p>Eine weitere Fragestellung ist, wie sich die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in den Betrieben verteilt. Dazu wird ein Kuchendiagramm erstellt, das die Anzahl der Mitarbeiter mit unterschiedlichen Erfahrungsstufen in Abhängigkeit der Betriebsgröße darstellt.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1424,7 +1423,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="remote-vs.-nicht-remote" class="level1">
 <h1>4.7 Remote vs.&nbsp;nicht Remote</h1>
-<p>Im folgenden Abschnitt werden nun noch die Gehälter der Angestellten in Abhängigkeit davon, ob zu wie viel Prozent sie remote arbeiten (0%, 50%, 100%), betrachtet. Hierzu werden die einzelnen Remote-Raten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt zusammengefasst dargestellt.</p>
+<p>Im folgenden Abschnitt werden die Gehälter der Angestellten in Abhängigkeit ihrer Remote-Rate (0%, 50%, 100%) betrachtet. Hierzu werden die einzelnen Remote-Raten mit der Anzahl der Angestellten und dem durchschnittlichen Gehalt zusammengefasst dargestellt.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1531,24 +1530,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Kopiert");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Kopiert");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1584,42 +1566,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>
